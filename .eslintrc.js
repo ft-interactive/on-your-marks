@@ -45,7 +45,7 @@ const overrides = {
   'generator-star-spacing': 0,
   'babel/generator-star-spacing': [2, { before: false, after: true }],
   'global-require': 1,
-  'import/no-extraneous-dependencies': 2,
+  'import/no-extraneous-dependencies': [2, { devDependencies: true }],
 };
 
 Object.assign(config.rules, overrides);
