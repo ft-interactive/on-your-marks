@@ -260,7 +260,11 @@ gulp.task('download-data', async () => {
     process.exit(1);
   }
 
-  const data = await fetch(`http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/levels,options`)
+  const url = `http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/levels,options`;
+
+  console.log('Downloading data from', url);
+
+  const data = await fetch(url)
     .then(res => res.json());
 
   const options = {};
@@ -268,11 +272,11 @@ gulp.task('download-data', async () => {
     options[name] = value;
   }
 
-  const events = data.events; // TODO format any markdown etc.
+  const levels = data.levels; // TODO format any markdown etc.
 
   fs.writeFileSync(path.join(__dirname, 'config', 'spreadsheet.json'), JSON.stringify({
     options,
-    events,
+    levels,
   }, null, 2));
 });
 
