@@ -260,7 +260,7 @@ gulp.task('download-data', async () => {
     process.exit(1);
   }
 
-  const data = await fetch(`http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/events,options`)
+  const data = await fetch(`http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/levels,options`)
     .then(res => res.json());
 
   const options = {};
