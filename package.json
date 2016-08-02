@@ -35,6 +35,7 @@
     "gulp-util": "^3.0.7",
     "markdown-it": "^7.0.0",
     "merge-stream": "^1.0.0",
+    "node-fetch": "^1.5.3",
     "nodemon": "^1.10.0",
     "nunjucks": "^2.4.2",
     "nunjucks-markdown": "^2.0.0",
@@ -70,11 +71,12 @@
     "clean": "rm -rf dist",
     "deploy": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js",
     "deploy:confirm": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js --confirm",
+    "download-data": "env $([[ -f .env ]] && cat .env) gulp download-data",
     "lint": "eslint .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",
     "prestart": "npm run clean",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "test": "npm run build"
+    "test": "npm run download-data && npm run build"
   }
 }

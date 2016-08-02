@@ -18,6 +18,8 @@ import gulpdata from 'gulp-data';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
+import fetch from 'node-fetch';
+import fs from 'fs';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -251,6 +253,28 @@ gulp.task('revreplace', ['revision'], () =>
     .pipe(revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
     .pipe(gulp.dest('dist'))
 );
+
+gulp.task('download-data', async () => {
+  if (!process.env.SPREADSHEET_KEY) {
+    console.error('Environment variable SPREADSHEET_KEY is not set. Failed.');
+    process.exit(1);
+  }
+
+  const data = await fetch(`http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/events,options`)
+    .then(res => res.json());
+
+  const options = {};
+  for (const { name, value } of data.options) {
+    options[name] = value;
+  }
+
+  const events = data.events; // TODO format any markdown etc.
+
+  fs.writeFileSync(path.join(__dirname, 'config', 'spreadsheet.json'), JSON.stringify({
+    options,
+    events,
+  }, null, 2));
+});
 
 // IMAGE COMPRESSION:
 // OPTIONAL TASK IF YOU HAVE IMAGES IN YOUR PROJECT REPO

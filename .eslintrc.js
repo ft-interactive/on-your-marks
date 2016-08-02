@@ -18,6 +18,10 @@ const rules = Object.assign({},
 const config = {
   extends: 'airbnb',
   parser: 'babel-eslint',
+  env: {
+    browser: true,
+    node: true,
+  },
   plugins: ['babel'],
   rules: Object.keys(rules).reduce((last, curr) => {
     let rule = rules[curr];
@@ -30,7 +34,7 @@ const config = {
     last[curr] = rule;
 
     return last;
-  }, {})
+  }, {}),
 };
 
 /**
@@ -40,8 +44,8 @@ const overrides = {
   'no-console': 0,
   'generator-star-spacing': 0,
   'babel/generator-star-spacing': [2, { before: false, after: true }],
-  'global-require': 1
-
+  'global-require': 1,
+  'import/no-extraneous-dependencies': 2,
 };
 
 Object.assign(config.rules, overrides);

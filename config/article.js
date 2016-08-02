@@ -1,10 +1,8 @@
-export default _ => ({ // eslint-disable-line
-
+export default () => ({
   // link file UUID
   id: '',
 
   // canonical URL of the published page
-  // https://ig.ft.com/sites/on-your-marks get filled in by the ./configure script
   url: 'https://ig.ft.com/sites/on-your-marks',
 
   // To set an exact publish date do this:
