@@ -9,33 +9,33 @@ export default () => ({
   //       new Date('2016-05-17T17:11:22Z')
   publishedDate: new Date(),
 
-  headline: 'Politics and the English Language',
+  // headline: 'Politics and the English Language',
 
-  summary: 'Political language is designed to make lies sound truthful' +
-           'and murder respectable, and to give an appearance of solidity to pure wind',
+  // summary: 'Political language is designed to make lies sound truthful' +
+  //          'and murder respectable, and to give an appearance of solidity to pure wind',
 
   topic: {
-    name: 'Starter Kit',
-    url: '/foo',
+    name: 'Olympic Games',
+    url: '/rio-olympics',
   },
 
-  relatedArticle: {
-    text: 'Related article »',
-    url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
-  },
+  // relatedArticle: {
+  //   text: 'Related article »',
+  //   url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
+  // },
 
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
-  byline: [
-    { name: 'Author One', url: '/foo/bar' },
-    { name: 'Author Two' },
-  ],
+  // byline: [
+  //   { name: 'Author One', url: '/foo/bar' },
+  //   { name: 'Author Two' },
+  // ],
 
   // Appears in the HTML <title>
-  title: '',
+  // title: '',
 
   // meta data
-  description: '',
+  // description: '',
 
   /*
   TODO: Select Twitter card type -

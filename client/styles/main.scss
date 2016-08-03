@@ -75,28 +75,48 @@ $share-button-size: 38px;
   }
 }
 
-.graphic {
+// .graphic {
 
-  display: block;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
-  width: 100%;
+//   display: block;
+//   max-width: 100%;
+//   margin: 0 auto;
+//   padding: 0;
+//   box-sizing: border-box;
+//   width: 100%;
 
-  & > img,
-  & > svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+//   & > img,
+//   & > svg {
+//     width: 100%;
+//     height: auto;
+//     display: block;
+//   }
 
-  &-b-0 {
-    max-width: 625px;
-  }
+//   &-b-0 {
+//     max-width: 625px;
+//   }
 
-  &-b-1 {
-    max-width: 700px;
-  }
+//   &-b-1 {
+//     max-width: 700px;
+//   }
 
+// }
+
+.game {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: rgba(blue, 0.5);
+  display: none;
 }
+
+.play-button-wrapper {
+  text-align: center;
+}
+  .loading-indicator {
+
+  }
+  .play-game-button {
+    display: none;
+  }

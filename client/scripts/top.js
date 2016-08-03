@@ -96,10 +96,10 @@ var polyfill_features = [
   'fetch|always|gated'
 ];
 
-var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
+var polyfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
                     + polyfill_features.join(',')
                     + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set';
 
-exec(polfill_url, true, true)
+exec(polyfill_url, true, true)
 
 }());

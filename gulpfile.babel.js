@@ -179,7 +179,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
     gulp.watch([
       'client/**/*.{html,md}',
       'views/**/*.{js,html}',
-      'config/*.{js,json}'], ['build-pages', reload]);
+      'config/**/*'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 
@@ -267,6 +267,7 @@ gulp.task('download-data', async () => {
   const data = await fetch(url)
     .then(res => res.json());
 
+  // TODO just dump whole spreadsheet, then crunch it in the config/index.js config-getter function
   const options = {};
   for (const { name, value } of data.options) {
     options[name] = value;

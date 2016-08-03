@@ -11,7 +11,7 @@ export function configure() {
     new nunjucks.FileSystemLoader(['client', 'views'])
   );
 
-  Object.assign(env.filters, require('./filters'));
+  Object.assign(env.filters, require('./filters')); // eslint-disable-line
   markdownTag.register(env, env.filters.md);
 
   return env;
