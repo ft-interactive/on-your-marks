@@ -33,7 +33,7 @@ const loadingIndicator = qs('.loading-indicator');
 
     for (const level of levels) {
       if (level.slug === slug) {
-        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('game-on');
         gameView.show(level);
         return;
       }
@@ -41,7 +41,7 @@ const loadingIndicator = qs('.loading-indicator');
 
     // not found; just revert to normal view
     gameView.hide();
-    document.body.style.overflow = '';
+    document.documentElement.classList.remove('game-on');
   };
 
   // handle hash

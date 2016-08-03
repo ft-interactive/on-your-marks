@@ -100,6 +100,17 @@ $share-button-size: 38px;
 //   }
 
 // }
+//
+
+.game-on {
+  &, body {
+    overflow: hidden;
+  }
+
+  body > *:not(.game) {
+    display: none;
+  }
+}
 
 .game {
   width: 100vw;
@@ -110,12 +121,16 @@ $share-button-size: 38px;
   // background: rgba(blue, 0.5);
   background: black;
   background-size: cover;
-  display: none;
+  // display: none;
   z-index: 2;
 
   color: white;
   opacity: 0;
   // transition: opacity 0.1s linear;
+  //
+  &[aria-hidden=true] {
+    display: none;
+  }
 
   a {
     color: white;

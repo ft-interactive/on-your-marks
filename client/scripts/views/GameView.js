@@ -43,7 +43,8 @@ export default class GameView {
     await this._loadLevel(level);
 
     // show it
-    this._el.style.display = 'block';
+    // this._el.style.display = 'block';
+    this._el.setAttribute('aria-hidden', 'false');
     this._el.offsetHeight; // eslint-disable-line no-unused-expressions
     this._el.style.opacity = '1';
   }
@@ -51,7 +52,7 @@ export default class GameView {
   async hide() {
     await this._unloadLevel();
 
-    this._el.style.display = 'none';
+    this._el.setAttribute('aria-hidden', 'true');
     this._el.style.opacity = '0';
   }
 }
