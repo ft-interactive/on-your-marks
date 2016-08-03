@@ -102,7 +102,7 @@ $share-button-size: 38px;
 // }
 //
 
-.game-on {
+html.game-on {
   &, body {
     overflow: hidden;
   }
@@ -118,22 +118,42 @@ $share-button-size: 38px;
   top: 0;
   left: 0;
   position: fixed;
-  // background: rgba(blue, 0.5);
   background: black center center;
   background-size: cover;
-  // display: none;
   z-index: 2;
-
   color: white;
-  opacity: 0;
-  // transition: opacity 0.1s linear;
-  //
+
   &[aria-hidden=true] {
     display: none;
   }
 
   a {
     color: white;
+  }
+
+  header {
+    background: rgba(#666, 0.8);
+  }
+
+  &__content {
+
+  }
+
+  &__panel {
+    background: rgba(#888, 0.8);
+    display: none;
+
+    &--intro {
+      .game--unplayed & { display: block; }
+    }
+
+    &--button {
+      .game--playing & { display: block; }
+    }
+
+    &--result {
+      .game--played & { display: block; }
+    }
   }
 }
 
@@ -146,3 +166,5 @@ $share-button-size: 38px;
   .play-game-button {
     display: none;
   }
+
+
