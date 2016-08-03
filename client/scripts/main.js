@@ -59,9 +59,4 @@ const loadingIndicator = qs('.loading-indicator');
 
   loadingIndicator.style.display = 'none';
   playGameButton.style.display = 'block';
-
-  console.log('firstLevelAssets', firstLevelAssets);
-
-  // firstLevelAssets.sounds.ambient.volume(0).play();
-  // firstLevelAssets.sounds.ambient.fade(0, 1, 1500);
 })();
