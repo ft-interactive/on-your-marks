@@ -1,16 +1,16 @@
 # [on-your-marks](https://ig.ft.com/sites/on-your-marks)
 
-> 
-
 [![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
 ## Local
+
+First time: make a `.env` file and put `SPREADSHEET_KEY` in it, set to the spreadsheet key for this project. Then do `npm run download-data`.
 
 ```
 npm start
 ```
 
-Build/compile, start a dev server and watches for changes.
+Build/compile, start a dev server and watch for changes.
 
 # Deploy
 

@@ -1,8 +1,8 @@
+import { Delegate } from 'dom-delegate';
 import { states } from '../Level';
 import introPanelTemplate from '../templates/introPanel';
 import buttonPanelTemplate from '../templates/buttonPanel';
 import resultPanelTemplate from '../templates/resultPanel';
-import { Delegate } from 'dom-delegate';
 
 const config = window.__gameConfig;
 
@@ -48,9 +48,10 @@ export default class GameView {
         this._currentLevel.startPlaying();
       });
 
-      delegate.on('click', '.game__race-button', () => {
-        console.log('click on race button!');
+      delegate.on('click', '.game__race-button', event => {
         this._currentLevel.registerReactionNow();
+
+        event.target.disabled = true; // eslint-disable-line no-param-reassign
       });
     }
   }
@@ -59,41 +60,46 @@ export default class GameView {
     const level = this._currentLevel;
 
     if (level) {
-      console.log('level', level);
       level.removeListener('statechanged', this.onLevelStateChanged);
-      level.stopSounds();
+      level.stop();
       delete this._currentLevel;
     }
   }
 
   async _loadLevel(level) {
-    await this._unloadLevel();
-
     level.on('statechanged', this.onLevelStateChanged);
 
     this._currentLevel = level;
 
-    // show bg image
+    // set the level's "bg" image as the background for the whole game element
     {
       const url = `${config.assetRoot}/images/${level.slug}-bg.jpg`;
+      // TODO use image service
       // const ratio = devicePixelRatio || 1;
       // const imageServiceURL = `https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent(url)}?source=IG&width=${screen.width * ratio}&height=${screen.height * ratio}`;
-      const imageServiceURL = url; // TEMPORARY
+      const imageServiceURL = url; // FOR NOW
       this._el.style.backgroundImage = `url(${imageServiceURL})`;
     }
 
-    // get to the intro state
-    await level.reset();
+    // transition to the first state
     await level.startIntro();
   }
 
+  /**
+   * Shows the game element and loads the the given level.
+   */
   async show(level) {
-    await this._loadLevel(level);
+    await this._unloadLevel();
 
     // show it
     this._el.setAttribute('aria-hidden', 'false');
+
+    await this._loadLevel(level);
   }
 
+  /**
+   * A this-bound function that's called whenever the current level's state changes.
+   */
   async onLevelStateChanged(newState) {
     for (const state of states) {
       this._el.classList.toggle(`game--${state}`, state === newState);
@@ -105,6 +111,9 @@ export default class GameView {
     this._resultPanelEl.innerHTML = resultPanelTemplate(this);
   }
 
+  /**
+   * Hides the entire game element.
+   */
   async hide() {
     await this._unloadLevel();
 

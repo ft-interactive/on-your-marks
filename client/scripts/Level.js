@@ -1,37 +1,41 @@
-/**
- * Level class
- * A kind of state machine for a level.
- *
- * - Knows the full config of a level, as well as its current state
- * -
- *
- * Three states:
- * - unplayed (intro screen, proceeds to 'playing' when user clicks)
- * - playing (sounds are playing)
- * - played
- */
-
 import { Howl } from 'howler';
 import { EventEmitter } from 'events';
 import Bluebird from 'bluebird';
 
-export const states = [
-  'off', 'unplayed', 'playing', 'played',
-];
-
 const config = window.__gameConfig;
+
+/**
+ * A level instance can be in one of three states:
+ *
+ * - unplayed (intro screen, proceeds to 'playing' when user clicks)
+ * - playing (sounds are playing, button panel showing, automatically proceeds
+ * to 'played' after timed sequence)
+ * - played (results panel showing)
+ */
+export const states = [
+  'unplayed', 'playing', 'played',
+];
 
 const soundTypes = [{
   name: 'ambient',
   loop: true,
+}, {
+  name: 'presignal', // TODO allow skipping this for the bike one
+}, {
+  name: 'signal',
+}, {
+  name: 'roar', // should play after the signal (or maybe after user goes?)
 }];
 
 const imageTypes = ['bg'];
 
+/**
+ * Returns a promise for a new Howl instance. Resolves when the sound is loaded
+ * and ready to play.
+ */
 const getSound = options => new Bluebird((resolve, reject) => {
   const sound = new Howl({
     ...options,
-    // sprite,
     onload: () => resolve(sound),
     onloaderror: (id, error) => {
       reject(error instanceof Error ? error : new Error(error));
@@ -39,59 +43,46 @@ const getSound = options => new Bluebird((resolve, reject) => {
   });
 });
 
+/**
+ * A kind of model/state machine (but also takes care of playing sounds, so it's
+ * a bit of a 'view' too).
+ */
 export default class Level extends EventEmitter {
   constructor(options) {
     super();
-
-    this._state = 'off';
 
     for (const key of Object.keys(options)) {
       Object.defineProperty(this, key, { value: options[key], enumerable: true });
     }
   }
 
-  // TODO remove this method
-  async getAssets() {
-    if (!this._getAssetsPromise) {
-      const soundPromises = {};
-      for (const { name, loop } of soundTypes) {
-        soundPromises[name] = getSound({
-          src: [`${config.assetRoot}/audio/${this.slug}-${name}.mp3`],
-          loop,
-        });
-      }
+  /**
+   * Returns a promise that resolves when `this._sounds` is ready to use.
+   * Can be called multiple times; only the first time does it start downloads.
+   */
+  async ready() {
+    if (!this._readyPromise) {
+      this._readyPromise = Promise.resolve().then(async () => {
+        const soundPromises = {};
 
-      const imagePromises = {};
-      for (const imageType of imageTypes) {
-        const url = `${config.assetRoot}/images/${this.slug}-${imageType}.jpg`;
-        // const ratio = devicePixelRatio || 1;
-        // const imageServiceURL = `https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent(url)}?source=IG&width=${screen.width * ratio}&height=${screen.height * ratio}`;
-        const imageServiceURL = url; // TEMPORARY
+        for (const { name, loop } of soundTypes) {
+          soundPromises[name] = getSound({
+            src: [`${config.assetRoot}/audio/${this.slug}-${name}.mp3`],
+            loop,
+          });
+        }
 
-        imagePromises[imageType] = fetch(imageServiceURL)
-          .then(res => res.blob())
-          /* .then(blob => {
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(blob);
-            return img;
-          })*/;
-      }
-
-      this._getAssetsPromise = Bluebird.props({
-        sounds: Bluebird.props(soundPromises),
-        images: Bluebird.props(imagePromises),
+        this._sounds = await Bluebird.props(soundPromises);
       });
     }
 
-    return await this._getAssetsPromise;
+    return this._readyPromise;
   }
 
-  async ready() {
-    const { sounds } = await this.getAssets();
-    this._sounds = sounds;
-  }
-
-  async stopSounds() {
+  /**
+   * Stops all/any sounds that are playing.
+   */
+  async _stopSounds() {
     await this.ready();
 
     await Bluebird.map(Object.keys(this._sounds), soundType => new Bluebird(resolve => {
@@ -101,10 +92,11 @@ export default class Level extends EventEmitter {
     }));
   }
 
+  /**
+   * Sets the level's state, and emits a statechanged event if it changed.
+   */
   _setState(newState) {
-    if (states.indexOf(newState) === -1) {
-      throw new Error(`Unknown state: ${newState}`);
-    }
+    if (states.indexOf(newState) === -1) throw new Error(`Unknown state: ${newState}`);
 
     if (this._state !== newState) {
       this._state = newState;
@@ -112,43 +104,57 @@ export default class Level extends EventEmitter {
     }
   }
 
-  async _startAmbient() {
-    await new Promise(resolve => {
-      const ambientSound = this._sounds.ambient;
-      ambientSound.once('play', () => resolve());
-      ambientSound.volume(0);
-      ambientSound.play();
-      this._fadeAmbient(0, 1, 1000);
-    });
-  }
-
-  async _fadeAmbient(fromVolume, toVolume, duration) {
-    await new Bluebird(resolve => {
-      const ambientSound = this._sounds.ambient;
-      ambientSound.once('fade', () => resolve());
-      ambientSound.fade(fromVolume, toVolume, duration);
-    });
-  }
-
   /**
-   * Sets it to the initial state.
+   * Plays the named sound clip, and waits for it to finish.
+   * Or, if you set awaitCompletion to false, it resolves as soon as the sound
+   * has started playing.
    */
-  async reset() {
-    await this.stopSounds();
-    this._setState('off');
-  }
-
-  async startIntro() {
-    if (!this._state === 'off') {
-      throw new Error('Expected current state to be "off"');
-    }
-
-    this._setState('unplayed');
-    await this._startAmbient();
+  async _playSound(name, volume = 1, awaitCompletion = true) {
+    await new Bluebird(resolve => {
+      const sound = this._sounds[name];
+      sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
+      sound.volume(volume);
+      sound.play();
+    });
   }
 
   /**
-   * Kicks off the timed game
+   * Fades the given already-playing sound. Waits for the fade to complete.
+   */
+  async _fadeSound(name, fromVolume, toVolume, duration) {
+    if (!this._active) return;
+
+    await new Bluebird(resolve => {
+      const sound = this._sounds[name];
+      sound.once('fade', () => resolve());
+      sound.fade(fromVolume, toVolume, duration);
+    });
+  }
+
+  /**
+   * Stops all sounds and disables 'active' flag in attempt to stop new sounds
+   * starting.
+   */
+  async stop() {
+    this._active = false;
+    this._stopSounds();
+  }
+
+  /**
+   * From a stopped/never-started state, this transitions to the first state.
+   */
+  async startIntro() {
+    if (this._active) throw new Error('Cannot call startIntro when level is already active');
+
+    await this.ready();
+    this._active = true;
+    this._setState('unplayed');
+    await this._playSound('ambient', 0, false);
+    await this._fadeSound('ambient', 0, 1, 2000);
+  }
+
+  /**
+   * Kicks off the timed game.
    */
   async startPlaying() {
     if (!this._state === 'unplayed') {
@@ -160,20 +166,37 @@ export default class Level extends EventEmitter {
     // wait a second then start fading down the ambient noise
     await Bluebird.delay(1000);
 
-    // TODO determine up front the timings we're going to use for this run, including any randomness.
-    // (should be determined up front so a negative reaction time, ie false start, can be known accurately)
+    // TODO determine here, up front, all the timings we're going to use for this
+    // run (including deciding any randomness now, so we can record reaction time correctly).
 
-    await this._fadeAmbient(1, 0.4, 1500);
+    // perform a nice staggered fade-down of the ambient noise
+    await this._fadeSound('ambient', 1, 0.4, 1500);
     await Bluebird.delay(1000);
-    await this._fadeAmbient(0.4, 0.15, 1000);
-    await this._fadeAmbient(0.15, 0.01, 1500);
+    await this._fadeSound('ambient', 0.4, 0.15, 1000);
+    await this._fadeSound('ambient', 0.15, 0, 1500);
+
+    // play the presignal
+    await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
+
+    // wait for the delay
+    await Bluebird.delay(2000);
+
+    // play the signal TODO
+    await this._playSound('signal');
+
+    // allow up to a couple of seconds
+    await Bluebird.delay(2000); // TODO race this against a promise that resolves when they tapped
+
+    this._setState('played');
   }
 
   /**
-   * For when the user actually clicks to race/dive/whatever.
+   * When the user actually clicks to race/dive/whatever, the view should call
+   * this to register the time.
    */
-  async registerReactionNow() {
-    // assert state is 'playing'.
-    // determine how long before/after the actual click time it is.
+
+  registerReactionNow() {
+    this._userReactedAt = Date.now();
+    console.log('reacted', this._userReactedAt);
   }
 }

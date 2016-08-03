@@ -3,59 +3,66 @@ import Bluebird from 'bluebird';
 import Level from './Level';
 import GameView from './views/GameView';
 
-const qs = selector => document.querySelector(selector);
-
-// grab key elements from DOM
-const gameEl = qs('.game');
-const playGameButton = qs('.play-game-button');
-const loadingIndicator = qs('.loading-indicator');
-
 (async () => {
-  // declare interactive to have loaded now, as the initial page is ready anyway
-  document.dispatchEvent(new CustomEvent('ig.Loaded'));
+  // grab key elements from DOM
+  const qs = selector => document.querySelector(selector);
+  const gameEl = qs('.game');
+  const playGameButton = qs('.play-game-button');
+  const loadingIndicator = qs('.loading-indicator');
 
+  // grab config that was dumped in the <head>
   const config = window.__gameConfig;
 
+  // construct the three level instances
   const levels = config.levels.map(options => new Level(options));
 
-  // preload levels in order (but don't wait for them all to load)
-  Bluebird.mapSeries(levels, level => level.getAssets());
+  // start preloading level assets in series
+  Bluebird.mapSeries(levels, level => level.ready());
 
+  // construct a came view
   const gameView = new GameView(gameEl, levels);
   gameView.render();
 
-  const handleHash = () => {
-    if (location.hash === '#' || location.hash === '') {
-      history.replaceState({}, document.title, '.');
-    }
-
-    const slug = location.hash.substring(1);
-
-    for (const level of levels) {
-      if (level.slug === slug) {
-        document.documentElement.classList.add('game-on');
-        gameView.show(level);
-        return;
-      }
-    }
-
-    // not found; just revert to normal view
-    gameView.hide();
-    document.documentElement.classList.remove('game-on');
-  };
-
-  // handle hash
-  window.addEventListener('hashchange', handleHash);
-  handleHash();
-
-  // start game when button clicked
+  // start game when play button is clicked
   playGameButton.addEventListener('click', () => {
-    // just visit the first level's hash
     window.location = `#${levels[0].slug}`;
   });
 
-  // once the first level is loaded, replace the 'loading' graphic with a 'play' button
-  await levels[0].getAssets();
+  // update the page according to the hash (#swim, #sprint, etc)
+  {
+    const updatePage = () => {
+      if (location.hash === '#' || location.hash === '') {
+        history.replaceState({}, document.title, '.');
+      }
+
+      const slug = location.hash.substring(1);
+
+      for (const level of levels) {
+        if (level.slug === slug) {
+          // add a class that hides landing page content, shows game element, and disables scrolling
+          document.documentElement.classList.add('game-on');
+
+          // load in the level
+          gameView.show(level);
+
+          return;
+        }
+      }
+
+      // not found; revert to normal landing page view
+      gameView.hide();
+      document.documentElement.classList.remove('game-on');
+    };
+
+    updatePage();
+
+    window.addEventListener('hashchange', updatePage);
+  }
+
+  // as soon as the first level is loaded, hide the 'loading' indicator and show the play button
+  await levels[0].ready();
   loadingIndicator.style.display = 'none';
   playGameButton.style.display = 'block';
+
+  document.dispatchEvent(new CustomEvent('ig.Loaded'));
 })();
