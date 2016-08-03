@@ -21,7 +21,7 @@ const loadingIndicator = qs('.loading-indicator');
   // preload levels in order (but don't wait for them all to load)
   Bluebird.mapSeries(levels, level => level.ready());
 
-  const gameView = new GameView(gameEl);
+  const gameView = new GameView(gameEl, config);
   gameView.render();
 
   const handleHash = () => {
