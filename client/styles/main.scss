@@ -107,8 +107,17 @@ $share-button-size: 38px;
   top: 0;
   left: 0;
   position: fixed;
-  background: rgba(blue, 0.5);
+  // background: rgba(blue, 0.5);
+  background: black;
+  background-size: cover;
   display: none;
+  z-index: 2;
+
+  color: white;
+
+  a {
+    color: white;
+  }
 }
 
 .play-button-wrapper {

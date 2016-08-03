@@ -56,11 +56,11 @@ export default config => {
                 `${config.assetRoot}/images/${level.slug}-${imageType}.jpg`
               )
                 .then(res => res.blob())
-                .then(blob => {
+                /* .then(blob => {
                   const img = document.createElement('img');
                   img.src = URL.createObjectURL(blob);
                   return img;
-                });
+                })*/;
             }
 
             readyPromise = Bluebird.props({

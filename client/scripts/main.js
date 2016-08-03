@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import Bluebird from 'bluebird';
 import getLevels from './getLevels';
+import GameView from './views/GameView';
 
 const qs = selector => document.querySelector(selector);
 
@@ -20,22 +21,27 @@ const loadingIndicator = qs('.loading-indicator');
   // preload levels in order (but don't wait for them all to load)
   Bluebird.mapSeries(levels, level => level.ready());
 
+  const gameView = new GameView(gameEl);
+  gameView.render();
+
   const handleHash = () => {
-    const slug = window.location.hash.substring(1);
+    if (location.hash === '#' || location.hash === '') {
+      history.replaceState({}, document.title, '.');
+    }
+
+    const slug = location.hash.substring(1);
 
     for (const level of levels) {
       if (level.slug === slug) {
-        document.body.style.overflow = '';
-        gameEl.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        gameView.show(level);
         return;
       }
     }
 
     // not found; just revert to normal view
-    gameEl.style.display = 'none';
+    gameView.hide();
     document.body.style.overflow = '';
-
-    console.log(slug);
   };
 
   // handle hash
@@ -49,13 +55,13 @@ const loadingIndicator = qs('.loading-indicator');
   });
 
   // once the first level is loaded, replace the 'loading' graphic with a 'play' button
-  const stuff = await levels[0].ready();
+  const firstLevelAssets = await levels[0].ready();
 
   loadingIndicator.style.display = 'none';
   playGameButton.style.display = 'block';
 
-  console.log('stuff', stuff);
+  console.log('firstLevelAssets', firstLevelAssets);
 
-  // stuff.sounds.ambient.volume(0).play();
-  // stuff.sounds.ambient.fade(0, 1, 1500);
+  // firstLevelAssets.sounds.ambient.volume(0).play();
+  // firstLevelAssets.sounds.ambient.fade(0, 1, 1500);
 })();
