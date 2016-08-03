@@ -44,8 +44,8 @@ const getSound = options => new Bluebird((resolve, reject) => {
 });
 
 /**
- * A kind of model/state machine (but also takes care of playing sounds, so it's
- * a bit of a 'view' too).
+ * This is a kind of model/state machine, but also takes care of playing sounds, so it's
+ * a bit of a 'view' too...
  */
 export default class Level extends EventEmitter {
   constructor(options) {
@@ -66,6 +66,8 @@ export default class Level extends EventEmitter {
         const soundPromises = {};
 
         for (const { name, loop } of soundTypes) {
+          if (this[`hasno${name}`]) continue;
+
           soundPromises[name] = getSound({
             src: [`${config.assetRoot}/audio/${this.slug}-${name}.mp3`],
             loop,
@@ -110,6 +112,8 @@ export default class Level extends EventEmitter {
    * has started playing.
    */
   async _playSound(name, volume = 1, awaitCompletion = true) {
+    if (this[`hasno${name}`]) return;
+
     await new Bluebird(resolve => {
       const sound = this._sounds[name];
       sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
@@ -146,6 +150,8 @@ export default class Level extends EventEmitter {
   async startIntro() {
     if (this._active) throw new Error('Cannot call startIntro when level is already active');
 
+    delete this._userReactedAt;
+
     await this.ready();
     this._active = true;
     this._setState('unplayed');
@@ -166,9 +172,6 @@ export default class Level extends EventEmitter {
     // wait a second then start fading down the ambient noise
     await Bluebird.delay(1000);
 
-    // TODO determine here, up front, all the timings we're going to use for this
-    // run (including deciding any randomness now, so we can record reaction time correctly).
-
     // perform a nice staggered fade-down of the ambient noise
     await this._fadeSound('ambient', 1, 0.4, 1500);
     await Bluebird.delay(1000);
@@ -179,14 +182,23 @@ export default class Level extends EventEmitter {
     await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
 
     // wait for the delay
-    await Bluebird.delay(2000);
+    await Bluebird.delay(this.delay + (Math.random() * this.delayrandomness));
 
-    // play the signal TODO
-    await this._playSound('signal');
+    // start play the signal
+    const signalPlayed = this._playSound('signal');
 
-    // allow up to a couple of seconds
-    await Bluebird.delay(2000); // TODO race this against a promise that resolves when they tapped
+    // record time at the actual signal (which might be after an offset into the sound clip)
+    if (this.signaloffset) await Bluebird.delay(this.signaloffset);
+    this._signalTime = Date.now(); // TODO add any offset, like there is for the cycling
 
+    // start the roar now (but don't wait for it)
+    await this._playSound('roar', 1, false);
+
+    // let the signal finish playing, plus a bit of extra time for them to react
+    await signalPlayed;
+    await Bluebird.delay(1000); // TODO race this against a promise that gets resolved shortly after user's reaction is registered?
+
+    // transition to the final state, showing the result panel
     this._setState('played');
   }
 
@@ -194,9 +206,15 @@ export default class Level extends EventEmitter {
    * When the user actually clicks to race/dive/whatever, the view should call
    * this to register the time.
    */
-
   registerReactionNow() {
     this._userReactedAt = Date.now();
-    console.log('reacted', this._userReactedAt);
+  }
+
+  getReactionTime() {
+    if (!this._userReactedAt) {
+      return 'You never left the blocks!';
+    }
+
+    return `${(this._userReactedAt - this._signalTime) / 1000} seconds`;
   }
 }

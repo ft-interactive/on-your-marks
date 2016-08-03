@@ -117,6 +117,11 @@ html.game-on {
   &__panel {
     background: rgba(#888, 0.8);
     display: none;
+    width: 400px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 24px;
 
     &--intro {
       .game--unplayed & { display: block; }

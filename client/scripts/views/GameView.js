@@ -101,14 +101,16 @@ export default class GameView {
    * A this-bound function that's called whenever the current level's state changes.
    */
   async onLevelStateChanged(newState) {
+    const level = this._currentLevel;
+
     for (const state of states) {
       this._el.classList.toggle(`game--${state}`, state === newState);
     }
 
     // set content of all panels according to level state
-    this._introPanelEl.innerHTML = introPanelTemplate(this);
-    this._buttonPanelEl.innerHTML = buttonPanelTemplate(this);
-    this._resultPanelEl.innerHTML = resultPanelTemplate(this);
+    this._introPanelEl.innerHTML = introPanelTemplate(level);
+    this._buttonPanelEl.innerHTML = buttonPanelTemplate(level);
+    this._resultPanelEl.innerHTML = resultPanelTemplate(level);
   }
 
   /**

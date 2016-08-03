@@ -47,6 +47,7 @@ const overrides = {
   'global-require': 1,
   'import/no-extraneous-dependencies': [2, { devDependencies: true }],
   'no-underscore-dangle': 0,
+  'no-continue': 0,
 };
 
 Object.assign(config.rules, overrides);

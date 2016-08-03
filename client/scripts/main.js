@@ -14,7 +14,30 @@ import GameView from './views/GameView';
   const config = window.__gameConfig;
 
   // construct the three level instances
-  const levels = config.levels.map(options => new Level(options));
+  const levels = config.levels.map((options, i) => {
+    const plusOne = config.levels[i + 1];
+
+    // determine details of 'next' level, for link at the end of this one
+    let nextLevel;
+    if (plusOne) {
+      nextLevel = {
+        name: plusOne.name,
+        slug: plusOne.slug,
+      };
+    } else {
+      const firstLevel = config.levels[0];
+      nextLevel = {
+        name: firstLevel.name,
+        slug: firstLevel.slug,
+        isRestart: true,
+      };
+    }
+
+    return new Level({
+      ...options,
+      nextLevel,
+    });
+  });
 
   // start preloading level assets in series
   Bluebird.mapSeries(levels, level => level.ready());

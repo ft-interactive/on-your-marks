@@ -267,7 +267,7 @@ gulp.task('download-data', async () => {
   const data = await fetch(url)
     .then(res => res.json());
 
-  // TODO just dump whole spreadsheet, then crunch it in the config/index.js config-getter function
+  // TODO just dump whole spreadsheet as a JSON file, then do any post-processing in config/index.js
   const options = {};
   for (const { name, value } of data.options) {
     options[name] = value;
