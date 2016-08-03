@@ -5,14 +5,21 @@ export default class GameView {
   }
 
   render() {
+    /* eslint-disable indent */
     this._el.innerHTML = [
-      '<a href="#">Close game</a>',
-      '<ul class="level-chooser">',
-      ...this._levels.map(level =>
-        `<li><a href="#${level.slug}">${level.name}</a></li>`
-      ),
-      '</ul>',
+      '<header>',
+        '<a href="#">Close game</a>',
+        '<ul class="level-chooser">',
+          ...this._levels.map(level =>
+            `<li><a href="#${level.slug}">${level.name}</a></li>`
+          ),
+        '</ul>',
+      '</header>',
+      '<div class="game__content"></div>',
     ].join('');
+    /* eslint-enable indent */
+
+    this._contentEl = this._el.querySelector('.game__content');
   }
 
   async _unloadLevel() {

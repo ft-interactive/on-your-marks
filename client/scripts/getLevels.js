@@ -52,9 +52,11 @@ export default config => {
 
             const imagePromises = {};
             for (const imageType of imageTypes) {
-              imagePromises[imageType] = fetch(
-                `${config.assetRoot}/images/${level.slug}-${imageType}.jpg`
-              )
+              const url = `${config.assetRoot}/images/${level.slug}-${imageType}.jpg`;
+              // const imageServiceURL = `https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent(url)}?source=IG&width=${screen.width}&height=${screen.height}`;
+              const imageServiceURL = url; // TEMPORARY
+
+              imagePromises[imageType] = fetch(imageServiceURL)
                 .then(res => res.blob())
                 /* .then(blob => {
                   const img = document.createElement('img');
