@@ -19,9 +19,9 @@ const loadingIndicator = qs('.loading-indicator');
   const levels = getLevels(config);
 
   // preload levels in order (but don't wait for them all to load)
-  Bluebird.mapSeries(levels, level => level.ready());
+  Bluebird.mapSeries(levels, level => level.getAssets());
 
-  const gameView = new GameView(gameEl, config);
+  const gameView = new GameView(gameEl, levels);
   gameView.render();
 
   const handleHash = () => {
@@ -55,8 +55,7 @@ const loadingIndicator = qs('.loading-indicator');
   });
 
   // once the first level is loaded, replace the 'loading' graphic with a 'play' button
-  const firstLevelAssets = await levels[0].ready();
-
+  await levels[0].getAssets();
   loadingIndicator.style.display = 'none';
   playGameButton.style.display = 'block';
 })();

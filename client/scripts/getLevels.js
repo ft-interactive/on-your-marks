@@ -37,11 +37,11 @@ export default config => {
        * Does not start loading until the first time it's called.
        * Usage: `level.ready().then(({ sounds, images }) => { ... });`
        */
-      const ready = (() => {
-        let readyPromise;
+      const getAssets = (() => {
+        let getAssetsPromise;
 
         return () => {
-          if (!readyPromise) {
+          if (!getAssetsPromise) {
             const soundPromises = {};
             for (const { name, loop } of soundTypes) {
               soundPromises[name] = getSound({
@@ -63,19 +63,19 @@ export default config => {
                 })*/;
             }
 
-            readyPromise = Bluebird.props({
+            getAssetsPromise = Bluebird.props({
               sounds: Bluebird.props(soundPromises),
               images: Bluebird.props(imagePromises),
             });
           }
 
-          return readyPromise;
+          return getAssetsPromise;
         };
       })();
 
       return {
         ...level,
-        ready,
+        getAssets,
       };
     });
   }
