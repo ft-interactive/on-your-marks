@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import Bluebird from 'bluebird';
-import getLevels from './getLevels';
+import Level from './Level';
 import GameView from './views/GameView';
 
 const qs = selector => document.querySelector(selector);
@@ -16,7 +16,7 @@ const loadingIndicator = qs('.loading-indicator');
 
   const config = window.__gameConfig;
 
-  const levels = getLevels(config);
+  const levels = config.levels.map(options => new Level(options));
 
   // preload levels in order (but don't wait for them all to load)
   Bluebird.mapSeries(levels, level => level.getAssets());
