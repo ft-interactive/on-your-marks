@@ -114,6 +114,8 @@ $share-button-size: 38px;
   z-index: 2;
 
   color: white;
+  opacity: 0;
+  // transition: opacity 0.1s linear;
 
   a {
     color: white;
