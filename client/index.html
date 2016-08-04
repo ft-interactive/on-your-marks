@@ -3,10 +3,9 @@
 {% block article_body %}
 {% markdown %}
 
-<i>TK an icon for each event:</i>
 <ul class="level-icons">
 {% for level in levels %}
-  <li><i>{{ level.name }}</i></li>
+  <li><i class="{{ level.slug }}"></i></li>
 {% endfor %}
 </ul>
 
@@ -16,6 +15,8 @@
   <span class="loading-indicator">Loading...</span>
   <button class="play-game-button">Play game</button>
 </div>
+
+<p>TK icons credit: Icons by Diego Naive from the Noun Project.</p>
 
 {% endmarkdown %}
 {% endblock %}
