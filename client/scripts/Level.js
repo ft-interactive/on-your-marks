@@ -166,7 +166,7 @@ export default class Level extends EventEmitter {
     if (this.slug === 'cycle') {
       this._setState('unplayed');
       await this._playSound('ambient', 0, false);
- -    await this._fadeSound('ambient', 0, 1, 2000);
+      await this._fadeSound('ambient', 0, 1, 2000);
     } else {
       await this.startPlaying();
     }
