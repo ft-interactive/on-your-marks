@@ -19,6 +19,8 @@ import GameView from './views/GameView';
 
     // determine details of 'next' level, for link at the end of this one
     let nextLevel;
+
+
     if (plusOne) {
       nextLevel = {
         name: plusOne.name,
@@ -36,6 +38,8 @@ import GameView from './views/GameView';
     return new Level({
       ...options,
       nextLevel,
+      isLast: !!plusOne,
+      isFirst: i === 0,
     });
   });
 
