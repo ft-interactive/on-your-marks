@@ -64,6 +64,10 @@ import GameView from './views/GameView';
 
       const slug = location.hash.substring(1);
 
+
+
+      qs('.game__panel--cue').classList.remove("ambient","presignal","signal","set","roar");
+
       for (const level of levels) {
         if (level.slug === slug) {
           // add a class that hides landing page content, shows game element, and disables scrolling

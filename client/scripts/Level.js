@@ -228,6 +228,8 @@ export default class Level extends EventEmitter {
     // start play the signal
     const signalPlayed = this._playSound('signal');
 
+    // this.startTheClock();
+
     // record time at the actual signal (which might be after an offset into the sound clip)
     if (this.signaloffset) await Bluebird.delay(this.signaloffset);
     this._signalTime = Date.now(); // TODO add any offset, like there is for the cycling
@@ -248,6 +250,38 @@ export default class Level extends EventEmitter {
    * When the user actually clicks to race/dive/whatever, the view should call
    * this to register the time.
    */
+
+  startTheClock() {
+    this._clockInterval = setInterval(() => this.clockRunning(), 60);
+  }
+
+  clockRunning() {
+    const elapsed = !this._signalTime ? "0.00" : ((this._userReactedAt ? this._userReactedAt : Date.now() - this._signalTime ) / 1000);
+    console.log(elapsed);
+  }
+
+  stopTheClock() {
+    clearInterval(this._clockInterval);
+  }
+
+  getClockTime() {
+
+    if (this._userReactedAt &&  this._signalTime) {
+      return this._userReactedAt - this._signalTime;
+    }
+
+    if ( !this._signalTime ) {
+      return 0;
+    }
+
+
+
+    if ( !this._userReactedAt )  {
+      return Date.now() - this._signalTime;
+    }
+    return 'Infinity';
+  }
+
   registerReactionNow() {
     this._userReactedAt = Date.now();
     this._setState('played');
