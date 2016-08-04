@@ -52,10 +52,10 @@ export default class GameView {
         this._currentLevel.startPlaying();
       });
 
-      delegate.on('click', '.game__race-button', event => {
-        this._currentLevel.registerReactionNow();
-
+      delegate.on('mousedown', '.game__race-button', event => {
+        event.preventDefault();
         event.target.disabled = true; // eslint-disable-line no-param-reassign
+        this._currentLevel.registerReactionNow();
       });
     }
   }
