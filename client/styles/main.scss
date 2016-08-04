@@ -131,6 +131,41 @@ html.game-on {
       .game--playing & { display: block; }
     }
 
+    &.ambient {
+      .game--playing & {
+        display: block;
+        background-color:red;
+      }
+    }
+
+    &.presignal {
+      .game--playing & {
+        display: block;
+        background-color:orange;
+      }
+    }
+
+    &.set {
+      .game--playing & {
+        display: block;
+        background-color:yellow;
+      }
+    }
+
+    &.signal {
+      .game--playing & {
+        display: block;
+        background-color:orange;
+      }
+    }
+
+    &.roar {
+      .game--playing & {
+        display: block;
+        background-color:green;
+      }
+    }
+
     &--result {
       .game--played & { display: block; }
     }

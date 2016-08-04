@@ -2,6 +2,7 @@ import { Delegate } from 'dom-delegate';
 import { states } from '../Level';
 import introPanelTemplate from '../templates/introPanel';
 import buttonPanelTemplate from '../templates/buttonPanel';
+import cuePanelTemplate from '../templates/cuePanel';
 import resultPanelTemplate from '../templates/resultPanel';
 
 const config = window.__gameConfig;
@@ -30,6 +31,8 @@ export default class GameView {
         '</div>',
         '<div class="game__panel game__panel--button">',
         '</div>',
+        '<div class="game__panel game__panel--cue">',
+        '</div>',
         '<div class="game__panel game__panel--result">',
         '</div>',
       '</div>',
@@ -38,6 +41,7 @@ export default class GameView {
 
     this._introPanelEl = this._el.querySelector('.game__panel--intro');
     this._buttonPanelEl = this._el.querySelector('.game__panel--button');
+    this._cuePanelEl = this._el.querySelector('.game__panel--cue');
     this._resultPanelEl = this._el.querySelector('.game__panel--result');
 
     // handle clicks on key elements
@@ -110,6 +114,7 @@ export default class GameView {
     // set content of all panels according to level state
     this._introPanelEl.innerHTML = introPanelTemplate(level);
     this._buttonPanelEl.innerHTML = buttonPanelTemplate(level);
+    this._cuePanelEl.innerHTML = cuePanelTemplate(level);
     this._resultPanelEl.innerHTML = resultPanelTemplate(level);
   }
 
