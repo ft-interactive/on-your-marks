@@ -170,6 +170,11 @@ html.game-on {
       .game--played & { display: block; }
     }
   }
+
+  &__race-button {
+    padding: 50px;
+    width: 100%;
+  }
 }
 
 .play-button-wrapper {

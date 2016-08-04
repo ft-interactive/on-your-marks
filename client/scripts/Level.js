@@ -165,6 +165,8 @@ export default class Level extends EventEmitter {
     this._active = true;
     if (this.slug === 'cycle') {
       this._setState('unplayed');
+      await this._playSound('ambient', 0, false);
+      await this._fadeSound('ambient', 0, 1, 2000);
     } else {
       await this.startPlaying();
     }
@@ -182,10 +184,28 @@ export default class Level extends EventEmitter {
     this._setState('playing');
 
     // wait a second then start fading down the ambient noise
-    // await Bluebird.delay(1000);
 
-    // await this._playSound('ambient', 1, false);
-    await this._fadeSound('ambient', 1, 0, 1000, true);
+    await this._playSound('ambient', 1, false);
+    await Bluebird.delay(300);
+    if (this.slug === 'sprint') {
+      await this._fadeSound('ambient', 1, 0.1, 1800);
+
+      setTimeout(async ()=> {
+        await this._fadeSound('ambient', 0.1, 0.05, 600);
+        await this._fadeSound('ambient', 0.05, 0.0055, 1000);
+        await this._fadeSound('ambient', 0.0055, 0, 3000);
+      }, 60);
+    } else {
+      await this._fadeSound('ambient', 1, 0.1, 1500);
+      setTimeout(async ()=> {
+        await this._fadeSound('ambient', 0.1, 0, 600);
+      }, 60);
+    }
+
+
+    // play the presignal
+    await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
+
 
     // perform a nice staggered fade-down of the ambient noise
     // await this._fadeSound('ambient', 1, 0.4, 1500);
@@ -193,8 +213,6 @@ export default class Level extends EventEmitter {
     // await this._fadeSound('ambient', 0.4, 0.15, 1000);
     // await this._fadeSound('ambient', 0.15, 0, 1500);
 
-    // play the presignal
-    await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
 
     // wait for the delay
     await Bluebird.delay(this.delay + (Math.random() * this.delayrandomness));
