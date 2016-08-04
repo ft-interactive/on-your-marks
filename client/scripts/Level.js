@@ -163,9 +163,12 @@ export default class Level extends EventEmitter {
 
     await this.ready();
     this._active = true;
-    this._setState('unplayed');
-    await this._playSound('ambient', 0, false);
-    await this._fadeSound('ambient', 0, 1, 2000);
+    if (this.slug === 'cycle') {
+      this._setState('unplayed');
+    } else {
+      await this.startPlaying();
+    }
+
   }
 
   /**
@@ -179,13 +182,16 @@ export default class Level extends EventEmitter {
     this._setState('playing');
 
     // wait a second then start fading down the ambient noise
-    await Bluebird.delay(1000);
+    // await Bluebird.delay(1000);
+
+    // await this._playSound('ambient', 1, false);
+    await this._fadeSound('ambient', 1, 0, 1000, true);
 
     // perform a nice staggered fade-down of the ambient noise
-    await this._fadeSound('ambient', 1, 0.4, 1500);
-    await Bluebird.delay(1000);
-    await this._fadeSound('ambient', 0.4, 0.15, 1000);
-    await this._fadeSound('ambient', 0.15, 0, 1500);
+    // await this._fadeSound('ambient', 1, 0.4, 1500);
+    // await Bluebird.delay(1000);
+    // await this._fadeSound('ambient', 0.4, 0.15, 1000);
+    // await this._fadeSound('ambient', 0.15, 0, 1500);
 
     // play the presignal
     await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
@@ -218,11 +224,16 @@ export default class Level extends EventEmitter {
    */
   registerReactionNow() {
     this._userReactedAt = Date.now();
+    this._setState('played');
   }
 
   getReactionTime() {
     if (!this._userReactedAt) {
       return 'You never left the blocks!';
+    }
+
+    if (!this._signalTime) {
+      return 'False start - you\'re disqualified';
     }
 
     return `${(this._userReactedAt - this._signalTime) / 1000} seconds`;
