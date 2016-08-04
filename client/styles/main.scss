@@ -186,3 +186,30 @@ html.game-on {
   .play-game-button {
     display: none;
   }
+
+$icon-width: 72px;
+$icon-height: 72px;
+
+ul.level-icons {
+  list-style-type: none;
+  li {
+    display: inline;
+    padding: 0 6px 5px;
+  }
+  i {
+    display: inline-block;
+    width: $icon-width;
+    height: $icon-height;
+    border: 1px solid black;
+    border-radius: 48px;
+    &.cycle {
+      background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/cycle.svg) no-repeat center 3px;
+    }
+    &.swim {
+      background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/swim.svg) no-repeat center center;
+    }
+    &.sprint {
+      background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/sprint.svg) no-repeat center center;
+    }
+  }
+}
