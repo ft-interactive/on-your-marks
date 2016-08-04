@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import Bluebird from 'bluebird';
 
 const config = window.__gameConfig;
+const qs = selector => document.querySelector(selector);
 
 /**
  * A level instance can be in one of three states:
@@ -115,9 +116,17 @@ export default class Level extends EventEmitter {
     if (this[`hasno${name}`]) return;
 
     await new Bluebird(resolve => {
+
+      if ( this.slug == 'sprint' && name == 'presignal' ){
+        Bluebird.delay(4050).then(function() {
+          qs('.game__panel--cue').classList.add('set');
+        });
+      }
+
       const sound = this._sounds[name];
       sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
       sound.volume(volume);
+      qs('.game__panel--cue').classList.add(name);
       sound.play();
     });
   }
@@ -196,10 +205,11 @@ export default class Level extends EventEmitter {
 
     // let the signal finish playing, plus a bit of extra time for them to react
     await signalPlayed;
-    await Bluebird.delay(1000); // TODO race this against a promise that gets resolved shortly after user's reaction is registered?
+    await Bluebird.delay(500); // TODO race this against a promise that gets resolved shortly after user's reaction is registered?
 
     // transition to the final state, showing the result panel
     this._setState('played');
+    qs('.game__panel--cue').classList.remove("ambient","presignal","signal","set","roar");
   }
 
   /**
