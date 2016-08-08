@@ -6,10 +6,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
 
 .level {
-  display: none;
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  display: none;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -32,8 +32,28 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   &__state {
     width: 500px;
     margin: 0 auto;
+
+    &[data-state="false-start"] {
+      background-color: red;
+      color: white;
+    }
+
+    &[data-state="normal-start"] {
+      background-color: blue;
+      color: white;
+    }
+
+    &[data-state="no-start"] {
+      background-color: black;
+      color: white;
+    }
   }
 
+}
+
+.countdown-status {
+  color: white;
+  font-weight: bold;
 }
 
 .clock {

@@ -1,12 +1,7 @@
 import { EventEmitter } from 'events';
 import Bluebird from 'bluebird';
 import Countdown from './Countdown';
-
-function randomTime(min = 0, extra = 0) {
-  const stableValue = Math.max(0, min - 1);
-  const random = Math.random() * extra;
-  return Math.round(stableValue + random);
-}
+import * as Timings from './Timings';
 
 const Result = {
   INCOMPLETE: 'INCOMPLETE',
@@ -14,6 +9,8 @@ const Result = {
   FALSE_START: 'FALSE_START',
   NORMAL_START: 'NORMAL_START',
 };
+
+
 /**
  * This is a kind of model/state machine, but also takes care of playing sounds, so it's
  * a bit of a 'view' too...
@@ -24,47 +21,79 @@ export default class Level extends EventEmitter {
     this.setResult();
 
     for (const key of Object.keys(options)) {
-      Object.defineProperty(this, key, { value: options[key], enumerable: true, writable: true });
+      Object.defineProperty(this, key, { value: options[key], enumerable: true });
     }
 
-    this.delay = this.delay || 0;
-    this.signaloffset = this.signaloffset || 0;
-    this.pause = 500;
-    this.countdownLength = this.delay + this.signaloffset;
-    this.totalWait = this.pause + this.countdownLength;
+    // Delay is not really in use at the moment
+    // this.pause = 0;
+
     this.noStartTimeout = 5000;
+
+    this.technicalFalseStartDuration = 0;
+
+    if (this.slug === 'sprint') {
+      this.technicalFalseStart = 2000;
+    }
+
+    // const delay = options.delay || 0;
+    // const signaloffset = options.signaloffset || 0;
+    // const countdownLength = delay + signaloffset;
+    //this.totalWait = this.pause + this.countdownLength;
+    const timings = Timings[this.slug];
+    this.countdown = new Countdown(timings, options.delayrandomness);
     this._timers = [];
   }
 
   step(event, pause = 0, callback) {
     if (this.complete) return;
-    this.emit(event);
     this._timers.push(setTimeout(callback, pause));
+    this.emit(event);
   }
 
   start() {
-    const pause = randomTime(this.pause, 100);
-    const countdown = randomTime(this.countdownLength, this.delayrandomness);
-    this.cd = new Countdown();
-    const timeout = this.noStartTimeout;
-    console.log(this.slug, pause, countdown, timeout)
-    this.step('start', pause, () => {
-      this.countdown = countdown;
-      this.falseStart = countdown + 0;
-      this.step('countdown', countdown, () => {
-        this.step('go', timeout, () => {
-          this.step('timeout', 0, () => {
-            this.setResult(Result.NO_START);
-          });
+    if (this.complete) return;
+
+    this.countdown.onend = () => {
+      if (this.complete) return;
+      this.step('go', this.noStartTimeout, () => {
+        this.step('timeout', 0, () => {
+          this.setResult(Result.NO_START);
         });
       });
-    });
+    };
+
+    this.countdown.onupdate = this.onCountdownProgress.bind(this);
+    this.countdown.start();
+    this.onCountdownProgress();
+    this.emit('start');
+  }
+
+  onCountdownProgress() {
+    const message = this.countdown.status;
+    this.emit('countdownprogress', message);
   }
 
   stop(time) {
     if (this.complete) return;
-    console.log('is normal start', time, time > 0);
-    this.setResult(time > 0 ? Result.NORMAL_START : Result.FALSE_START, time);
+
+    let result;
+
+    this.istechnicalFalseStart = false;
+
+    if (time > 0 && time < this.technicalFalseStartDuration) {
+      result = Result.FALSE_START;
+      this.countdown.cancel();
+      this.istechnicalFalseStart = true;
+    } else if (time > 0) {
+      result = Result.NORMAL_START;
+    } else if (this.countdown.running) {
+      result = Result.FALSE_START;
+      this.countdown.cancel();
+    }
+
+    if (!result) return;
+
+    this.setResult(result, time);
     this.emit('stop');
     const timers = this._timers;
     this._timers = [];
@@ -80,7 +109,6 @@ export default class Level extends EventEmitter {
   setResult(result = Result.INCOMPLETE, time) {
     this.complete = result !== Result.INCOMPLETE;
     this.result = result;
-    // negative time is false start
     this.time = !this.complete ? null : time;
     this.emit('result', this.result, this.time, this.complete);
   }

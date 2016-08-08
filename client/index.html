@@ -34,6 +34,7 @@
 {% macro countdown(slug, intro) %}
   {% call statePanel(slug, "countdown") %}
   <p>{{ intro }}</p>
+  <p class="countdown-status"></p>
   <button class="game__race-button" name="stopwatch-stop">GO!</button>
   {% endcall %}
 {% endmacro %}

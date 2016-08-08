@@ -9,6 +9,14 @@ export default class LevelView {
       this.updateState();
     });
 
+    this.level.on('start', () => {
+      this.updateCountdownStatus();
+    });
+
+    this.level.on('countdownprogress', () => {
+      this.updateCountdownStatus();
+    });
+
     this.updateState();
   }
 
@@ -34,6 +42,21 @@ export default class LevelView {
       default:
         console.log('WHAT STATE??')
     }
+  }
+
+  updateCountdownStatus() {
+    const _el = this.getStateElement('countdown');
+    const msgEl = _el.querySelector('.countdown-status');
+    const countdown = this.level.countdown;
+
+    if (countdown.complete) {
+      msgEl.style.backgroundColor = 'green';
+    } else if (countdown.running) {
+      msgEl.style.backgroundColor = 'orange';
+    } else {
+      msgEl.style.backgroundColor = 'red';
+    }
+    msgEl.innerHTML = this.level.countdown.status;
   }
 
   falseStart() {
