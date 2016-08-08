@@ -32,13 +32,14 @@
             </header>
           </div>
         </div>
+
+        {% block article_body %}{% endblock %}
+
         <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
-
-          {% block article_body %}{% endblock %}
-
           <footer class="o-typography-footer">
-            <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
-  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
+            <p><small>TK icons credit: Icons by Diego Naive from the Noun Project.</small></p>
+            <p><small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
+  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small></p>
           </footer>
         </div>
       </article>
@@ -47,9 +48,6 @@
     {# this element will be made fullscreen #}
     <section class="game" aria-hidden="true"></section>
 
-    {% if flags.comments %}
-      {% include "includes/comments.html" %}
-    {% endif %}
 
     {% if flags.footer %}
       {% include "includes/footer.html" %}

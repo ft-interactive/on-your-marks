@@ -252,10 +252,15 @@ export default class Level extends EventEmitter {
     this._userReactedAt = Date.now();
     this._setState('played');
 
+    this.allowRetry = false;
+
     if (this.isFalseStart()) {
-      this._stopSounds();
       console.log('That was a false start!');
+      this._stopSounds();
       this.reactToFalseStart();
+      this.allowRetry = true;
+    } else if (this.isTooSlow()) {
+      this.allowRetry = true;
     }
   }
 
@@ -275,7 +280,6 @@ export default class Level extends EventEmitter {
 
   getReactionTime() {
 
-    console.log('Assk reactio time')
     if (this.isTooSlow()) {
       return 'You never left the blocks!';
     } else if (this.isFalseStart()) {

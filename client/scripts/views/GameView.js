@@ -1,129 +1,74 @@
 import { Delegate } from 'dom-delegate';
-import { states } from '../Level';
-import introPanelTemplate from '../templates/introPanel';
-import buttonPanelTemplate from '../templates/buttonPanel';
-import cuePanelTemplate from '../templates/cuePanel';
-import resultPanelTemplate from '../templates/resultPanel';
+import LevelView from './LevelView';
 
-const config = window.__gameConfig;
+const qsa = (s) => [...document.querySelectorAll(s)];
+const qs = (s) => document.querySelector(s);
+const getLevelElement = (slug) => qs(`.level[data-level="${slug}"]`);
 
 export default class GameView {
-  constructor(el, levels) {
-    this._el = el;
-    this._levels = levels;
+  constructor(el, game, stopwatchView) {
+    this.el = el;
+    this.game = game;
+    this.stopwatchView = stopwatchView;
 
-    this.onLevelStateChanged = GameView.prototype.onLevelStateChanged.bind(this);
-  }
+    const delegate = new Delegate(this.el);
 
-  render() {
-    /* eslint-disable indent */
-    this._el.innerHTML = [
-      '<header>',
-        '<a href="#">Close game</a>',
-        '<ul class="level-chooser">',
-          ...this._levels.map(level =>
-            `<li><a href="#${level.slug}">${level.name}</a></li>`
-          ),
-        '</ul>',
-      '</header>',
-      '<div class="game__content">',
-        '<div class="game__panel game__panel--intro">',
-        '</div>',
-        '<div class="game__panel game__panel--button">',
-        '</div>',
-        '<div class="game__panel game__panel--cue">',
-        '</div>',
-        '<div class="game__panel game__panel--result">',
-        '</div>',
-      '</div>',
-    ].join('');
-    /* eslint-enable indent */
-
-    this._introPanelEl = this._el.querySelector('.game__panel--intro');
-    this._buttonPanelEl = this._el.querySelector('.game__panel--button');
-    this._cuePanelEl = this._el.querySelector('.game__panel--cue');
-    this._resultPanelEl = this._el.querySelector('.game__panel--result');
-
-    // handle clicks on key elements
-    {
-      const delegate = new Delegate(this._el);
-
-      delegate.on('click', '.game__ready-button', () => {
-        this._currentLevel.startPlaying();
+    ['mousedown', 'mouseup', 'mouseout', 'click',
+      'touchstart', 'touchmove', 'touchmove'].forEach(type => {
+        this.el.addEventListener(type, event => event.preventDefault());
       });
 
-      delegate.on('mousedown', '.game__race-button', event => {
-        event.preventDefault();
-        event.target.disabled = true; // eslint-disable-line no-param-reassign
-        this._currentLevel.registerReactionNow();
+    delegate.on('click', '[name="first-level"]', () => {
+      game.begin();
+    });
+
+    delegate.on('click', '[name="next-level"]', () => {
+      game.nextLevel();
+    });
+
+    delegate.on('click', '[name="replay-level"]', event => {
+      const slug = event.target.value;
+      game.replayLevel(slug);
+    });
+
+    delegate.on('mousedown', '[name="stopwatch-stop"]', () => {
+      game.currentLevel.stop(game.stopwatch.getCurrentTime());
+    });
+
+    // TODO: handle spacebar activation
+    // delegate.on('keydown', '[name="stopwatch-stop"]', event => {
+    //   game.currentLevel.stop();
+    // });
+
+    this.levelViews = game.levels
+                          .map(level => new LevelView(getLevelElement(level.slug), level));
+
+    game.levels.forEach(l => {
+      l.on('start', () => {
+        this.showLevel(l);
       });
-    }
+      l.on('replay', () => this.resetLevel(l));
+    });
   }
 
-  async _unloadLevel() {
-    const level = this._currentLevel;
+  showLevel() {
+    document.body.style.overflow = 'hidden';
 
-    if (level) {
-      level.removeListener('statechanged', this.onLevelStateChanged);
-      level.stop();
-      delete this._currentLevel;
-    }
-  }
-
-  async _loadLevel(level) {
-    level.on('statechanged', this.onLevelStateChanged);
-
-    this._currentLevel = level;
-
-    // set the level's "bg" image as the background for the whole game element
-    {
-      const url = `${config.assetRoot}/images/${level.slug}-bg.jpg`;
-      // TODO use image service
-      // const ratio = devicePixelRatio || 1;
-      // const imageServiceURL = `https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent(url)}?source=IG&width=${screen.width * ratio}&height=${screen.height * ratio}`;
-      const imageServiceURL = url; // FOR NOW
-      this._el.style.backgroundImage = `url(${imageServiceURL})`;
+    if (this.stopwatchView) {
+      this.stopwatchView.el = document.querySelector(`[data-clock=${this.game.currentLevel.slug}]`);
     }
 
-    // transition to the first state
-    await level.startIntro();
+    this.levelViews.forEach(view => {
+      if (view.level.slug === this.game.currentLevel.slug) {
+        view.show();
+      } else {
+        view.hide();
+      }
+    });
   }
 
-  /**
-   * Shows the game element and loads the the given level.
-   */
-  async show(level) {
-    await this._unloadLevel();
-
-    // show it
-    this._el.setAttribute('aria-hidden', 'false');
-
-    await this._loadLevel(level);
+  resetLevel() {
+    this.showLevel();
   }
 
-  /**
-   * A this-bound function that's called whenever the current level's state changes.
-   */
-  async onLevelStateChanged(newState) {
-    const level = this._currentLevel;
-
-    for (const state of states) {
-      this._el.classList.toggle(`game--${state}`, state === newState);
-    }
-
-    // set content of all panels according to level state
-    this._introPanelEl.innerHTML = introPanelTemplate(level);
-    this._buttonPanelEl.innerHTML = buttonPanelTemplate(level);
-    this._cuePanelEl.innerHTML = cuePanelTemplate(level);
-    this._resultPanelEl.innerHTML = resultPanelTemplate(level);
-  }
-
-  /**
-   * Hides the entire game element.
-   */
-  async hide() {
-    await this._unloadLevel();
-
-    this._el.setAttribute('aria-hidden', 'true');
-  }
 }
