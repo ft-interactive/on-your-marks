@@ -98,13 +98,6 @@ export default class AudioPlayer extends EventEmitter {
     }
 
     await new Bluebird(resolve => {
-
-      if ( this.slug == 'sprint' && name == 'presignal' ){
-        Bluebird.delay(4050).then(function() {
-          qs('.game__panel--cue').classList.add('set');
-        });
-      }
-
       const sound = this._sounds[name];
       sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
       sound.volume(volume);

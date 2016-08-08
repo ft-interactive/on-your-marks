@@ -1,7 +1,6 @@
 import { Delegate } from 'dom-delegate';
 import LevelView from './LevelView';
 
-const qsa = (s) => [...document.querySelectorAll(s)];
 const qs = (s) => document.querySelector(s);
 const getLevelElement = (slug) => qs(`.level[data-level="${slug}"]`);
 

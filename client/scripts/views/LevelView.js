@@ -3,20 +3,9 @@ export default class LevelView {
     this.el = el;
     this.level = level;
     this.hideAllState();
-
-    this.level.on('result', () => {
-      console.log('RESULT');
-      this.updateState();
-    });
-
-    this.level.on('start', () => {
-      this.updateCountdownStatus();
-    });
-
-    this.level.on('countdownprogress', () => {
-      this.updateCountdownStatus();
-    });
-
+    this.level.on('result', () => this.updateState());
+    this.level.on('start', () => this.updateCountdownStatus());
+    this.level.on('countdownprogress', () => this.updateCountdownStatus());
     this.updateState();
   }
 
@@ -25,7 +14,6 @@ export default class LevelView {
   }
 
   updateState() {
-    console.log('Update state', this.level.result);
     switch (this.level.result) {
       case 'NO_START':
         this.noStart();
@@ -40,7 +28,7 @@ export default class LevelView {
         this.incomplete();
         break;
       default:
-        console.log('WHAT STATE??')
+        console.log('WHAT STATE??');
     }
   }
 

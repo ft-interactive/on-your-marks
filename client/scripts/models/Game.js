@@ -1,23 +1,18 @@
 import { EventEmitter } from 'events';
 
 export default class Game extends EventEmitter {
+
   constructor(levels, stopwatch) {
     super();
     this.currentLevel = null;
     this.levels = levels;
     this.stopwatch = stopwatch;
-
     levels.forEach(level => {
-      level.on('start', e => {
-        this.stopwatch.reset();
-        // showLevel(l)
-      });
-      level.on('replay', e => {
-        this.stopwatch.reset();
-      });
-      level.on('go', e => this.stopwatch.start());
-      level.on('stop', e => this.stopwatch.stop());
-      level.on('timeout', e => this.stopwatch.stop());
+      level.on('start', () => this.stopwatch.reset());
+      level.on('replay', () => this.stopwatch.reset());
+      level.on('go', () => this.stopwatch.start());
+      level.on('stop', () => this.stopwatch.stop());
+      level.on('timeout', () => this.stopwatch.stop());
     });
   }
 
@@ -31,7 +26,7 @@ export default class Game extends EventEmitter {
 
   end() {
     this.lastLevel();
-    setTimeout(()=> {
+    setTimeout(() => {
       this.currentLevel.stop();
     }, 1);
   }
@@ -54,7 +49,6 @@ export default class Game extends EventEmitter {
   }
 
   setCurrentLevel(level) {
-    console.log('set surrent level', level, level.slug);
     this.currentLevel = level;
     this.currentLevel.start();
   }
@@ -62,4 +56,5 @@ export default class Game extends EventEmitter {
   setCurrentLevelSlug(slug) {
     this.setCurrentLevel(this.levels.find(l => l.slug === slug));
   }
+
 }

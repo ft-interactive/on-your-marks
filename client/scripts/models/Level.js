@@ -10,12 +10,12 @@ const Result = {
   NORMAL_START: 'NORMAL_START',
 };
 
+const technicalFalseStarts = {
+  spring: 100,
+};
 
-/**
- * This is a kind of model/state machine, but also takes care of playing sounds, so it's
- * a bit of a 'view' too...
- */
 export default class Level extends EventEmitter {
+
   constructor(options) {
     super();
     this.setResult();
@@ -24,21 +24,13 @@ export default class Level extends EventEmitter {
       Object.defineProperty(this, key, { value: options[key], enumerable: true });
     }
 
-    // Delay is not really in use at the moment
-    // this.pause = 0;
-
     this.noStartTimeout = 5000;
-
     this.technicalFalseStartDuration = 0;
 
-    if (this.slug === 'sprint') {
-      this.technicalFalseStart = 2000;
+    if (technicalFalseStarts[this.slug]) {
+      this.technicalFalseStartDuration = technicalFalseStarts[this.slug];
     }
 
-    // const delay = options.delay || 0;
-    // const signaloffset = options.signaloffset || 0;
-    // const countdownLength = delay + signaloffset;
-    //this.totalWait = this.pause + this.countdownLength;
     const timings = Timings[this.slug];
     this.countdown = new Countdown(timings, options.delayrandomness);
     this._timers = [];
@@ -62,15 +54,10 @@ export default class Level extends EventEmitter {
       });
     };
 
-    this.countdown.onupdate = this.onCountdownProgress.bind(this);
+    this.countdown.onupdate = () => this.emit('countdownprogress', this.countdown.status);
     this.countdown.start();
-    this.onCountdownProgress();
+    this.countdown.onupdate();
     this.emit('start');
-  }
-
-  onCountdownProgress() {
-    const message = this.countdown.status;
-    this.emit('countdownprogress', message);
   }
 
   stop(time) {
@@ -87,7 +74,6 @@ export default class Level extends EventEmitter {
     } else if (time > 0) {
       result = Result.NORMAL_START;
     } else if (this.countdown.running) {
-      console.log('rununggnng');
       result = Result.FALSE_START;
       this.countdown.cancel();
     }
@@ -112,6 +98,17 @@ export default class Level extends EventEmitter {
     this.result = result;
     this.time = !this.complete ? null : time;
     this.emit('result', this.result, this.time, this.complete);
+  }
+
+  static async loadLevels() {
+    return window.__gameConfig.levels
+                      .map(level => new Level(level))
+                      .map((level, index, arr) => {
+                        level.isFirst = index === 0;
+                        level.nextLevel = arr[index + 1];
+                        level.isLast = index === arr.length - 1;
+                        return level;
+                      });
   }
 
 }

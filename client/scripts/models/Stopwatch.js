@@ -17,7 +17,6 @@ export default class Level extends EventEmitter {
   }
 
   stop() {
-    console.log('call stop');
     if (!this._end && this._begin) {
       this._end = P.now();
       this.emit('stop', this.getCurrentTime());

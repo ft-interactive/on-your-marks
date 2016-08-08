@@ -5,32 +5,24 @@ import Game from './models/Game';
 import GameView from './views/GameView';
 import StopwatchView from './views/StopwatchView';
 
-
-function loadLevels() {
-  return window.__gameConfig.levels
-                    .map(level => new Level(level))
-                    .map((level, index, arr) => {
-                      level.isFirst = index === 0;
-                      level.nextLevel = arr[index + 1];
-                      level.isLast = index === arr.length - 1;
-                      return level;
-                    });
+async function init() {
+  const stopwatch = new Stopwatch();
+  return new GameView(
+    document.body,
+    new Game(await Level.loadLevels(), stopwatch),
+    new StopwatchView(null, stopwatch)
+  );
 }
 
 (async () => {
+  const view = init();
 
-  const stopwatch = new Stopwatch();
-  const stopwatchView = new StopwatchView(null, stopwatch);
-  const game = new Game(await loadLevels(), stopwatch)
-  const gameView = new GameView(
-    document.body,
-    game,
-    stopwatchView
-  );
-
-  window.gameView = gameView;
-  window.game = game;
-  window.stopwatch = stopwatch;
+  // add references on the window to allow
+  // easier debugging
+  window.view = view;
+  window.game = view.game;
+  window.stopwatch = view.stopwatchView.stopwatch;
+  window.levels = view.game.levels;
 
   document.dispatchEvent(new CustomEvent('ig.Loaded'));
 })();
