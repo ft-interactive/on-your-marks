@@ -3,22 +3,34 @@ export default class Countdown {
   constructor(timings, onend = function (){}) {
     this.timings = timings;
     this.onend = onend;
-    this._timers = [];
+    this._started = false;
     this._running = false;
     this._complete = false;
-    this._status = null;
+    this.status = '';
   }
 
   async start() {
-    this._running = true;
-    this._status = '';
+
+    if (this._started) return;
 
     const delays = [...this.timings];
+    const first = delays[0];
     const last = delays[delays.length - 1];
 
+    this._started = true;
+    this.status = '';
+    this.onupdate();
+
     for (let delay of delays) {
-      this._status = await delay();
-      if (delay === last) {
+
+      this.status = await delay();
+
+      if (delay === first && delay !== last) {
+        this._running = true;
+      } else if (!this._running) {
+        break;
+      } else if (delay === last) {
+        this._started = false;
         this._running = false;
         this._complete = true;
         this.onend();
@@ -28,10 +40,8 @@ export default class Countdown {
   }
 
   cancel() {
-    console.log('cancel countdown');
-    this._timers.forEach(clearTimeout);
-    this._timers = [];
     this._running = false;
+    this._started = false;
   }
 
   get running() {
@@ -40,9 +50,5 @@ export default class Countdown {
 
   get complete() {
     return this._complete;
-  }
-
-  get status() {
-    return this._status;
   }
 }

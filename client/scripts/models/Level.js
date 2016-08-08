@@ -87,6 +87,7 @@ export default class Level extends EventEmitter {
     } else if (time > 0) {
       result = Result.NORMAL_START;
     } else if (this.countdown.running) {
+      console.log('rununggnng');
       result = Result.FALSE_START;
       this.countdown.cancel();
     }

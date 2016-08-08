@@ -54,7 +54,7 @@ export default class LevelView {
     } else if (countdown.running) {
       msgEl.style.backgroundColor = 'orange';
     } else {
-      msgEl.style.backgroundColor = 'red';
+      msgEl.style.backgroundColor = null;
     }
     msgEl.innerHTML = this.level.countdown.status;
   }

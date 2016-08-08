@@ -6,29 +6,30 @@ function randomTime(min = 0, extra = 0) {
   return Math.round(stableValue + random);
 }
 
-const delay = (name, duration = 0) => async () => {
-  const d = typeof duration === 'function' ? duration() : duration;
+const delay = (name, duration = 0, random) => async () => {
+  const d = random ? randomTime(duration, random) : duration;
   await Bluebird.delay(d);
   return name;
 };
 
-const createDelay = ([name, duration]) => delay(name, duration);
+const createDelay = args => delay(...args);
 
 export const cycle = [
-  ['1', 3000],
-  ['2', 1000],
-  ['3', 1000],
+  ['5', 9000],
   ['4', 1000],
-  ['5', 1000],
+  ['3', 1000],
+  ['2', 1000],
+  ['1', 1000],
+  ['Doink', 1000],
 ].map(createDelay);
 
 export const swim = [
-  ['Marks', 2000],
-  ['Beep', 1500],
+  ['Take you marks', 5000],
+  ['Beep', 2000, 1000],
 ].map(createDelay);
 
 export const sprint = [
   ['On your marks', 3000],
-  ['Set', 1000],
-  ['Bang', () => randomTime(1000, 2500)],
+  ['Set', 1500],
+  ['Bang', 2000, 2500],
 ].map(createDelay);
