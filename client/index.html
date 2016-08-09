@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 
+{% macro lastScreen() %}
+THIS IS THE END
+{% endmacro %}
 
 {% macro introPanel(text) %}
 <p>{{text}}</p>
@@ -97,7 +100,11 @@ THIS SHOWS THE COMPASION DATA
         {{ falseStart(level.slug) }}
         {{ noStart(level.slug) }}
         {{ comparison(level.slug) }}
-        {{ nextButton(level.sportname, loop.index + 1, level.nextimage, level.slug) }}
+        {% if not loop.last %}
+        {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
+        {% else %}
+        {{ lastScreen() }}
+        {% endif %}
       </div>
     </div>
   </div>
