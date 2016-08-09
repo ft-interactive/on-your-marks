@@ -1,6 +1,6 @@
 export default class Countdown {
 
-  constructor(timings, onend = function (){}) {
+  constructor(timings, onend = function () {}) {
     this.timings = timings;
     this.onend = onend;
     this._started = false;
@@ -10,7 +10,6 @@ export default class Countdown {
   }
 
   async start() {
-
     if (this._started) return;
 
     const delays = [...this.timings];
@@ -21,8 +20,7 @@ export default class Countdown {
     this.status = '';
     this.onupdate();
 
-    for (let delay of delays) {
-
+    for (const delay of delays) {
       this.status = await delay();
 
       if (delay === first && delay !== last) {

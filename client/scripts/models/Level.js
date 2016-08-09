@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import Bluebird from 'bluebird';
 import Countdown from './Countdown';
 import * as Timings from './Timings';
+
 
 const Result = {
   INCOMPLETE: 'INCOMPLETE',

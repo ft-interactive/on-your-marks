@@ -1,11 +1,23 @@
+import AudioPlayer from './AudioPlayer';
+
 export default class LevelView {
   constructor(el, level) {
     this.el = el;
     this.level = level;
     this.hideAllState();
     this.level.on('result', () => this.updateState());
-    this.level.on('start', () => this.updateCountdownStatus());
+    this.level.on('start', () => {
+      // TODO: inc ase of replay fix
+      // fading out of false start audio clip
+      //this.audio.fade('false', 1, 0, 600);
+      this.audio.play('countdown');
+      this.updateCountdownStatus()
+    });
     this.level.on('countdownprogress', () => this.updateCountdownStatus());
+    this.audio = new AudioPlayer(this.level.slug);
+    setTimeout(async () => {
+      await this.audio.load();
+    }, 0);
     this.updateState();
   }
 
@@ -38,6 +50,7 @@ export default class LevelView {
     const countdown = this.level.countdown;
 
     if (countdown.complete) {
+      this.audio.play('signal')
       msgEl.style.backgroundColor = 'green';
     } else if (countdown.running) {
       msgEl.style.backgroundColor = 'orange';
@@ -48,6 +61,8 @@ export default class LevelView {
   }
 
   falseStart() {
+    this.audio.fade('countdown', 1, 0, 300);
+    this.audio.play('false');
     this.hideAllState();
     const _el = this.getStateElement('false-start');
     _el.style.display = 'block';

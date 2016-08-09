@@ -39,8 +39,7 @@ export default class GameView {
     //   game.currentLevel.stop();
     // });
 
-    this.levelViews = game.levels
-                          .map(level => new LevelView(getLevelElement(level.slug), level));
+    this.levelViews = game.levels.map(level => new LevelView(getLevelElement(level.slug), level));
 
     game.levels.forEach(l => {
       l.on('start', () => {

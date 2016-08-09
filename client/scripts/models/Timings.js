@@ -3,8 +3,10 @@ import Bluebird from 'bluebird';
 const randomDuration = (min = 0, extra = 0) =>
   Math.round(Math.max(0, min - 1) + (Math.random() * extra));
 
-const delay = (name, duration = 0, random) => async () =>
+const delay = (name, duration = 0, random) => async () => {
   await Bluebird.delay(random ? randomDuration(duration, random) : duration);
+  return name;
+};
 
 const sequence = (...arr) => arr.map(args => delay(...args));
 
@@ -25,7 +27,7 @@ export const swim = sequence(
 );
 
 export const sprint = sequence(
-  ['On your marks', secs(3)],
-  ['Set', secs(1.5)],
+  ['On your marks', secs(7.98)],
+  ['Set', secs(4)],
   ['Bang', secs(2), secs(2.5)]
 );

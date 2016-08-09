@@ -4,21 +4,19 @@ import Bluebird from 'bluebird';
 
 const config = window.__gameConfig;
 const qs = selector => document.querySelector(selector);
+const assetRoot = config.assetRoot;
 
 const soundTypes = [{
-  name: 'ambient',
-  loop: true,
-}, {
-  name: 'presignal', // TODO allow skipping this for the bike one
+  name: 'countdown',
+  loop: false,
 }, {
   name: 'signal',
+  loop: false,
 }, {
-  name: 'roar', // should play after the signal (or maybe after user goes?)
-}, {
-  name: 'groan', // should play after the signal (or maybe after user goes?)
+  name: 'false',
+  loop: false,
 }];
 
-const imageTypes = ['bg'];
 
 /**
  * Returns a promise for a new Howl instance. Resolves when the sound is loaded
@@ -39,28 +37,24 @@ const getSound = options => new Bluebird((resolve, reject) => {
  * a bit of a 'view' too...
  */
 export default class AudioPlayer extends EventEmitter {
-  constructor(options) {
+  constructor(slug) {
     super();
 
-    for (const key of Object.keys(options)) {
-      Object.defineProperty(this, key, { value: options[key], enumerable: true });
-    }
+    this.slug = slug
   }
 
   /**
    * Returns a promise that resolves when `this._sounds` is ready to use.
    * Can be called multiple times; only the first time does it start downloads.
    */
-  async ready() {
+  async load() {
     if (!this._readyPromise) {
       this._readyPromise = Promise.resolve().then(async () => {
         const soundPromises = {};
 
         for (const { name, loop } of soundTypes) {
-          if (this[`hasno${name}`]) continue;
-
           soundPromises[name] = getSound({
-            src: [`${config.assetRoot}/audio/${this.slug}-${name}.mp3`],
+            src: [`${assetRoot}/audio/${this.slug}-${name}.mp3`],
             loop,
           });
         }
@@ -75,9 +69,8 @@ export default class AudioPlayer extends EventEmitter {
   /**
    * Stops all/any sounds that are playing.
    */
-  async _stopSounds() {
-    await this.ready();
-
+  async stop() {
+    await this.load();
     await Bluebird.map(Object.keys(this._sounds), soundType => new Bluebird(resolve => {
       const sound = this._sounds[soundType];
       sound.once('stop', () => resolve());
@@ -90,18 +83,11 @@ export default class AudioPlayer extends EventEmitter {
    * Or, if you set awaitCompletion to false, it resolves as soon as the sound
    * has started playing.
    */
-  async _playSound(name, volume = 1, awaitCompletion = true) {
-    if (this[`hasno${name}`]) return;
-
-    if (this._state === 'played' && name !== 'groan') {
-      return;
-    }
-
+  async play(name, volume = 1, awaitCompletion = true) {
     await new Bluebird(resolve => {
       const sound = this._sounds[name];
       sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
       sound.volume(volume);
-      qs('.game__panel--cue').classList.add(name);
       sound.play();
     });
   }
@@ -109,23 +95,12 @@ export default class AudioPlayer extends EventEmitter {
   /**
    * Fades the given already-playing sound. Waits for the fade to complete.
    */
-  async _fadeSound(name, fromVolume, toVolume, duration) {
-    if (!this._active) return;
-
+  async fade(name, fromVolume, toVolume, duration) {
     await new Bluebird(resolve => {
       const sound = this._sounds[name];
       sound.once('fade', () => resolve());
       sound.fade(fromVolume, toVolume, duration);
     });
-  }
-
-  /**
-   * Stops all sounds and disables 'active' flag in attempt to stop new sounds
-   * starting.
-   */
-  async stop() {
-    this._active = false;
-    this._stopSounds();
   }
 
 }

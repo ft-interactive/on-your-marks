@@ -5,17 +5,19 @@ import Game from './models/Game';
 import GameView from './views/GameView';
 import StopwatchView from './views/StopwatchView';
 
+(async () => {
+
 async function init() {
   const stopwatch = new Stopwatch();
+  const levels = await Level.loadLevels();
   return new GameView(
     document.body,
-    new Game(await Level.loadLevels(), stopwatch),
+    new Game(levels, stopwatch),
     new StopwatchView(null, stopwatch)
   );
 }
 
-(async () => {
-  const view = init();
+  const view = await init();
 
   // add references on the window to allow
   // easier debugging
