@@ -68,12 +68,13 @@ export default class LevelView {
     } else {
       msgEl.style.backgroundColor = null;
     }
-    msgEl.innerHTML = this.level.countdown.status;
+    msgEl.innerHTML = this.level.countdown.status || 'WAIT';
   }
 
   falseStart() {
     this.audio.fade('countdown', 1, 0, 300);
     this.audio.play('false');
+    this.el.querySelector('.level__complete').style.display = 'block';
     this.hideAllState();
     const _el = this.getStateElement('false-start');
     _el.style.display = 'block';
@@ -81,12 +82,14 @@ export default class LevelView {
 
   noStart() {
     this.hideAllState();
+    this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('no-start');
     _el.style.display = 'block';
   }
 
   normalStart() {
     this.hideAllState();
+    this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('normal-start');
     _el.style.display = 'block';
 
@@ -97,6 +100,7 @@ export default class LevelView {
 
   incomplete() {
     this.hideAllState();
+    this.el.querySelector('.level__complete').style.display = 'none';
     const _el = this.getStateElement('countdown');
     _el.style.display = 'block';
   }

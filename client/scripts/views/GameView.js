@@ -31,6 +31,12 @@ export default class GameView {
     });
 
     delegate.on('mousedown', '[name="stopwatch-stop"]', () => {
+      if (game.currentLevel.slug === 'swim') return;
+      game.currentLevel.stop(game.stopwatch.getCurrentTime());
+    });
+
+    delegate.on('click', '[name="stopwatch-stop"]', () => {
+      if (game.currentLevel.slug !== 'swim') return;
       game.currentLevel.stop(game.stopwatch.getCurrentTime());
     });
 

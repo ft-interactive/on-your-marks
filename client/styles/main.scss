@@ -30,9 +30,20 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/sprint-bg.jpg);
   }
 
-  &__state {
-    width: 500px;
+  &__complete {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    min-width: 280px;
+    min-height: 200px;
+    max-width: 600px;
+    width: 80%;
     margin: 0 auto;
+    padding: 20px;
+  }
+
+  &__state {
+    margin: 0 auto;
+    text-align: center;;
 
     &[data-state="false-start"] {
       background-color: red;
@@ -50,6 +61,48 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     }
   }
 
+  &__comparison {
+    text-align: center;
+    min-height: 120px;
+  }
+
+}
+
+.next-level-button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  padding-top: 35.5%;
+  margin: 0 auto;
+  p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    text-align: left;
+    padding: 5px;
+  }
+  img {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &__target {
+    position: absolute;
+    display: inline-block;
+    left: 5px;
+    bottom: 5px;
+    border: 1px solid white;
+    color: white;
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .countdown-status {
@@ -264,8 +317,14 @@ html.game-on {
   }
 
   &__race-button {
-    padding: 50px;
-    width: 100%;
+    text-align: center;
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    border: none;
+    background-color: black;
+    margin: 30px auto;
   }
 }
 

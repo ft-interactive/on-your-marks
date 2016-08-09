@@ -18,16 +18,16 @@ export const cycle = sequence(
   ['3', secs(1)],
   ['2', secs(1)],
   ['1', secs(1)],
-  ['Doink', secs(1)]
+  ['Peddle!', secs(1)]
 );
 
 export const swim = sequence(
   ['Take you marks', secs(5)],
-  ['Beep', secs(2), secs(1)]
+  ['Dive!', secs(2), secs(1)]
 );
 
 export const sprint = sequence(
   ['On your marks', secs(7.98)],
   ['Set', secs(4)],
-  ['Bang', secs(2), secs(2.5)]
+  ['Run!', secs(2), secs(2.5)]
 );
