@@ -4,8 +4,15 @@
 <div style="display:none;" class="game-race__loader">LOADING</div>
 {% endmacro %}
 
-{% macro lastScreen() %}
-THIS IS THE END
+{% macro lastScreen(levels) %}
+<div class="last-screen">
+  <div class="last-screen__replay-btns">
+    {% for level in levels %}
+    {{ replayButton(level.slug, level.name) }}
+    {% endfor %}
+  </div>
+  {% include "includes/share.html" %}
+</div>
 {% endmacro %}
 
 {% macro comparison() %}
@@ -99,7 +106,7 @@ THIS SHOWS THE COMPASION DATA
         {% if not loop.last %}
         {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
         {% else %}
-        {{ lastScreen() }}
+        {{ lastScreen(levels) }}
         {% endif %}
       </div>
     </div>
