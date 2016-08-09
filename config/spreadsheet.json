@@ -13,27 +13,13 @@
       "slug": "cycle",
       "name": "Omnium time trial",
       "sportname": "Track cycling",
-      "clockname": "Team sprint",
+      "clockname": "T eam sprint",
       "nextimage": "https://image.webservices.ft.com/v1/images/raw/http://www2.pictures.zimbio.com/gi/Ranomi+Kromowidjojo+Olympics+Day+7+Swimming+-w8h9mERPR5l.jpg?source=ig",
       "intro": "Cyclists have an easy ride: five low beeps followed by a high-pitched starter tone.",
       "hasnopresignal": true,
       "delay": null,
       "delayrandomness": 0,
-      "signaloffset": 5000,
-      "pro": {
-        "male": {
-          "time": null,
-          "name": null,
-          "event": null,
-          "source": null
-        },
-        "female": {
-          "time": null,
-          "name": null,
-          "event": null,
-          "source": null
-        }
-      }
+      "signaloffset": 5000
     },
     {
       "slug": "swim",
@@ -45,21 +31,7 @@
       "hasnopresignal": null,
       "delay": 2000,
       "delayrandomness": 1000,
-      "signaloffset": 0,
-      "pro": {
-        "male": {
-          "time": 620,
-          "name": "Florent Manaudou",
-          "event": "2015 FINA World Championships (final)",
-          "source": "Omega"
-        },
-        "female": {
-          "time": 670,
-          "name": "Bronte Campbell",
-          "event": "2015 FINA World Championships (final)",
-          "source": "Omega"
-        }
-      }
+      "signaloffset": 0
     },
     {
       "slug": "sprint",
@@ -71,21 +43,7 @@
       "hasnopresignal": null,
       "delay": 2000,
       "delayrandomness": 3000,
-      "signaloffset": 0,
-      "pro": {
-        "male": {
-          "time": 165,
-          "name": "Usain Bolt",
-          "event": "2012 Olympic Games (final)",
-          "source": "BBC"
-        },
-        "female": {
-          "time": 153,
-          "name": "Shelly-Ann Fraser-Pryce",
-          "event": "2012 Olympic Games (final)",
-          "source": "IAAF"
-        }
-      }
+      "signaloffset": 0
     }
   ]
 }
