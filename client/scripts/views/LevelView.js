@@ -62,16 +62,13 @@ export default class LevelView {
 
     if (countdown.complete) {
       this.audio.play('signal')
-      // msgEl.style.backgroundColor = 'green';
-      msgEl.classList.remove('countdown');
+      msgEl.classList.remove('countdown', 'error');
       msgEl.classList.add('go');
     } else if (countdown.running) {
-      // msgEl.style.backgroundColor = 'orange';
-      msgEl.classList.remove('go');
+      msgEl.classList.remove('go', 'error');
       msgEl.classList.add('countdown');
     } else {
-      msgEl.classList.remove('go');
-      msgEl.classList.remove('countdown');
+      msgEl.classList.remove('go', 'countdown');
     }
     msgEl.innerHTML = this.level.countdown.status || 'WAIT';
   }
@@ -79,10 +76,18 @@ export default class LevelView {
   falseStart() {
     this.audio.fade('countdown', 1, 0, 300);
     this.audio.play('false');
-    this.el.querySelector('.level__complete').style.display = 'block';
-    this.hideAllState();
-    const _el = this.getStateElement('false-start');
-    _el.style.display = 'block';
+    setTimeout(()=>{
+      this.hideAllState();
+      this.el.querySelector('.level__complete').style.display = 'block';
+      const _el = this.getStateElement('false-start');
+      _el.style.display = 'block';
+    }, 700);
+    {
+      const _el = this.getStateElement('countdown');
+      const msgEl = _el.querySelector('.countdown-status');
+      msgEl.classList.remove('go', 'countdown');
+      msgEl.classList.add('error');
+    }
   }
 
   noStart() {
@@ -93,14 +98,15 @@ export default class LevelView {
   }
 
   normalStart() {
-    this.hideAllState();
-    this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('normal-start');
-    _el.style.display = 'block';
-
     const msg = this.messageScale(this.level.time);
-    console.log(msg, this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
+    console.log(msg, this.level.time);
+    setTimeout(() => {
+      this.hideAllState();
+      this.el.querySelector('.level__complete').style.display = 'block';
+      _el.style.display = 'block';
+    }, 800);
   }
 
   incomplete() {
@@ -108,6 +114,8 @@ export default class LevelView {
     this.el.querySelector('.level__complete').style.display = 'none';
     const _el = this.getStateElement('countdown');
     _el.style.display = 'block';
+    const msgEl = _el.querySelector('.countdown-status');
+    msgEl.classList.remove('go', 'error', 'countdown');
   }
 
   show() {

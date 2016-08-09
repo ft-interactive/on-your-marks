@@ -350,19 +350,25 @@ html.game-on {
       position:relative;
       top: 12px;
     }
-
+    &.error {
+      background-color: red;
+      box-shadow: 0px 20px 0px darken(red, 20);
+      &:after {
+        box-shadow: 0px 8px 0px darken(red, 30);
+      }
+    }
     &.go {
       background-color: green;
-      box-shadow: 0px 20px 0px #006d00;
+      box-shadow: 0px 20px 0px darken(green, 10);
       &:after {
-        box-shadow: 0px 8px 0px #015601;
+        box-shadow: 0px 8px 0px darken(green, 15);
       }
     }
     &.countdown {
       background-color: orange;
-      box-shadow: 0px 20px 0px #de6700;
+      box-shadow: 0px 20px 0px darken(orange, 20);
       &:after {
-        box-shadow: 0px 8px 0px #845601;
+        box-shadow: 0px 8px 0px darken(orange, 30);
       }
     }
   }
