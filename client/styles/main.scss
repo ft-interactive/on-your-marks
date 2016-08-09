@@ -4,6 +4,90 @@ $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
 
+
+.level {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: #fff1e0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  &[data-level="cycle"] {
+    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/cycle-bg.jpg);
+  }
+
+  &[data-level="swim"] {
+    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/swim-bg.jpg);
+  }
+
+  &[data-level="sprint"] {
+    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/sprint-bg.jpg);
+  }
+
+  &__state {
+    width: 500px;
+    margin: 0 auto;
+
+    &[data-state="false-start"] {
+      background-color: red;
+      color: white;
+    }
+
+    &[data-state="normal-start"] {
+      background-color: blue;
+      color: white;
+    }
+
+    &[data-state="no-start"] {
+      background-color: black;
+      color: white;
+    }
+  }
+
+}
+
+.countdown-status {
+  color: white;
+  font-weight: bold;
+}
+
+.clock {
+  display: block;
+  width: 330px;
+  margin: 0 auto;
+  text-align: right;
+  background-color: black;
+  color: yellow;
+  font-family: monospace;
+  padding: 20px;
+  font-size: 50px;
+
+  &__seconds {
+
+  }
+
+  &__tenths {
+
+    // &:before,
+    // &:after {
+    //   content: ":";
+    //   display: inline-block;
+    //   width: 20px;
+    //   height: 30px;
+    // }
+  }
+
+  &__hundreths {
+
+  }
+}
+
 body {
   @include oColorsFor(page, background);
   margin: 0;

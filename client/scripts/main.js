@@ -1,99 +1,30 @@
 import 'babel-polyfill';
-import Bluebird from 'bluebird';
-import Level from './Level';
+import Level from './models/Level';
+import Stopwatch from './models/Stopwatch';
+import Game from './models/Game';
 import GameView from './views/GameView';
+import StopwatchView from './views/StopwatchView';
 
 (async () => {
-  // grab key elements from DOM
-  const qs = selector => document.querySelector(selector);
-  const gameEl = qs('.game');
-  const playGameButton = qs('.play-game-button');
-  const loadingIndicator = qs('.loading-indicator');
 
-  // grab config that was dumped in the <head>
-  const config = window.__gameConfig;
+async function init() {
+  const stopwatch = new Stopwatch();
+  const levels = await Level.loadLevels();
+  return new GameView(
+    document.body,
+    new Game(levels, stopwatch),
+    new StopwatchView(null, stopwatch)
+  );
+}
 
-  // construct the three level instances
-  const levels = config.levels.map((options, i) => {
-    const plusOne = config.levels[i + 1];
+  const view = await init();
 
-    // determine details of 'next' level, for link at the end of this one
-    let nextLevel;
-
-
-    if (plusOne) {
-      nextLevel = {
-        name: plusOne.name,
-        slug: plusOne.slug,
-      };
-    } else {
-      const firstLevel = config.levels[0];
-      nextLevel = {
-        name: firstLevel.name,
-        slug: firstLevel.slug,
-        isRestart: true,
-      };
-    }
-
-    return new Level({
-      ...options,
-      nextLevel,
-      isLast: !!plusOne,
-      isFirst: i === 0,
-    });
-  });
-
-  // start preloading level assets in series
-  Bluebird.mapSeries(levels, level => level.ready());
-
-  // construct a came view
-  const gameView = new GameView(gameEl, levels);
-  gameView.render();
-
-  // start game when play button is clicked
-  playGameButton.addEventListener('click', () => {
-    window.location = `#${levels[0].slug}`;
-  });
-
-  // update the page according to the hash (#swim, #sprint, etc)
-  {
-    const updatePage = () => {
-      if (location.hash === '#' || location.hash === '') {
-        history.replaceState({}, document.title, '.');
-      }
-
-      const slug = location.hash.substring(1);
-
-
-
-      qs('.game__panel--cue').classList.remove("ambient","presignal","signal","set","roar");
-
-      for (const level of levels) {
-        if (level.slug === slug) {
-          // add a class that hides landing page content, shows game element, and disables scrolling
-          document.documentElement.classList.add('game-on');
-
-          // load in the level
-          gameView.show(level);
-
-          return;
-        }
-      }
-
-      // not found; revert to normal landing page view
-      gameView.hide();
-      document.documentElement.classList.remove('game-on');
-    };
-
-    updatePage();
-
-    window.addEventListener('hashchange', updatePage);
-  }
-
-  // as soon as the first level is loaded, hide the 'loading' indicator and show the play button
-  await levels[0].ready();
-  loadingIndicator.style.display = 'none';
-  playGameButton.style.display = 'block';
+  // add references on the window to allow
+  // easier debugging
+  window.view = view;
+  window.game = view.game;
+  window.stopwatch = view.stopwatchView.stopwatch;
+  window.levels = view.game.levels;
 
   document.dispatchEvent(new CustomEvent('ig.Loaded'));
 })();

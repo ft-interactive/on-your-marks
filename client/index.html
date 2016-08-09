@@ -1,7 +1,74 @@
 {% extends "layout.html" %}
 
+
+{% macro introPanel(text) %}
+<p>{{text}}</p>
+<p><button class="game__ready-button">I'm ready</button></p>
+{% endmacro %}
+
+{% macro resultPanel(text, slug) %}
+<h4>TIME</h4>`,
+<p><button class="retry-button">Retry</button></p>,
+<p><i>pretty results table TKTK</i></p>,
+<p><a href="#{{slug}}">Next</a></p>`,
+{% endmacro %}
+
+{% macro cuePanel() %}
+<p>Visual cue</p>
+{% endmacro %}
+
+{% macro replayButton(slug, label) %}
+<button name="replay-level" value="{{ slug }}">{{ label }}</button>
+{% endmacro %}
+
+{% macro nextButton() %}
+<button name="next-level">Next</button>
+{% endmacro%}
+
+{% macro statePanel(slug, state) %}
+<div class="level__state level__state--{{slug}}" data-state="{{ state }}">
+{{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro countdown(slug, intro) %}
+  {% call statePanel(slug, "countdown") %}
+  <p>{{ intro }}</p>
+  <button class="game__race-button" name="stopwatch-stop">GO!</button>
+  <p class="countdown-status"></p>
+  {% endcall %}
+{% endmacro %}
+
+{% macro falseStart(slug) %}
+  {% call statePanel(slug, "false-start") %}
+  <p>False start - {{ slug }}</p>
+  {{ replayButton(slug, "Go again") }}
+  {{ nextButton() }}
+  {% endcall %}
+{% endmacro %}
+
+{% macro normalStart(slug) %}
+  {% call statePanel(slug, "normal-start") %}
+  <p class="result-summary"></p>
+  {{ nextButton() }}
+  {% endcall %}
+{% endmacro %}
+
+{% macro noStart(slug) %}
+  {% call statePanel(slug, "no-start") %}
+  <p>No start - {{ slug }}</p>
+  {{ replayButton(slug, "Go again") }}
+  {{ nextButton() }}
+  {% endcall %}
+{% endmacro %}
+
+{% macro clock(slug, d) %}
+<div class="clock">{{ d }}</div>
+<div class="clock clock--{{ slug }}" data-clock="{{ slug }}">0.00</div>
+{% endmacro %}
+
 {% block article_body %}
-{% markdown %}
+
 
 <ul class="level-icons">
 {% for level in levels %}
@@ -12,11 +79,30 @@
 <b>Use headphones or turn up your sound!</b>
 
 <div class="play-button-wrapper">
+  <button name="first-level">Play as a man</button>
+  <button name="first-level">Play as a woman</button>
   <span class="loading-indicator">Loading...</span>
   <button class="play-game-button">Play game</button>
 </div>
 
-<p>TK icons credit: Icons by Diego Naive from the Noun Project.</p>
 
-{% endmarkdown %}
+{% for level in levels %}
+  <div class="level" data-level="{{ level.slug }}">
+    {{ level.slug }}
+    {{ clock(level.slug, level.clockname) }}
+    <div class="level__states">
+      {{ countdown(level.slug, level.intro) }}
+      {{ normalStart(level.slug) }}
+      {{ falseStart(level.slug) }}
+      {{ noStart(level.slug) }}
+      {% if loop.last %}
+        {% for l in levels %}
+        {{ replayButton(l.slug, "REPLAY " + l.slug) }}
+        {% endfor %}
+      {% else %}
+      <p>The next level is {{ levels[loop.index0 + 1].slug }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
 {% endblock %}
