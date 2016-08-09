@@ -8,8 +8,8 @@ export default () => ({
   ads: false,
   onwardjourney: false,
   shareButtons: false,
-  header: false,
-  footer: false,
+  header: true,
+  footer: true,
 
   /*
     NOTE ABOUT COMMENTS:
