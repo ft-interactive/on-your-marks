@@ -398,8 +398,9 @@ ul.level-icons {
   padding: 0 0.75em;
   text-align: center;
   > h1 {
+    margin-top: 10px;
+    margin-bottom: 0;
     line-height: 1;
-    margin-bottom: 5px;
     font-family: 'Monoton', cursive;
     font-size: 3.5em;
     font-weight: 400;
@@ -428,18 +429,26 @@ ul.level-icons {
 
 @include oGridRespondTo (S) {
   .title h1 {
-    font-size: 2.6em;
+    font-size: 2.4em;
   }
 }
 
 @include oGridRespondTo (M) {
   .title h1 {
-    font-size: 4.8em;
+    font-size: 4.9em;
+    margin-top: 0.83em;
+    margin-bottom: 10px;
   }
 }
 
 @include oGridRespondTo (L) {
   .title h1 {
-    font-size: 5.4em;
+    font-size: 4.4em;
+  }
+}
+
+@include oGridRespondTo (XL) {
+  .title h1 {
+    font-size: 5.8em;
   }
 }
