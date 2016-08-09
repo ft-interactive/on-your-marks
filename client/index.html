@@ -75,7 +75,9 @@ THIS SHOWS THE COMPASION DATA
 
 <div class="title">
   <h1>on your marks</h1>
+
   <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
+
   <div data-o-component="o-share"
       class="o-share o-share--muted"
       data-o-share-links="twitter facebook"
@@ -84,6 +86,7 @@ THIS SHOWS THE COMPASION DATA
       data-o-share-summary="{{ socialSummary | default(summary, true) | plain }}"
       data-o-share-relatedTwitterAccounts="@ft">
   </div>
+
   <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script>
 </div>
 
@@ -102,12 +105,19 @@ THIS SHOWS THE COMPASION DATA
     <b>Use headphones or turn up your sound!</b>
   </p>
 
+  <h2>First up: track cycling</h2>
+
   <div class="play-button-wrapper">
     <button name="first-level">Play as a man</button>
     <button name="first-level">Play as a woman</button>
     <span class="loading-indicator">Loading...</span>
     <button class="play-game-button">Play game</button>
   </div>
+
+  <footer class="o-typography-footer">
+    <p><small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+    The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Icons by Diego Naive via Noun Project.</small></p>
+  </footer>
 </div>
 
 {% for level in levels %}
