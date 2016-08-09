@@ -35,14 +35,17 @@ export default class GameView {
       game.currentLevel.stop(game.stopwatch.getCurrentTime());
     });
 
+    // For swimming add a little bit of time to leave the block
     delegate.on('click', '[name="stopwatch-stop"]', () => {
       if (game.currentLevel.slug !== 'swim') return;
-      game.currentLevel.stop(game.stopwatch.getCurrentTime());
+      setTimeout(() => {
+        game.currentLevel.stop(game.stopwatch.getCurrentTime());
+      }, 60);
     });
 
     // TODO: handle spacebar activation
     // delegate.on('keydown', '[name="stopwatch-stop"]', event => {
-    //   game.currentLevel.stop();
+    //   game.currentLevel.stop(game.stopwatch.getCurrentTime());
     // });
 
     this.levelViews = game.levels.map(level => new LevelView(getLevelElement(level.slug), level));
