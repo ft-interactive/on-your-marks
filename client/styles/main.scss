@@ -213,6 +213,18 @@ $share-button-size: 38px;
   }
 }
 
+
+.last-screen {
+  &__replay-btns {
+    button {
+      box-sizing: border-box;
+      width: 47.5%;
+      margin: 10px 1.25%;
+    }
+  }
+}
+
+
 html.game-on {
   &, body {
     overflow: hidden;
@@ -321,13 +333,38 @@ html.game-on {
   &__race-button {
     text-align: center;
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 333px;
+    height: 333px;
     border-radius: 100%;
     border: none;
     background-color: #0363b7;
+    position: relative;
     margin: 40px auto;
     font-size: 60px;
+    transition: all 0.1s;
+    box-shadow: 0px 20px 0px #034f92;
+    transform: rotateX(33deg);
+    top: 0;
+    &:active{
+      box-shadow: 0px 8px 0px #023058;
+      position:relative;
+      top: 12px;
+    }
+
+    &.go {
+      background-color: green;
+      box-shadow: 0px 20px 0px #006d00;
+      &:after {
+        box-shadow: 0px 8px 0px #015601;
+      }
+    }
+    &.countdown {
+      background-color: orange;
+      box-shadow: 0px 20px 0px #de6700;
+      &:after {
+        box-shadow: 0px 8px 0px #845601;
+      }
+    }
   }
 }
 

@@ -62,11 +62,16 @@ export default class LevelView {
 
     if (countdown.complete) {
       this.audio.play('signal')
-      msgEl.style.backgroundColor = 'green';
+      // msgEl.style.backgroundColor = 'green';
+      msgEl.classList.remove('countdown');
+      msgEl.classList.add('go');
     } else if (countdown.running) {
-      msgEl.style.backgroundColor = 'orange';
+      // msgEl.style.backgroundColor = 'orange';
+      msgEl.classList.remove('go');
+      msgEl.classList.add('countdown');
     } else {
-      msgEl.style.backgroundColor = null;
+      msgEl.classList.remove('go');
+      msgEl.classList.remove('countdown');
     }
     msgEl.innerHTML = this.level.countdown.status || 'WAIT';
   }

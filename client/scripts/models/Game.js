@@ -25,9 +25,12 @@ export default class Game extends EventEmitter {
   }
 
   end() {
+    if (this.currentLevel) {
+      this.currentLevel.stop(0);
+    }
     this.lastLevel();
     setTimeout(() => {
-      this.currentLevel.stop();
+      this.currentLevel.stop(101);
     }, 1);
   }
 
