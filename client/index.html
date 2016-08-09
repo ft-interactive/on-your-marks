@@ -73,22 +73,42 @@ THIS SHOWS THE COMPASION DATA
 
 {% block article_body %}
 
-
-<ul class="level-icons">
-{% for level in levels %}
-  <li><i class="{{ level.slug }}"></i></li>
-{% endfor %}
-</ul>
-
-<b>Use headphones or turn up your sound!</b>
-
-<div class="play-button-wrapper">
-  <button name="first-level">Play as a man</button>
-  <button name="first-level">Play as a woman</button>
-  <span class="loading-indicator">Loading...</span>
-  <button class="play-game-button">Play game</button>
+<div class="title">
+  <h1>on your marks</h1>
+  <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
+  <div data-o-component="o-share"
+      class="o-share o-share--muted"
+      data-o-share-links="twitter facebook"
+      data-o-share-url="{{ url }}"
+      data-o-share-title="{{ socialHeadline | default(headline, true) | plain }}"
+      data-o-share-summary="{{ socialSummary | default(summary, true) | plain }}"
+      data-o-share-relatedTwitterAccounts="@ft">
+  </div>
+  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script>
 </div>
 
+<div class="intro-panel">
+  <!-- <ul class="level-icons">
+  {% for level in levels %}
+    <li><i class="{{ level.slug }}"></i></li>
+  {% endfor %}
+  </ul> -->
+
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </p>
+
+  <p>
+    <b>Use headphones or turn up your sound!</b>
+  </p>
+
+  <div class="play-button-wrapper">
+    <button name="first-level">Play as a man</button>
+    <button name="first-level">Play as a woman</button>
+    <span class="loading-indicator">Loading...</span>
+    <button class="play-game-button">Play game</button>
+  </div>
+</div>
 
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">

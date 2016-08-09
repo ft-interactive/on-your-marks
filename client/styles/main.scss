@@ -1,4 +1,6 @@
 @import 'o-colors/main';
+@import 'o-grid/main';
+@import 'https://fonts.googleapis.com/css?family=Monoton';
 
 $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
@@ -357,6 +359,7 @@ ul.level-icons {
     border-radius: 48px;
     &.cycle {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/cycle.svg) no-repeat center 3px;
+      fill: #fff;
     }
     &.swim {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/swim.svg) no-repeat center center;
@@ -364,5 +367,79 @@ ul.level-icons {
     &.sprint {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/sprint.svg) no-repeat center center;
     }
+    > svg {
+      fill: #fff;
+    }
+  }
+}
+
+.o-header {
+  background-color: transparent !important;
+}
+
+.intro-container {
+  -webkit-display: flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  height: calc(100vh - 46px);
+  margin-top: -64px;
+  margin-bottom: 40px;
+  padding-top: 64px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background: url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fintro-bg.jpg?source=ig&width=1920&quality=high) no-repeat top center;
+  background-size: cover;
+}
+
+.title {
+  padding: 0 0.75em;
+  text-align: center;
+  > h1 {
+    line-height: 1;
+    margin-bottom: 5px;
+    font-family: 'Monoton', cursive;
+    font-size: 3.5em;
+    font-weight: 400;
+    color: #fff;
+  }
+}
+
+.o-share {
+  margin-bottom: 5px;
+}
+
+.intro-panel {
+  min-width: 33%;
+  align-self: center;
+  margin-top: 5%;
+  border: 1px solid #2bbbbf;
+  border-radius: 4px;
+  padding: 0 20px;
+  background: rgba(51, 51, 51, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  > p {
+    // margin-bottom: 5px;
+    color: oColorsGetPaletteColor('white');
+  }
+}
+
+@include oGridRespondTo (S) {
+  .title h1 {
+    font-size: 2.6em;
+  }
+}
+
+@include oGridRespondTo (M) {
+  .title h1 {
+    font-size: 4.8em;
+  }
+}
+
+@include oGridRespondTo (L) {
+  .title h1 {
+    font-size: 5.4em;
   }
 }
