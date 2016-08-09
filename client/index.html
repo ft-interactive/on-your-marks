@@ -49,7 +49,7 @@
 
 {% macro normalStart(slug) %}
   {% call statePanel(slug, "normal-start") %}
-  <p>Normal start - {{ slug }}</p>
+  <p class="result-summary"></p>
   {{ nextButton() }}
   {% endcall %}
 {% endmacro %}

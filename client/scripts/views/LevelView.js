@@ -1,3 +1,4 @@
+import { scaleThreshold } from 'd3-scale';
 import AudioPlayer from './AudioPlayer';
 
 export default class LevelView {
@@ -13,6 +14,16 @@ export default class LevelView {
       this.audio.play('countdown');
       this.updateCountdownStatus()
     });
+
+    // TODO: dont hard code these values, use real data
+    //       to generate a histogram to make the domain
+    //       - or at least make the reflect the sport's data
+    // TODO: tweak the messages
+    this.messageScale = scaleThreshold()
+                            .domain([0, 200, 400, 650, 1100, 2000])
+                            .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
+                                    'Poor Effort', 'Terrible', 'Did you fall asleep?'])
+
     this.level.on('countdownprogress', () => this.updateCountdownStatus());
     this.audio = new AudioPlayer(this.level.slug);
     setTimeout(async () => {
@@ -78,6 +89,10 @@ export default class LevelView {
     this.hideAllState();
     const _el = this.getStateElement('normal-start');
     _el.style.display = 'block';
+
+    const msg = this.messageScale(this.level.time);
+    console.log(msg, this.level.time);
+    _el.querySelector('.result-summary').innerHTML = msg;
   }
 
   incomplete() {
@@ -88,6 +103,8 @@ export default class LevelView {
 
   show() {
     this.el.style.display = 'block';
+    // TODO: dont let the user play and dont start countdown until
+    //       the audio is loaded
   }
 
   hide() {
