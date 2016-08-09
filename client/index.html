@@ -4,18 +4,6 @@
 THIS IS THE END
 {% endmacro %}
 
-{% macro introPanel(text) %}
-<p>{{text}}</p>
-<p><button class="game__ready-button">I'm ready</button></p>
-{% endmacro %}
-
-{% macro resultPanel(text, slug) %}
-<h4>TIME</h4>`,
-<p><button class="retry-button">Retry</button></p>,
-<p><i>pretty results table TKTK</i></p>,
-<p><a href="#{{slug}}">Next</a></p>`,
-{% endmacro %}
-
 {% macro comparison() %}
 <div class="level__comparison">
 THIS SHOWS THE COMPASION DATA
@@ -67,8 +55,11 @@ THIS SHOWS THE COMPASION DATA
 {% endmacro %}
 
 {% macro clock(slug, d) %}
-<div class="clock">{{ d }}</div>
-<div class="clock clock--{{ slug }}" data-clock="{{ slug }}">0.00</div>
+
+<div class="clock clock--{{ slug }}">
+<div class="clock__display clock__event">{{ d }}</div>
+<div class="clock__display clock__time" data-clock="{{ slug }}">0.00</div>
+</div>
 {% endmacro %}
 
 {% block article_body %}

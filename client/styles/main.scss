@@ -113,32 +113,23 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
 .clock {
   display: block;
-  width: 330px;
-  margin: 0 auto;
+  width: 360px;
+  margin: 40px auto;
   text-align: right;
-  background-color: black;
+  background-color: #050505;
+  border: 1px solid black;
   color: yellow;
   font-family: monospace;
-  padding: 20px;
-  font-size: 50px;
+  padding: 0 16px;
+  font-size: 38px;
+  box-sizing: border-box;
+  overflow: auto;
 
-  &__seconds {
-
-  }
-
-  &__tenths {
-
-    // &:before,
-    // &:after {
-    //   content: ":";
-    //   display: inline-block;
-    //   width: 20px;
-    //   height: 30px;
-    // }
-  }
-
-  &__hundreths {
-
+  &__display {
+    background-color: #191919;
+    border: 1px solid black;
+    margin: 16px 0;
+    padding: 4px;
   }
 }
 
@@ -324,9 +315,9 @@ html.game-on {
     height: 200px;
     border-radius: 100%;
     border: none;
-    background-color: black;
-    margin: 30px auto;
-    font-size: 50px;
+    background-color: #0363b7;
+    margin: 40px auto;
+    font-size: 60px;
   }
 }
 
