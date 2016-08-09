@@ -75,6 +75,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   position: relative;
   padding-top: 35.5%;
   margin: 0 auto;
+  overflow: hidden;
   p {
     position: absolute;
     top: 0;
@@ -100,7 +101,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     bottom: 5px;
     border: 1px solid white;
     color: white;
-    padding: 4px 8px;
+    padding: 8px 20px;
     background-color: rgba(0, 0, 0, 0.5);
   }
 }

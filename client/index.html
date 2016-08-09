@@ -23,11 +23,11 @@ THIS SHOWS THE COMPASION DATA
 <button name="replay-level" value="{{ slug }}">{{ label }}</button>
 {% endmacro %}
 
-{% macro nextButton(name, num) %}
+{% macro nextButton(name, num, src) %}
 <button class="next-level-button" name="next-level">
-  <img src="https://image.webservices.ft.com/v1/images/raw/http://i.dailymail.co.uk/i/pix/2012/08/05/article-2184122-1466B186000005DC-689_964x533.jpg?source=ig" alt="">
+  <img src="{{ src }}" alt="">
   <p>Next up, level {{ num }}: {{ name }}</p>
-  <span class="next-level-button__target">Play</span>
+  <span class="next-level-button__target">I'm ready</span>
 </button>
 {% endmacro%}
 
@@ -45,7 +45,7 @@ THIS SHOWS THE COMPASION DATA
 
 {% macro falseStart(slug) %}
   {% call statePanel(slug, "false-start") %}
-  <p>False start - {{ slug }}</p>
+  <p>False start</p>
   {{ replayButton(slug, "Try again") }}
   {% endcall %}
 {% endmacro %}
@@ -58,7 +58,7 @@ THIS SHOWS THE COMPASION DATA
 
 {% macro noStart(slug) %}
   {% call statePanel(slug, "no-start") %}
-  <p>No start - {{ slug }}</p>
+  <p>What happened, you didn't leave blocks?</p>
   {{ replayButton(slug, "Go again") }}
   {% endcall %}
 {% endmacro %}
@@ -98,7 +98,7 @@ THIS SHOWS THE COMPASION DATA
         {{ falseStart(level.slug) }}
         {{ noStart(level.slug) }}
         {{ comparison(level.slug) }}
-        {{ nextButton(level.sportname, loop.index + 1, level.slug) }}
+        {{ nextButton(level.sportname, loop.index + 1, level.nextimage, level.slug) }}
       </div>
     </div>
   </div>
