@@ -83,6 +83,6 @@
     "prebuild": "npm run clean",
     "prestart": "npm run clean",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "test": "npm run download-data && npm run build"
+    "test": "npm run build"
   }
 }

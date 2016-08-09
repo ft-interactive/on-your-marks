@@ -1,0 +1,49 @@
+{
+  "options": {
+    "title": "On your marks...",
+    "description": "Test your reaction speed.",
+    "headline": "On your marks...",
+    "summary": "Being quick off the mark can make all the difference in the Olympics. Can you compete with professionals? Blah blah. Blah.",
+    "buttonText": "Play",
+    "tweetText": "I got a reaction time of $TIME in the $EVENT. Can you do better? $URL",
+    "assetRoot": "http://ig.ft.com/static/on-your-marks/assets-1"
+  },
+  "levels": [
+    {
+      "slug": "cycle",
+      "name": "Omnium time trial",
+      "sportname": "Track cycling",
+      "clockname": "Team sprint",
+      "nextimage": "https://image.webservices.ft.com/v1/images/raw/http://www2.pictures.zimbio.com/gi/Ranomi+Kromowidjojo+Olympics+Day+7+Swimming+-w8h9mERPR5l.jpg?source=ig",
+      "intro": "Cyclists have an easy ride: five low beeps followed by a high-pitched starter tone.",
+      "hasnopresignal": true,
+      "delay": null,
+      "delayrandomness": 0,
+      "signaloffset": 5000
+    },
+    {
+      "slug": "swim",
+      "name": "50m freestyle",
+      "sportname": "Swimming",
+      "nextimage": "https://image.webservices.ft.com/v1/images/raw/http://i.dailymail.co.uk/i/pix/2012/08/05/article-2184122-1466B186000005DC-689_964x533.jpg?source=ig",
+      "clockname": "50m Freestyle",
+      "intro": "In swimming, a lifeguard waits for everyone to stop moving before saying \"beep\".",
+      "hasnopresignal": null,
+      "delay": 2000,
+      "delayrandomness": 1000,
+      "signaloffset": 0
+    },
+    {
+      "slug": "sprint",
+      "name": "100m sprint",
+      "sportname": "Athletics",
+      "clockname": "100m",
+      "nextimage": null,
+      "intro": "In track events, the starter signal is a gun, usually filled with blanks.",
+      "hasnopresignal": null,
+      "delay": 2000,
+      "delayrandomness": 3000,
+      "signaloffset": 0
+    }
+  ]
+}

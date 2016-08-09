@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 
+{% macro lastScreen() %}
+THIS IS THE END
+{% endmacro %}
 
 {% macro introPanel(text) %}
 <p>{{text}}</p>
@@ -13,16 +16,22 @@
 <p><a href="#{{slug}}">Next</a></p>`,
 {% endmacro %}
 
-{% macro cuePanel() %}
-<p>Visual cue</p>
+{% macro comparison() %}
+<div class="level__comparison">
+THIS SHOWS THE COMPASION DATA
+</div>
 {% endmacro %}
 
 {% macro replayButton(slug, label) %}
 <button name="replay-level" value="{{ slug }}">{{ label }}</button>
 {% endmacro %}
 
-{% macro nextButton() %}
-<button name="next-level">Next</button>
+{% macro nextButton(name, num, src) %}
+<button class="next-level-button" name="next-level">
+  <img src="{{ src }}" alt="">
+  <p>Next up, level {{ num }}: {{ name }}</p>
+  <span class="next-level-button__target">I'm ready</span>
+</button>
 {% endmacro%}
 
 {% macro statePanel(slug, state) %}
@@ -33,32 +42,27 @@
 
 {% macro countdown(slug, intro) %}
   {% call statePanel(slug, "countdown") %}
-  <p>{{ intro }}</p>
-  <button class="game__race-button" name="stopwatch-stop">GO!</button>
-  <p class="countdown-status"></p>
+  <button class="countdown-status game__race-button" name="stopwatch-stop">WAIT</button>
   {% endcall %}
 {% endmacro %}
 
 {% macro falseStart(slug) %}
   {% call statePanel(slug, "false-start") %}
-  <p>False start - {{ slug }}</p>
-  {{ replayButton(slug, "Go again") }}
-  {{ nextButton() }}
+  <p>False start</p>
+  {{ replayButton(slug, "Try again") }}
   {% endcall %}
 {% endmacro %}
 
 {% macro normalStart(slug) %}
   {% call statePanel(slug, "normal-start") %}
   <p class="result-summary"></p>
-  {{ nextButton() }}
   {% endcall %}
 {% endmacro %}
 
 {% macro noStart(slug) %}
   {% call statePanel(slug, "no-start") %}
-  <p>No start - {{ slug }}</p>
-  {{ replayButton(slug, "Go again") }}
-  {{ nextButton() }}
+  <p>What happened, you didn't leave blocks?</p>
+  {{ replayButton(slug, "Restart") }}
   {% endcall %}
 {% endmacro %}
 
@@ -88,20 +92,20 @@
 
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">
-    {{ level.slug }}
     {{ clock(level.slug, level.clockname) }}
     <div class="level__states">
       {{ countdown(level.slug, level.intro) }}
-      {{ normalStart(level.slug) }}
-      {{ falseStart(level.slug) }}
-      {{ noStart(level.slug) }}
-      {% if loop.last %}
-        {% for l in levels %}
-        {{ replayButton(l.slug, "REPLAY " + l.slug) }}
-        {% endfor %}
-      {% else %}
-      <p>The next level is {{ levels[loop.index0 + 1].slug }}</p>
-      {% endif %}
+      <div class="level__complete">
+        {{ normalStart(level.slug) }}
+        {{ falseStart(level.slug) }}
+        {{ noStart(level.slug) }}
+        {{ comparison(level.slug) }}
+        {% if not loop.last %}
+        {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
+        {% else %}
+        {{ lastScreen() }}
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endfor %}
