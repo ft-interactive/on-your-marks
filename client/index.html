@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% macro loading() %}
+<div style="display:none;" class="game-race__loader">LOADING</div>
+{% endmacro %}
+
 {% macro lastScreen() %}
 THIS IS THE END
 {% endmacro %}
@@ -84,6 +88,7 @@ THIS SHOWS THE COMPASION DATA
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">
     {{ clock(level.slug, level.clockname) }}
+    {{ loading() }}
     <div class="level__states">
       {{ countdown(level.slug, level.intro) }}
       <div class="level__complete">

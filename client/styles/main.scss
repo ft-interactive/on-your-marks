@@ -5,6 +5,14 @@ $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
 
 
+@font-face {
+    font-family: 'clock';
+    src: url('https://ig.ft.com/static/on-your-marks/assets-1/fonts/ds-digii-webfont.woff2?#iefix') format('woff2'),
+         url('https://ig.ft.com/static/on-your-marks/assets-1/fonts/ds-digii-webfont.woff?#iefix') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .level {
   width: 100%;
   height: 100vh;
@@ -116,11 +124,12 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   width: 360px;
   margin: 40px auto;
   text-align: right;
-  background-color: #050505;
-  border: 1px solid black;
-  color: yellow;
-  font-family: monospace;
-  padding: 0 16px;
+  // background-color: #050505;
+  background-color: #9c0202;
+  // border: 1px solid black;
+  color: rgb(222, 160, 0);
+  font-family: 'clock', monospace;
+  padding: 0 12px;
   font-size: 38px;
   box-sizing: border-box;
   overflow: auto;
@@ -128,8 +137,8 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   &__display {
     background-color: #191919;
     border: 1px solid black;
-    margin: 16px 0;
-    padding: 4px;
+    margin: 14px 0;
+    padding: 0 4px;
   }
 }
 
@@ -308,6 +317,7 @@ html.game-on {
     }
   }
 
+  &__race-loader,
   &__race-button {
     text-align: center;
     display: block;
