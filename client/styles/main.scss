@@ -215,6 +215,10 @@ html.game-on {
       .game--playing & { display: block; }
     }
 
+    &--clock {
+      .game--playing & { display: block; }
+    }
+
     &.ambient {
       .game--playing & {
         display: block;
@@ -226,13 +230,7 @@ html.game-on {
       .game--playing & {
         display: block;
         background-color:orange;
-      }
-    }
-
-    &.set {
-      .game--playing & {
-        display: block;
-        background-color:yellow;
+        transition: background-color 0.1s;
       }
     }
 
@@ -240,6 +238,15 @@ html.game-on {
       .game--playing & {
         display: block;
         background-color:orange;
+        transition: background-color 0.1s;
+      }
+    }
+
+    &.set {
+      .game--playing & {
+        display: block;
+        background-color:yellow;
+        transition: background-color 0.1s;
       }
     }
 
@@ -247,6 +254,7 @@ html.game-on {
       .game--playing & {
         display: block;
         background-color:green;
+        transition: background-color 0.1s;
       }
     }
 
