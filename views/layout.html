@@ -17,7 +17,7 @@
 
     <main role="main">
       <article class="article" itemscope itemtype="http://schema.org/Article">
-        <div class="article-head o-grid-container">
+        <!-- <div class="article-head o-grid-container">
           <div class="o-grid-row">
             <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
 
@@ -32,15 +32,10 @@
 
             </header>
           </div>
-        </div>
+        </div> -->
 
-        {% block article_body %}{% endblock %}
-
-        <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
-          <footer class="o-typography-footer">
-            <p><small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
-  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small></p>
-          </footer>
+        <div class="intro-container">
+          {% block article_body %}{% endblock %}
         </div>
       </article>
     </main>

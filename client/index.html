@@ -79,24 +79,92 @@ THIS SHOWS THE COMPASION DATA
 
 {% block article_body %}
 
+<div class="title-container">
+  <h1>on your marks</h1>
 
-<ul class="level-icons">
-{% for level in levels %}
-  <li><i class="{{ level.slug }}"></i></li>
-{% endfor %}
-</ul>
+  <div class="o-typography-lead standfirst">
+    Can you react faster than an Olympic athlete?
+  </div>
 
+  <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
 
-<div class="play-button-wrapper">
-  <b>Use headphones or turn up your sound!</b>
-  <h2>
-    LEVEL 1: Track cycling
-  </h2>
-  <p>Choose which event to enter</p>
-  <button name="first-level" style="vertical-align:middle;display:inline-block;width:100px;height:100px">Mens<br/>event</button>
-  <button name="first-level" style="vertical-align:middle;display:inline-block;width:100px;height:100px">Womens<br/>event</button>
+  <div data-o-component="o-share"
+      class="o-share o-share--muted"
+      data-o-share-links="twitter facebook"
+      data-o-share-url="{{ url }}"
+      data-o-share-title="{{ socialHeadline | default(headline, true) | plain }}"
+      data-o-share-summary="{{ socialSummary | default(summary, true) | plain }}"
+      data-o-share-relatedTwitterAccounts="@ft">
+  </div>
+
+  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
 </div>
 
+<div class="panel-container">
+  <div class="icon-container">
+    <i class="fa fa-volume-up fa-2x"></i>
+  </div>
+  <p>
+    Make sure your device sound is on.
+  </p>
+
+  <div class="icon-container">
+    <i class="fa fa-bullhorn fa-2x"></i>
+  </div>
+
+  <p>
+    Listen for the starting signal – be careful not to false start!
+  </p>
+
+  <div class="icon-container">
+    <i class="fa fa-circle fa-2x"></i>
+  </div>
+
+  <p>
+    Tap or click the button to start the race.
+  </p>
+
+  <div class="intro-panel">
+    <!-- <ul class="level-icons">
+    {% for level in levels %}
+      <li><i class="{{ level.slug }}"></i></li>
+    {% endfor %}
+    </ul> -->
+
+    <span class="o-typography-flyline">Level 1</span>
+    <h2>Track cycling</h2>
+
+    <div class="next-level">
+      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: left">
+        <h2 class="hoverable-text">
+          Compete as a man
+        </h2>
+
+        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-man.jpg?source=ig">
+      </button>
+
+      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: right">
+        <h2 class="hoverable-text">
+          Compete as a woman
+        </h2>
+
+        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig">
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="o-typography-footer">
+  <p>
+    <small>
+      <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+      The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
+      <a href="http://fontawesome.io" target="_blank" class="o-typography-link">Font Awesome</a> by Dave Gandy.
+      <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
+    </small>
+  </p>
+</footer>
 
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">

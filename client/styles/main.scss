@@ -1,4 +1,7 @@
+@import 'variables';
 @import 'o-colors/main';
+@import 'o-grid/main';
+@import 'https://fonts.googleapis.com/css?family=Monoton';
 
 $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
@@ -13,9 +16,27 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     font-style: normal;
 }
 
+@font-face{
+  font-family:'FontAwesome';
+  src:url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.eot?v=4.6.3");src:url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.eot?#iefix&v=4.6.3") format("embedded-opentype"),url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3") format("woff2"),url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.woff?v=4.6.3") format("woff"),url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.ttf?v=4.6.3") format("truetype"),url("https://ig.ft.com/static/on-your-marks/assets-1/icons/font-awesome-4.6.3/fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular") format("svg");
+  font-weight:normal;font-style:normal}
+.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-15%}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}
+
+@mixin icon($name, $content) {
+.fa-#{$name}:before{content:$content;}
+}
+
+
+@include icon('bullhorn', $fa-var-bullhorn);
+@include icon('volume-up', $fa-var-volume-up);
+@include icon('circle', $fa-var-circle);
+
+
 .level {
   width: 100%;
   height: 100vh;
+  margin-left: -10px;
   overflow: hidden;
   display: none;
   position: fixed;
@@ -425,6 +446,7 @@ ul.level-icons {
     border-radius: 48px;
     &.cycle {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/cycle.svg) no-repeat center 3px;
+      fill: #fff;
     }
     &.swim {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/swim.svg) no-repeat center center;
@@ -432,5 +454,192 @@ ul.level-icons {
     &.sprint {
       background: url(https://ig.ft.com/static/on-your-marks/assets-1/icons/sprint.svg) no-repeat center center;
     }
+    > svg {
+      fill: #fff;
+    }
+  }
+}
+
+.o-header {
+  position: relative;
+  background-color: transparent !important;
+}
+
+.intro-container {
+  -webkit-display: flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  margin-top: -64px;
+  margin-bottom: 40px;
+  padding-top: 64px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background: url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fintro-bg.jpg?source=ig&width=1920&quality=high) no-repeat top center;
+  background-size: cover;
+}
+
+.title-container {
+  max-width: 800px;
+  align-self: center;
+  padding: 0 0.75em;
+  text-align: center;
+  h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1;
+    font-family: 'Monoton', cursive;
+    font-size: 3.5em;
+    font-weight: 400;
+    color: #fff;
+  }
+  .standfirst {
+    color: oColorsGetPaletteColor('white');
+    margin-bottom: 20px;
+  }
+}
+
+.o-share {
+  margin-bottom: 5px;
+}
+
+.panel-container {
+  min-width: 33%;
+  max-width: 625px;
+  align-self: center;
+  color: oColorsGetPaletteColor('white');
+  .icon-container {
+    text-align: center;
+  }
+  > h2 {
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 1.7em;
+    color: oColorsGetPaletteColor('white');
+  }
+  p {
+    margin-top: 0.10px;
+    font-size: 20px;
+    text-shadow: 0 0 2px oColorsGetPaletteColor('grey-tint5');
+    text-align: center;
+  }
+}
+
+.intro-panel {
+  min-width: 33%;
+  max-width: 625px;
+  align-self: center;
+  margin: 20px auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(39, 117, 123, 1);
+  border-radius: 4px;
+  padding: 20px;
+  background: rgba(29, 29, 29, 0.8);
+  -webkit-backdrop-filter: blur(6px);
+  color: oColorsGetPaletteColor('white');
+  .o-typography-flyline {
+    color: oColorsGetPaletteColor('teal-1');
+  }
+  > h2 {
+    margin-top: 0;
+    font-size: 1.7em;
+    color: oColorsGetPaletteColor('white');
+  }
+  .next-level {
+    max-height: 349px;
+    overflow: hidden;
+  }
+
+  .img-hoverable {
+    position: relative;
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    outline: 0;
+    .hoverable-text {
+      position: absolute;
+      z-index: 1;
+      margin-right: auto;
+      margin-left: auto;
+      text-align: center;
+      text-shadow: 0 0 2px oColorsGetPaletteColor('grey-tint5');
+      cursor: pointer;
+    }
+    img {
+      width: 100%;
+      // vertical-align: top;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height:100%;
+      top:0;
+      left:0;
+      background: rgba(29, 29, 29, 0.8);
+      opacity: 0;
+      transition: all 300ms;
+      -webkit-transition: all 300ms;
+    }
+    &:hover:after {
+      opacity: 1;
+    }
+  }
+}
+
+.o-typography-footer {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: auto;
+  color: oColorsGetPaletteColor('grey-tint1');
+  p {
+    text-align: left;
+  }
+}
+
+footer.o-footer {
+  margin-top: -40px;
+}
+
+@include oGridRespondTo (S) {
+  .title-container h1 {
+    font-size: 2.4em;
+  }
+}
+
+@include oGridRespondTo (M) {
+  .title-container h1 {
+    font-size: 4.9em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83px;
+  }
+  .o-typography-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@include oGridRespondTo (L) {
+  .title-container h1 {
+    font-size: 4.4em;
+  }
+  .o-typography-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@include oGridRespondTo (XL) {
+  .title-container h1 {
+    font-size: 5.3em;
+  }
+  .o-typography-footer {
+    max-width: 1180px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
 }
