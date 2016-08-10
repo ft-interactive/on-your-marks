@@ -27,11 +27,9 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 .fa-#{$name}:before{content:$content;}
 }
 
-
 @include icon('bullhorn', $fa-var-bullhorn);
 @include icon('volume-up', $fa-var-volume-up);
 @include icon('circle', $fa-var-circle);
-
 
 .level {
   width: 100%;
@@ -46,6 +44,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+
+  button {
+    user-select: none;
+  }
 
   &[data-level="cycle"] {
     background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/cycle-bg.jpg);

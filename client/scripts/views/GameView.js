@@ -53,15 +53,16 @@ export default class GameView {
   }
 
   showLevel(level, previous) {
-    document.body.style.overflow = 'hidden';
 
     if (this.stopwatchView) {
       this.stopwatchView.el = document.querySelector(`[data-clock=${level.slug}]`);
     }
 
     if (level) {
+      document.body.style.overflow = 'hidden';
       this.levelViews.find(v => v.level === level).show();
     } else {
+      document.body.style.overflow = null;
       // TODO: what to do if there's no level
     }
 
