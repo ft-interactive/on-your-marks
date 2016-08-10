@@ -21,7 +21,7 @@ function createHowl(slug, name) {
 function fadeOutAndReturnToStart(sound, duration = 200) {
   if (!sound.playing()) return;
   sound.once('fade', () => {
-    sound.seek(0);
+    sound.stop();
   });
   sound.fade(1, 0, duration);
 }
