@@ -23,7 +23,7 @@ export default class Level extends EventEmitter {
     for (const key of Object.keys(options)) {
       Object.defineProperty(this, key, { value: options[key], enumerable: true });
     }
-
+console.log(this);
     this.noStartTimeout = 5000;
     this.technicalFalseStartDuration = 0;
 
