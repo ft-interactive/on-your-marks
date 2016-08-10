@@ -39,9 +39,13 @@ THIS SHOWS THE COMPASION DATA
 </div>
 {% endmacro %}
 
-{% macro countdown(slug, intro) %}
+{% macro countdown(slug, text) %}
+  {% set content=caller() %}
   {% call statePanel(slug, "countdown") %}
   <button class="countdown-status game__race-button" name="stopwatch-stop">WAIT</button>
+  <div class="countdown-message">
+    {{ content }}
+  </div>
   {% endcall %}
 {% endmacro %}
 
@@ -97,7 +101,17 @@ THIS SHOWS THE COMPASION DATA
     {{ clock(level.slug, level.clockname) }}
     {{ loading() }}
     <div class="level__states">
-      {{ countdown(level.slug, level.intro) }}
+      {% call countdown(level.slug, level.countdownInstruction) %}
+      {% if level.slug == 'cycle' %}
+      <p>Counting down...</p>
+      <p>5, 4, 3, 2, 1, Go!</p>
+      {% elif level.slug == 'swim' %}
+      <p>This one is quicker</p>
+      <p>"Take you marks", "Go"</p>
+      {% elif level.slug == 'sprint' %}
+      <p>Listen for the gun</p>
+      {% endif %}
+      {% endcall %}
       <div class="level__complete">
         {{ normalStart(level.slug) }}
         {{ falseStart(level.slug) }}
