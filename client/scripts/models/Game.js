@@ -4,7 +4,7 @@ export default class Game extends EventEmitter {
 
   constructor(levels, stopwatch) {
     super();
-    this.currentLevel = null;
+    this._currentLevel = null;
     this.levels = levels;
     this.stopwatch = stopwatch;
     levels.forEach(level => {
@@ -16,45 +16,44 @@ export default class Game extends EventEmitter {
     });
   }
 
-  begin() {
-    this.setCurrentLevel(this.levels[0]);
+  firstLevel() {
+    this.currentLevel = this.levels[0];
   }
 
   lastLevel() {
-    this.setCurrentLevel(this.levels[this.levels.length - 1]);
+    this.currentLevel = this.levels[this.levels.length - 1];
   }
 
   end() {
+    if (this.currentLevel) {
+      this.currentLevel.stop(0);
+    }
     this.lastLevel();
     setTimeout(() => {
-      this.currentLevel.stop();
+      this.currentLevel.stop(101);
     }, 1);
   }
 
   nextLevel() {
     if (!this.currentLevel) {
-      this.begin();
+      this.firstLevel();
     } else if (!this.currentLevel.isLast) {
-      this.setCurrentLevel(this.currentLevel.nextLevel);
+      this.currentLevel = this.currentLevel.nextLevel;
     }
   }
 
-  replayLevel(slug) {
-    if (this.currentLevel && this.currentLevel.slug === slug) {
-      this.currentLevel.replay();
-      return;
-    }
-
-    this.setCurrentLevelSlug(slug);
+  get currentLevel() {
+    return this._currentLevel;
   }
 
-  setCurrentLevel(level) {
-    this.currentLevel = level;
-    this.currentLevel.start();
+  set currentLevel(level) {
+    const previous = this._currentLevel;
+    this._currentLevel = level;
+    this.emit('changelevel', level, previous);
   }
 
-  setCurrentLevelSlug(slug) {
-    this.setCurrentLevel(this.levels.find(l => l.slug === slug));
+  getLevelBySlug(slug) {
+    return this.levels.find(l => l.slug === slug);
   }
 
 }

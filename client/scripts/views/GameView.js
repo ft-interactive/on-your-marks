@@ -17,8 +17,10 @@ export default class GameView {
         this.el.addEventListener(type, event => event.preventDefault());
       });
 
+    game.on('changelevel', this.showLevel.bind(this));
+
     delegate.on('click', '[name="first-level"]', () => {
-      game.begin();
+      game.firstLevel();
     });
 
     delegate.on('click', '[name="next-level"]', () => {
@@ -26,8 +28,7 @@ export default class GameView {
     });
 
     delegate.on('click', '[name="replay-level"]', event => {
-      const slug = event.target.value;
-      game.replayLevel(slug);
+      this.game.currentLevel = this.game.getLevelBySlug(event.target.value);
     });
 
     delegate.on('mousedown', '[name="stopwatch-stop"]', () => {
@@ -35,44 +36,38 @@ export default class GameView {
       game.currentLevel.stop(game.stopwatch.getCurrentTime());
     });
 
+    // For swimming add a little bit of time to leave the block
     delegate.on('click', '[name="stopwatch-stop"]', () => {
       if (game.currentLevel.slug !== 'swim') return;
-      game.currentLevel.stop(game.stopwatch.getCurrentTime());
+      setTimeout(() => {
+        game.currentLevel.stop(game.stopwatch.getCurrentTime());
+      }, 60);
     });
 
     // TODO: handle spacebar activation
     // delegate.on('keydown', '[name="stopwatch-stop"]', event => {
-    //   game.currentLevel.stop();
+    //   game.currentLevel.stop(game.stopwatch.getCurrentTime());
     // });
 
     this.levelViews = game.levels.map(level => new LevelView(getLevelElement(level.slug), level));
-
-    game.levels.forEach(l => {
-      l.on('start', () => {
-        this.showLevel(l);
-      });
-      l.on('replay', () => this.resetLevel(l));
-    });
   }
 
-  showLevel() {
+  showLevel(level, previous) {
     document.body.style.overflow = 'hidden';
 
     if (this.stopwatchView) {
-      this.stopwatchView.el = document.querySelector(`[data-clock=${this.game.currentLevel.slug}]`);
+      this.stopwatchView.el = document.querySelector(`[data-clock=${level.slug}]`);
     }
 
-    this.levelViews.forEach(view => {
-      if (view.level.slug === this.game.currentLevel.slug) {
-        view.show();
-      } else {
-        view.hide();
-      }
-    });
-  }
+    if (level) {
+      this.levelViews.find(v => v.level === level).show();
+    } else {
+      // TODO: what to do if there's no level
+    }
 
-  resetLevel() {
-    this.showLevel();
+    if (previous && previous !== level) {
+      this.levelViews.find(v => v.level === previous).hide();
+    }
   }
 
 }

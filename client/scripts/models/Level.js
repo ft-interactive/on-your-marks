@@ -1,7 +1,5 @@
 import { EventEmitter } from 'events';
 import Countdown from './Countdown';
-import * as Timings from './Timings';
-
 
 const Result = {
   INCOMPLETE: 'INCOMPLETE',
@@ -31,8 +29,7 @@ export default class Level extends EventEmitter {
       this.technicalFalseStartDuration = technicalFalseStarts[this.slug];
     }
 
-    const timings = Timings[this.slug];
-    this.countdown = new Countdown(timings, options.delayrandomness);
+    this.countdown = Countdown.createInstance(this.slug);
     this._timers = [];
   }
 
@@ -45,19 +42,18 @@ export default class Level extends EventEmitter {
   start() {
     if (this.complete) return;
 
-    this.countdown.onend = () => {
+    this.countdown.on('complete', () => {
       if (this.complete) return;
       this.step('go', this.noStartTimeout, () => {
         this.step('timeout', 0, () => {
           this.setResult(Result.NO_START);
         });
       });
-    };
+    });
 
-    this.countdown.onupdate = () => this.emit('countdownprogress', this.countdown.status);
+    this.countdown.on('update', () => this.emit('countdownprogress', this.countdown.status));
+    this.countdown.on('start', () => this.emit('start'));
     this.countdown.start();
-    this.countdown.onupdate();
-    this.emit('start');
   }
 
   stop(time) {
@@ -78,19 +74,21 @@ export default class Level extends EventEmitter {
       this.countdown.cancel();
     }
 
-    if (!result) return;
-
-    this.setResult(result, time);
-    this.emit('stop');
     const timers = this._timers;
     this._timers = [];
     timers.forEach(t => clearTimeout(t));
+
+    if (!result) return;
+    this.setResult(result, time);
+    this.emit('stop');
   }
 
-  replay() {
+  restart() {
+    this.countdown.cancel();
     this.setResult();
-    this.emit('replay');
+    this.stop();
     this.start();
+    this.emit('replay');
   }
 
   setResult(result = Result.INCOMPLETE, time) {

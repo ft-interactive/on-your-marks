@@ -18,7 +18,7 @@ export const cycle = sequence(
   ['3', secs(1)],
   ['2', secs(1)],
   ['1', secs(1)],
-  ['Peddle!', secs(1)]
+  ['Pedal!', secs(1)]
 );
 
 export const swim = sequence(
