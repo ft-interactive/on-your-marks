@@ -376,6 +376,7 @@ ul.level-icons {
 }
 
 .o-header {
+  position: relative;
   background-color: transparent !important;
 }
 
@@ -386,7 +387,6 @@ ul.level-icons {
   flex-direction: column;
   -webkit-justify-content: flex-start;
   justify-content: flex-start;
-  // height: calc(100vh + 100px);
   margin-top: -64px;
   margin-bottom: 40px;
   padding-top: 64px;
@@ -402,7 +402,7 @@ ul.level-icons {
   padding: 0 0.75em;
   text-align: center;
   h1 {
-    // margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 10px;
     line-height: 1;
     font-family: 'Monoton', cursive;
@@ -411,8 +411,8 @@ ul.level-icons {
     color: #fff;
   }
   .standfirst {
-    margin-bottom: 0.75em;
     color: oColorsGetPaletteColor('white');
+    margin-bottom: 20px;
   }
 }
 
@@ -426,11 +426,7 @@ ul.level-icons {
   align-self: center;
   color: oColorsGetPaletteColor('white');
   .icon-container {
-    margin-top: 1.5em;
     text-align: center;
-    i {
-      margin-right: 5px;
-    }
   }
   > h2 {
     margin-bottom: 0;
@@ -439,7 +435,9 @@ ul.level-icons {
     color: oColorsGetPaletteColor('white');
   }
   p {
-    margin-top: 0.33em;
+    margin-top: 0.10px;
+    font-size: 20px;
+    text-shadow: 0 0 2px oColorsGetPaletteColor('grey-tint5');
     text-align: center;
   }
 }
@@ -448,28 +446,34 @@ ul.level-icons {
   min-width: 33%;
   max-width: 625px;
   align-self: center;
-  margin-top: 3%;
+  margin: 20px auto;
   border-style: solid;
   border-width: 1px;
   border-color: rgba(39, 117, 123, 1);
   border-radius: 4px;
-  padding: 0 20px;
+  padding: 10px 20px;
   background: rgba(29, 29, 29, 0.8);
   -webkit-backdrop-filter: blur(6px);
   color: oColorsGetPaletteColor('white');
+  .o-typography-flyline {
+    color: oColorsGetPaletteColor('teal-1');
+  }
   h2 {
-    text-align: center;
+    margin-top: 0;
     font-size: 1.7em;
     color: oColorsGetPaletteColor('white');
   }
 }
 
 .o-typography-footer {
-  min-width: 33%;
-  max-width: 800px;
-  align-self: center;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: auto;
   color: oColorsGetPaletteColor('grey-tint1');
+  p {
+    text-align: left;
+  }
 }
 
 footer.o-footer {
@@ -486,7 +490,11 @@ footer.o-footer {
   .title-container h1 {
     font-size: 4.9em;
     margin-top: 0.83em;
-    margin-bottom: 10px;
+    margin-bottom: 0.83px;
+  }
+  .o-typography-footer {
+    padding-right: 10px;
+    padding-left: 10px;
   }
 }
 
@@ -494,10 +502,19 @@ footer.o-footer {
   .title-container h1 {
     font-size: 4.4em;
   }
+  .o-typography-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
 }
 
 @include oGridRespondTo (XL) {
   .title-container h1 {
     font-size: 5.3em;
+  }
+  .o-typography-footer {
+    max-width: 1180px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
 }
