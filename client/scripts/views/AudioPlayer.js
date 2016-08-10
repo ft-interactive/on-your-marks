@@ -1,106 +1,74 @@
 import { Howl } from 'howler';
-import { EventEmitter } from 'events';
-import Bluebird from 'bluebird';
 
-const config = window.__gameConfig;
-const qs = selector => document.querySelector(selector);
-const assetRoot = config.assetRoot;
+const assetRoot = window.__gameConfig.assetRoot;
 
-const soundTypes = [{
-  name: 'countdown',
-  loop: false,
-}, {
-  name: 'signal',
-  loop: false,
-}, {
-  name: 'false',
-  loop: false,
-}];
-
-
-/**
- * Returns a promise for a new Howl instance. Resolves when the sound is loaded
- * and ready to play.
- */
-const getSound = options => new Bluebird((resolve, reject) => {
-  const sound = new Howl({
-    ...options,
-    onload: () => resolve(sound),
-    onloaderror: (id, error) => {
-      reject(error instanceof Error ? error : new Error(error));
+function createHowl(slug, name) {
+  const h = new Howl({
+    src: [
+      `${assetRoot}/audio/${slug}-${name}.mp3`,
+    ],
+    volume: 1,
+    preload: true,
+    loop: false,
+    onloaderror: () => {
+      h.loaderror = true;
     },
   });
-});
 
-/**
- * This is a kind of model/state machine, but also takes care of playing sounds, so it's
- * a bit of a 'view' too...
- */
-export default class AudioPlayer extends EventEmitter {
-  constructor(slug) {
-    super();
+  return h;
+}
 
-    this.slug = slug
-  }
+function fadeOutAndReturnToStart(sound, duration = 200) {
+  if (!sound.playing()) return;
+  sound.once('fade', () => {
+    sound.seek(0);
+  });
+  sound.fade(1, 0, duration);
+}
 
-  /**
-   * Returns a promise that resolves when `this._sounds` is ready to use.
-   * Can be called multiple times; only the first time does it start downloads.
-   */
-  async load() {
-    if (!this._readyPromise) {
-      this._readyPromise = Promise.resolve().then(async () => {
-        const soundPromises = {};
+function transition(from, to) {
+  fadeOutAndReturnToStart(from);
 
-        for (const { name, loop } of soundTypes) {
-          soundPromises[name] = getSound({
-            src: [`${assetRoot}/audio/${this.slug}-${name}.mp3`],
-            loop,
-          });
-        }
-
-        this._sounds = await Bluebird.props(soundPromises);
-      });
+  return new Promise((resolve, reject) => {
+    if (to.loaderror) {
+      reject();
+      return;
     }
+    to.onloaderror = (id, reason) => {
+      reject(reason);
+    };
+    to.once('play', resolve);
+    to.volume(1);
+    to.play();
+  });
+}
 
-    return this._readyPromise;
+export default class AudioPlayer {
+
+  constructor(slug) {
+    this.countdown = createHowl(slug, 'countdown');
+    this.falseStart = createHowl(slug, 'false');
+    this.signal = createHowl(slug, 'signal');
   }
 
-  /**
-   * Stops all/any sounds that are playing.
-   */
-  async stop() {
-    await this.load();
-    await Bluebird.map(Object.keys(this._sounds), soundType => new Bluebird(resolve => {
-      const sound = this._sounds[soundType];
-      sound.once('stop', () => resolve());
-      sound.stop();
-    }));
+  playCountdownClip() {
+    if (this.signal.playing()) {
+      fadeOutAndReturnToStart(this.signal, 300);
+    }
+    return transition(this.falseStart, this.countdown);
   }
 
-  /**
-   * Plays the named sound clip, and waits for it to finish.
-   * Or, if you set awaitCompletion to false, it resolves as soon as the sound
-   * has started playing.
-   */
-  async play(name, volume = 1, awaitCompletion = true) {
-    await new Bluebird(resolve => {
-      const sound = this._sounds[name];
-      sound.once((awaitCompletion ? 'end' : 'play'), () => resolve());
-      sound.volume(volume);
-      sound.play();
-    });
+  playFalseStartClip() {
+    return transition(this.countdown, this.falseStart);
   }
 
-  /**
-   * Fades the given already-playing sound. Waits for the fade to complete.
-   */
-  async fade(name, fromVolume, toVolume, duration) {
-    await new Bluebird(resolve => {
-      const sound = this._sounds[name];
-      sound.once('fade', () => resolve());
-      sound.fade(fromVolume, toVolume, duration);
-    });
+  playSignalClip() {
+    return transition(this.countdown, this.signal);
   }
 
+  stopAll() {
+    this.countdown.stop();
+    this.falseStart.stop();
+    this.signal.stop();
+  }
 }
