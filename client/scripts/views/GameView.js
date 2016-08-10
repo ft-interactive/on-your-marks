@@ -12,10 +12,13 @@ export default class GameView {
 
     const delegate = new Delegate(this.el);
 
+
+    this.levelContainer = this.el.querySelector('.level');
+
     ['mousedown', 'mouseup', 'mouseout', 'click',
-      'touchstart', 'touchmove', 'touchmove'].forEach(type => {
-        this.el.addEventListener(type, event => event.preventDefault());
-      });
+     'touchmove'].forEach(type => {
+      this.levelContainer.addEventListener(type, event => event.preventDefault());
+    });
 
     game.on('changelevel', this.showLevel.bind(this));
 
