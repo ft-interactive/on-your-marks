@@ -51,7 +51,11 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
   &__state {
     margin: 0 auto;
-    text-align: center;;
+    text-align: center;
+
+    &[data-state="countdown"] {
+      display: none;
+    }
 
     &[data-state="false-start"] {
       background-color: red;
@@ -330,9 +334,26 @@ html.game-on {
     }
   }
 
-  &__race-loader,
+  &__race-loader {
+    text-align: center;
+    display: block;
+    width: 333px;
+    height: 333px;
+    border-radius: 100%;
+    border: none;
+    background-color: #0363b7;
+    position: relative;
+    margin: 40px auto;
+    font-size: 60px;
+    transition: all 0.1s;
+    box-shadow: 0px 20px 0px #034f92;
+    transform: rotateX(33deg);
+    color: white;
+  }
+
   &__race-button {
     text-align: center;
+    color: white;
     display: block;
     width: 333px;
     height: 333px;
@@ -354,21 +375,21 @@ html.game-on {
     &.error {
       background-color: red;
       box-shadow: 0px 20px 0px darken(red, 20);
-      &:after {
+      &:active {
         box-shadow: 0px 8px 0px darken(red, 30);
       }
     }
     &.go {
       background-color: green;
       box-shadow: 0px 20px 0px darken(green, 10);
-      &:after {
+      &:active {
         box-shadow: 0px 8px 0px darken(green, 15);
       }
     }
     &.countdown {
       background-color: orange;
       box-shadow: 0px 20px 0px darken(orange, 20);
-      &:after {
+      &:active {
         box-shadow: 0px 8px 0px darken(orange, 30);
       }
     }

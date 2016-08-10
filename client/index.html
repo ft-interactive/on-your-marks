@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% macro loading() %}
-<div style="display:none;" class="game-race__loader">LOADING</div>
+<div class="game__race-loader">LOADING</div>
 {% endmacro %}
 
 {% macro lastScreen(levels) %}
@@ -86,13 +86,14 @@ THIS SHOWS THE COMPASION DATA
 {% endfor %}
 </ul>
 
-<b>Use headphones or turn up your sound!</b>
 
 <div class="play-button-wrapper">
-  <button name="first-level">Play as a man</button>
-  <button name="first-level">Play as a woman</button>
-  <span class="loading-indicator">Loading...</span>
-  <button class="play-game-button">Play game</button>
+  <b>Use headphones or turn up your sound!</b>
+  <h2>
+    LEVEL 1: Track cycling
+  </h2>
+  <button name="first-level" style="vertical-align:middle;display:inline-block;width:100px;height:100px">Enter mens event</button>
+  <button name="first-level" style="vertical-align:middle;display:inline-block;width:100px;height:100px">Enter womens event</button>
 </div>
 
 

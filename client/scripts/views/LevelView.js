@@ -1,34 +1,25 @@
 import { scaleThreshold } from 'd3-scale';
 import AudioPlayer from './AudioPlayer';
 
+// TODO: dont hard code these values, use real data
+//       to generate a histogram to make the domain
+//       - or at least make the reflect the sport's data
+// TODO: tweak the messages
+const messageScale = scaleThreshold()
+                        .domain([0, 180, 380, 620, 1100, 2000])
+                        .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
+                                'Poor Effort', 'Terrible', 'Did you fall asleep?'])
+
 export default class LevelView {
   constructor(el, level) {
     this.el = el;
     this.level = level;
     this.hideAllState();
-    this.level.on('result', () => this.updateState());
-    this.level.on('start', () => {
-      // TODO: inc ase of replay fix
-      // fading out of false start audio clip
-      // this.audio.fade('false', 1, 0, 600);
-      this.audio.play('countdown');
-      this.updateCountdownStatus();
-    });
-    // TODO: dont hard code these values, use real data
-    //       to generate a histogram to make the domain
-    //       - or at least make the reflect the sport's data
-    // TODO: tweak the messages
-    this.messageScale = scaleThreshold()
-                            .domain([0, 200, 400, 650, 1100, 2000])
-                            .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
-                                    'Poor Effort', 'Terrible', 'Did you fall asleep?']);
-
-    this.level.on('countdownprogress', () => this.updateCountdownStatus());
     this.audio = new AudioPlayer(this.level.slug);
-    setTimeout(async () => {
-      await this.audio.load();
-    }, 0);
-    this.updateState();
+    this.level.on('result', () => this.updateState());
+    this.level.on('start', () => this.updateCountdownStatus());
+    this.level.on('countdownprogress', () => this.updateCountdownStatus());
+    this._loaded = false;
   }
 
   hideAllState() {
@@ -60,7 +51,7 @@ export default class LevelView {
     const countdown = this.level.countdown;
 
     if (countdown.complete) {
-      this.audio.play('signal');
+      this.audio.playSignalClip();
       msgEl.classList.remove('countdown', 'error');
       msgEl.classList.add('go');
     } else if (countdown.running) {
@@ -73,8 +64,7 @@ export default class LevelView {
   }
 
   falseStart() {
-    this.audio.fade('countdown', 1, 0, 300);
-    this.audio.play('false');
+    this.audio.playFalseStartClip();
     setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
@@ -98,9 +88,8 @@ export default class LevelView {
 
   normalStart() {
     const _el = this.getStateElement('normal-start');
-    const msg = this.messageScale(this.level.time);
+    const msg = messageScale(this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
-    console.log(msg, this.level.time);
     setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
@@ -118,13 +107,24 @@ export default class LevelView {
   }
 
   show() {
+    this.hideAllState();
     this.el.style.display = 'block';
-    // TODO: dont let the user play and dont start countdown until
-    //       the audio is loaded
+    this.el.querySelector('.level__complete').style.display = 'none';
+    const loader = this.el.querySelector('.game__race-loader');
+    const showLoader = setTimeout(() => {
+      loader.style.display = 'block';
+    }, 800);
+    this.audio.playCountdownClip().then(() => {
+      this.level.restart();
+      clearTimeout(showLoader);
+      loader.style.display = 'none';
+    });
   }
 
   hide() {
     this.el.style.display = 'none';
+    this.level.stop();
+    this.audio.stopAll();
   }
 
   getStateElement(state) {
