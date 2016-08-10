@@ -10,11 +10,10 @@ export default class LevelView {
     this.level.on('start', () => {
       // TODO: inc ase of replay fix
       // fading out of false start audio clip
-      //this.audio.fade('false', 1, 0, 600);
+      // this.audio.fade('false', 1, 0, 600);
       this.audio.play('countdown');
-      this.updateCountdownStatus()
+      this.updateCountdownStatus();
     });
-
     // TODO: dont hard code these values, use real data
     //       to generate a histogram to make the domain
     //       - or at least make the reflect the sport's data
@@ -22,7 +21,7 @@ export default class LevelView {
     this.messageScale = scaleThreshold()
                             .domain([0, 200, 400, 650, 1100, 2000])
                             .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
-                                    'Poor Effort', 'Terrible', 'Did you fall asleep?'])
+                                    'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
     this.level.on('countdownprogress', () => this.updateCountdownStatus());
     this.audio = new AudioPlayer(this.level.slug);
@@ -61,7 +60,7 @@ export default class LevelView {
     const countdown = this.level.countdown;
 
     if (countdown.complete) {
-      this.audio.play('signal')
+      this.audio.play('signal');
       msgEl.classList.remove('countdown', 'error');
       msgEl.classList.add('go');
     } else if (countdown.running) {
@@ -76,7 +75,7 @@ export default class LevelView {
   falseStart() {
     this.audio.fade('countdown', 1, 0, 300);
     this.audio.play('false');
-    setTimeout(()=>{
+    setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       const _el = this.getStateElement('false-start');
