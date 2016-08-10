@@ -10,11 +10,10 @@ export default class LevelView {
     this.level.on('start', () => {
       // TODO: inc ase of replay fix
       // fading out of false start audio clip
-      //this.audio.fade('false', 1, 0, 600);
+      // this.audio.fade('false', 1, 0, 600);
       this.audio.play('countdown');
-      this.updateCountdownStatus()
+      this.updateCountdownStatus();
     });
-
     // TODO: dont hard code these values, use real data
     //       to generate a histogram to make the domain
     //       - or at least make the reflect the sport's data
@@ -22,7 +21,7 @@ export default class LevelView {
     this.messageScale = scaleThreshold()
                             .domain([0, 200, 400, 650, 1100, 2000])
                             .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
-                                    'Poor Effort', 'Terrible', 'Did you fall asleep?'])
+                                    'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
     this.level.on('countdownprogress', () => this.updateCountdownStatus());
     this.audio = new AudioPlayer(this.level.slug);
@@ -61,17 +60,14 @@ export default class LevelView {
     const countdown = this.level.countdown;
 
     if (countdown.complete) {
-      this.audio.play('signal')
-      // msgEl.style.backgroundColor = 'green';
-      msgEl.classList.remove('countdown');
+      this.audio.play('signal');
+      msgEl.classList.remove('countdown', 'error');
       msgEl.classList.add('go');
     } else if (countdown.running) {
-      // msgEl.style.backgroundColor = 'orange';
-      msgEl.classList.remove('go');
+      msgEl.classList.remove('go', 'error');
       msgEl.classList.add('countdown');
     } else {
-      msgEl.classList.remove('go');
-      msgEl.classList.remove('countdown');
+      msgEl.classList.remove('go', 'countdown');
     }
     msgEl.innerHTML = this.level.countdown.status || 'WAIT';
   }
@@ -79,10 +75,18 @@ export default class LevelView {
   falseStart() {
     this.audio.fade('countdown', 1, 0, 300);
     this.audio.play('false');
-    this.el.querySelector('.level__complete').style.display = 'block';
-    this.hideAllState();
-    const _el = this.getStateElement('false-start');
-    _el.style.display = 'block';
+    setTimeout(() => {
+      this.hideAllState();
+      this.el.querySelector('.level__complete').style.display = 'block';
+      const _el = this.getStateElement('false-start');
+      _el.style.display = 'block';
+    }, 700);
+    {
+      const _el = this.getStateElement('countdown');
+      const msgEl = _el.querySelector('.countdown-status');
+      msgEl.classList.remove('go', 'countdown');
+      msgEl.classList.add('error');
+    }
   }
 
   noStart() {
@@ -93,14 +97,15 @@ export default class LevelView {
   }
 
   normalStart() {
-    this.hideAllState();
-    this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('normal-start');
-    _el.style.display = 'block';
-
     const msg = this.messageScale(this.level.time);
-    console.log(msg, this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
+    console.log(msg, this.level.time);
+    setTimeout(() => {
+      this.hideAllState();
+      this.el.querySelector('.level__complete').style.display = 'block';
+      _el.style.display = 'block';
+    }, 800);
   }
 
   incomplete() {
@@ -108,6 +113,8 @@ export default class LevelView {
     this.el.querySelector('.level__complete').style.display = 'none';
     const _el = this.getStateElement('countdown');
     _el.style.display = 'block';
+    const msgEl = _el.querySelector('.countdown-status');
+    msgEl.classList.remove('go', 'error', 'countdown');
   }
 
   show() {

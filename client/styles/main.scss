@@ -124,10 +124,11 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   width: 360px;
   margin: 40px auto;
   text-align: right;
-  // background-color: #050505;
+  font-feature-settings: "tnum";
   background-color: #bd1713;
-  // border: 1px solid black;
-  color: rgb(222, 160, 0);
+  border: 1px solid darken(#bd1713, 12);
+  color: rgba(222, 160, 0, 0.95);
+  text-shadow: 0 0 8px rgba(240, 160, 0, 0.22), 0 0 2px rgba(235, 160, 0, 0.4);
   font-family: 'clock', monospace;
   padding: 0 12px;
   font-size: 38px;
@@ -350,19 +351,25 @@ html.game-on {
       position:relative;
       top: 12px;
     }
-
+    &.error {
+      background-color: red;
+      box-shadow: 0px 20px 0px darken(red, 20);
+      &:after {
+        box-shadow: 0px 8px 0px darken(red, 30);
+      }
+    }
     &.go {
       background-color: green;
-      box-shadow: 0px 20px 0px #006d00;
+      box-shadow: 0px 20px 0px darken(green, 10);
       &:after {
-        box-shadow: 0px 8px 0px #015601;
+        box-shadow: 0px 8px 0px darken(green, 15);
       }
     }
     &.countdown {
       background-color: orange;
-      box-shadow: 0px 20px 0px #de6700;
+      box-shadow: 0px 20px 0px darken(orange, 20);
       &:after {
-        box-shadow: 0px 8px 0px #845601;
+        box-shadow: 0px 8px 0px darken(orange, 30);
       }
     }
   }
