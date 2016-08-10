@@ -1,6 +1,7 @@
 @import 'o-colors/main';
 @import 'o-grid/main';
 @import 'https://fonts.googleapis.com/css?family=Monoton';
+@import 'font-awesome';
 
 $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
@@ -384,7 +385,7 @@ ul.level-icons {
   flex-direction: column;
   -webkit-justify-content: flex-start;
   justify-content: flex-start;
-  height: calc(100vh - 46px);
+  // height: calc(100vh + 100px);
   margin-top: -64px;
   margin-bottom: 40px;
   padding-top: 64px;
@@ -394,11 +395,13 @@ ul.level-icons {
   background-size: cover;
 }
 
-.title {
+.title-container {
+  max-width: 800px;
+  align-self: center;
   padding: 0 0.75em;
   text-align: center;
-  > h1 {
-    margin-top: 10px;
+  h1 {
+    // margin-top: 10px;
     margin-bottom: 10px;
     line-height: 1;
     font-family: 'Monoton', cursive;
@@ -406,25 +409,62 @@ ul.level-icons {
     font-weight: 400;
     color: #fff;
   }
+  .standfirst {
+    margin-bottom: 0.75em;
+    color: oColorsGetPaletteColor('white');
+  }
 }
 
 .o-share {
   margin-bottom: 5px;
 }
 
-.intro-panel {
+.panel-container {
   min-width: 33%;
+  max-width: 625px;
   align-self: center;
-  margin-top: 5%;
-  border: 1px solid #2bbbbf;
-  border-radius: 4px;
-  padding: 0 20px;
-  background: rgba(51, 51, 51, 0.6);
-  -webkit-backdrop-filter: blur(12px);
-  p {
-    // margin-bottom: 5px;
+  // margin-top: 5%;
+  color: oColorsGetPaletteColor('white');
+  .icon-container {
+    margin-top: 1.5em;
+    text-align: center;
+    i {
+      margin-right: 5px;
+    }
+  }
+  h2 {
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 1.7em;
     color: oColorsGetPaletteColor('white');
   }
+  p {
+    margin-top: 0.33em;
+    text-align: center;
+  }
+}
+
+.intro-panel {
+  min-width: 33%;
+  max-width: 625px;
+  align-self: center;
+  margin-top: 3%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(39, 117, 123, 1);
+  border-radius: 4px;
+  padding: 0 20px;
+  background: rgba(29, 29, 29, 0.8);
+  -webkit-backdrop-filter: blur(12px);
+  color: oColorsGetPaletteColor('white');
+}
+
+.o-typography-footer {
+  min-width: 33%;
+  max-width: 800px;
+  align-self: center;
+  margin-top: auto;
+  color: oColorsGetPaletteColor('grey-tint1');
 }
 
 footer.o-footer {
@@ -432,31 +472,27 @@ footer.o-footer {
 }
 
 @include oGridRespondTo (S) {
-  .title h1 {
+  .title-container h1 {
     font-size: 2.4em;
   }
 }
 
 @include oGridRespondTo (M) {
-  .title h1 {
+  .title-container h1 {
     font-size: 4.9em;
     margin-top: 0.83em;
     margin-bottom: 10px;
   }
-
-  .intro-panel {
-    max-width: 625px;
-  }
 }
 
 @include oGridRespondTo (L) {
-  .title h1 {
+  .title-container h1 {
     font-size: 4.4em;
   }
 }
 
 @include oGridRespondTo (XL) {
-  .title h1 {
-    font-size: 5.8em;
+  .title-container h1 {
+    font-size: 5.3em;
   }
 }

@@ -73,10 +73,14 @@ THIS SHOWS THE COMPASION DATA
 
 {% block article_body %}
 
-<div class="title">
+<div class="title-container">
   <h1>on your marks</h1>
 
-  <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
+  <div class="o-typography-lead standfirst">
+    Think you're quick out of the blocks? Play to test your reaction times against Olympic athletes
+  </div>
+
+  <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
 
   <div data-o-component="o-share"
       class="o-share o-share--muted"
@@ -87,38 +91,55 @@ THIS SHOWS THE COMPASION DATA
       data-o-share-relatedTwitterAccounts="@ft">
   </div>
 
-  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script>
+  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
 </div>
 
-<div class="intro-panel">
-  <!-- <ul class="level-icons">
-  {% for level in levels %}
-    <li><i class="{{ level.slug }}"></i></li>
-  {% endfor %}
-  </ul> -->
-
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  </p>
-
-  <p>
-    <b>Use headphones or turn up your sound!</b>
-  </p>
-
-  <h2>First up: track cycling</h2>
-
-  <div class="play-button-wrapper">
-    <button name="first-level">Play as a man</button>
-    <button name="first-level">Play as a woman</button>
-    <span class="loading-indicator">Loading...</span>
-    <button class="play-game-button">Play game</button>
+<div class="panel-container">
+  <div class="icon-container">
+    <i class="fa fa-headphones fa-2x"></i>
+    <i class="fa fa-volume-up fa-2x"></i>
   </div>
 
-  <footer class="o-typography-footer">
-    <p><small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
-    The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Icons by Diego Naive via Noun Project.</small></p>
-  </footer>
+  <p>
+    This game is designed to be played with sound. For the best experience, use headphones or turn up your speakers.
+  </p>
+
+  <h2>Get set…</h2>
+
+  <p>
+    Listen for the starting signal in three different Olympic events – be careful not to false start!
+  </p>
+
+  <h2>GO!</h2>
+
+  <p>
+    Tap or click the button to start the race. Your reaction time will be displayed alongside those of professional athletes.
+  </p>
+
+  <div class="intro-panel">
+    <!-- <ul class="level-icons">
+    {% for level in levels %}
+      <li><i class="{{ level.slug }}"></i></li>
+    {% endfor %}
+    </ul> -->
+
+    <h2>First up: track cycling</h2>
+
+    <img src="http://placehold.it/620x349" style="width: 100%">
+
+    <div class="play-button-wrapper">
+      <button name="first-level">Play as a man</button>
+      <button name="first-level">Play as a woman</button>
+      <span class="loading-indicator">Loading...</span>
+      <button class="play-game-button">Play game</button>
+    </div>
+  </div>
 </div>
+
+<footer class="o-typography-footer">
+  <p><small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+  The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Icons by Diego Naive via Noun Project.</small></p>
+</footer>
 
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">
