@@ -5,10 +5,21 @@ import AudioPlayer from './AudioPlayer';
 //       to generate a histogram to make the domain
 //       - or at least make the reflect the sport's data
 // TODO: tweak the messages
-const messageScale = scaleThreshold()
-                        .domain([0, 180, 380, 620, 1100, 2000])
-                        .range(['False start', 'Incredible!!', 'Pretty good!', 'Fair',
-                                'Poor Effort', 'Terrible', 'Did you fall asleep?'])
+const messageScale = {};
+messageScale.cycle = scaleThreshold()
+                        .domain([0, 20, 120, 260, 360, 500, 2000])
+                        .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
+                                'Poor Effort', 'Terrible', 'Did you fall asleep?']);
+
+messageScale.swim = scaleThreshold()
+                      .domain([0, 130, 275, 450, 560, 750, 2000])
+                      .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
+                              'Poor Effort', 'Terrible', 'Did you fall asleep?']);
+
+messageScale.sprint = scaleThreshold()
+                      .domain([100, 120, 140, 180, 250, 500, 2000])
+                      .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
+                              'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
 export default class LevelView {
   constructor(el, level) {
@@ -88,7 +99,7 @@ export default class LevelView {
 
   normalStart() {
     const _el = this.getStateElement('normal-start');
-    const msg = messageScale(this.level.time);
+    const msg = messageScale[this.level.slug](this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
     setTimeout(() => {
       this.hideAllState();
