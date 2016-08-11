@@ -12,7 +12,7 @@ messageScale.cycle = scaleThreshold()
                                 'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
 messageScale.swim = scaleThreshold()
-                      .domain([0, 130, 275, 450, 560, 750, 2000])
+                      .domain([0, 150, 275, 450, 560, 750, 2000])
                       .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
                               'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
