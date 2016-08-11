@@ -13,7 +13,7 @@ const sequence = (...arr) => arr.map(args => delay(...args));
 const secs = (s = 1) => s * 1000;
 
 export const cycle = sequence(
-  ['5', secs(1)],
+  ['5', secs(9)],
   ['4', secs(1)],
   ['3', secs(1)],
   ['2', secs(1)],
