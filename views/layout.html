@@ -5,6 +5,7 @@
     {% include "includes/html-head.html" %}
   </head>
   <body>
+    <div id="preload-clock-font" style="position:fixed;top:-100px;left:-100px;opacity:0;font-family:clock;">1234567890</div>
 
     {% if flags.analytics %}
       {% include "includes/analytics.html" %}
@@ -16,23 +17,6 @@
 
     <main role="main">
       <article class="article" itemscope itemtype="http://schema.org/Article">
-        <!-- <div class="article-head o-grid-container">
-          <div class="o-grid-row">
-            <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
-
-              {% block article_head %}
-
-              {% if flags.shareButtons %}
-                {% include "includes/share.html" %}
-              {% endif %}
-
-              {% include "includes/article-head.html" %}
-              {% endblock %}
-
-            </header>
-          </div>
-        </div> -->
-
         <div class="intro-container">
           {% block article_body %}{% endblock %}
         </div>

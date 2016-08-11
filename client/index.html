@@ -1,19 +1,18 @@
 {% extends "layout.html" %}
 
-{% macro lastScreen() %}
-THIS IS THE END
+{% macro loading() %}
+<div class="game__race-loader">LOADING</div>
 {% endmacro %}
 
-{% macro introPanel(text) %}
-<p>{{text}}</p>
-<p><button class="game__ready-button">I'm ready</button></p>
-{% endmacro %}
-
-{% macro resultPanel(text, slug) %}
-<h4>TIME</h4>`,
-<p><button class="retry-button">Retry</button></p>,
-<p><i>pretty results table TKTK</i></p>,
-<p><a href="#{{slug}}">Next</a></p>`,
+{% macro lastScreen(levels) %}
+<div class="last-screen">
+  <div class="last-screen__replay-btns">
+    {% for level in levels %}
+    {{ replayButton(level.slug, level.name) }}
+    {% endfor %}
+  </div>
+  {% include "includes/share.html" %}
+</div>
 {% endmacro %}
 
 {% macro comparison() %}
@@ -40,9 +39,13 @@ THIS SHOWS THE COMPASION DATA
 </div>
 {% endmacro %}
 
-{% macro countdown(slug, intro) %}
+{% macro countdown(slug, text) %}
+  {% set content=caller() %}
   {% call statePanel(slug, "countdown") %}
   <button class="countdown-status game__race-button" name="stopwatch-stop">WAIT</button>
+  <div class="countdown-message">
+    {{ content }}
+  </div>
   {% endcall %}
 {% endmacro %}
 
@@ -67,17 +70,24 @@ THIS SHOWS THE COMPASION DATA
 {% endmacro %}
 
 {% macro clock(slug, d) %}
-<div class="clock">{{ d }}</div>
-<div class="clock clock--{{ slug }}" data-clock="{{ slug }}">0.00</div>
+
+<div class="clock clock--{{ slug }}">
+  <div class="clock__display">
+    <div class="clock__event">{{ d }}</div>
+  </div>
+  <div class="clock__display">
+    <div class="clock__time" data-clock="{{ slug }}">0.00</div>
+  </div>
+</div>
 {% endmacro %}
 
 {% block article_body %}
 
 <div class="title-container">
-  <h1>on your marks</h1>
+  <h1>{{ headline }}</h1>
 
   <div class="o-typography-lead standfirst">
-    Can you react faster than an Olympic athlete?
+    {{ summary }}
   </div>
 
   <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
@@ -92,67 +102,7 @@ THIS SHOWS THE COMPASION DATA
   </div>
 
   <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
-</div>
-
-<div class="panel-container">
-  <div class="icon-container">
-    <i class="fa fa-volume-up fa-2x"></i>
-  </div>
-  <p>
-    Make sure your device sound is on.
-  </p>
-
-  <div class="icon-container">
-    <i class="fa fa-bullhorn fa-2x"></i>
-  </div>
-
-  <p>
-    Listen for the starting signal – be careful not to false start!
-  </p>
-
-  <div class="icon-container">
-    <i class="fa fa-circle fa-2x"></i>
-  </div>
-
-  <p>
-    Tap or click the button to start the race.
-  </p>
-
-  <div class="intro-panel">
-    <!-- <ul class="level-icons">
-    {% for level in levels %}
-      <li><i class="{{ level.slug }}"></i></li>
-    {% endfor %}
-    </ul> -->
-
-    <span class="o-typography-flyline">Level 1</span>
-    <h2>Track cycling</h2>
-
-    <div class="next-level">
-      <div class="img-hoverable" style="max-width: 50%; float: left">
-        <h2 class="hoverable-text">
-          Compete as a man
-        </h2>
-
-        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-man.jpg?source=ig">
-      </div>
-
-      <div class="img-hoverable" style="max-width: 50%; float: right">
-        <h2 class="hoverable-text">
-          Compete as a woman
-        </h2>
-
-        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig">
-      </div>
-    </div>
-
-    <!-- <div class="play-button-wrapper">
-      <button name="first-level">Play as a man</button>
-      <button name="first-level">Play as a woman</button>
-      <span class="loading-indicator">Loading...</span>
-      <button class="play-game-button">Play game</button>
-    </div> -->
-  </div>
+>>>>>>> master
 </div>
 
 <footer class="o-typography-footer">
@@ -166,11 +116,44 @@ THIS SHOWS THE COMPASION DATA
   </p>
 </footer>
 
+  <p class="game-instruction"><i class="fa fa-volume-up fa-2x"></i> Turn on your sound</p>
+  <p class="game-instruction"><i class="fa fa-bullhorn fa-2x"></i> Listen for the starting signal</p>
+  <p class="game-instruction"><i class="fa fa-circle fa-2x"></i> Push the button to start the race<br/>Be careful not to false start!</p>
+
+  <div class="next-level__container">
+    <button name="first-level" class="next-level" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 1</div>
+      <h2 class="next-level__level-name">Track cycling</h2>
+      <div class="next-level__play">START THE GAME</div>
+    </button>
+
+    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 2</div>
+      <h2 class="next-level__level-name">Swimming</h2>
+    </button>
+
+    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 3</div>
+      <h2 class="next-level__level-name">Athletics</h2>
+    </button>
+  </div>
+
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">
     {{ clock(level.slug, level.clockname) }}
+    {{ loading() }}
     <div class="level__states">
-      {{ countdown(level.slug, level.intro) }}
+      {% call countdown(level.slug, level.countdownInstruction) %}
+      {% if level.slug == 'cycle' %}
+      <p>Counting down...</p>
+      <p>5, 4, 3, 2, 1, Go!</p>
+      {% elif level.slug == 'swim' %}
+      <p>This one is quicker</p>
+      <p>"Take you marks", "Go"</p>
+      {% elif level.slug == 'sprint' %}
+      <p>Listen for the gun</p>
+      {% endif %}
+      {% endcall %}
       <div class="level__complete">
         {{ normalStart(level.slug) }}
         {{ falseStart(level.slug) }}
@@ -179,10 +162,21 @@ THIS SHOWS THE COMPASION DATA
         {% if not loop.last %}
         {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
         {% else %}
-        {{ lastScreen() }}
+        {{ lastScreen(levels) }}
         {% endif %}
       </div>
     </div>
   </div>
 {% endfor %}
+
+<footer class="o-typography-footer">
+  <p>
+    <small>
+      <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+      The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
+      <a href="http://fontawesome.io" target="_blank" class="o-typography-link">Font Awesome</a> by Dave Gandy.
+      <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
+    </small>
+  </p>
+</footer>
 {% endblock %}

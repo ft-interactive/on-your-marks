@@ -27,7 +27,7 @@ const AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
   'ff >= 30',
   'chrome >= 34',
-  'iOS >= 7',
+  'iOS >= 8',
   'Safari >= 7',
 ];
 
@@ -253,33 +253,6 @@ gulp.task('revreplace', ['revision'], () =>
     .pipe(revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
     .pipe(gulp.dest('dist'))
 );
-
-gulp.task('download-data', async () => {
-  if (!process.env.SPREADSHEET_KEY) {
-    console.error('Environment variable SPREADSHEET_KEY is not set. Failed.');
-    process.exit(1);
-  }
-
-  const url = `http://bertha.ig.ft.com/republish/publish/gss/${process.env.SPREADSHEET_KEY}/levels,options`;
-
-  console.log('Downloading data from', url);
-
-  const data = await fetch(url)
-    .then(res => res.json());
-
-  // TODO just dump whole spreadsheet as a JSON file, then do any post-processing in config/index.js
-  const options = {};
-  for (const { name, value } of data.options) {
-    options[name] = value;
-  }
-
-  const levels = data.levels; // TODO format any markdown etc.
-
-  fs.writeFileSync(path.join(__dirname, 'config', 'spreadsheet.json'), JSON.stringify({
-    options,
-    levels,
-  }, null, 2));
-});
 
 // IMAGE COMPRESSION:
 // OPTIONAL TASK IF YOU HAVE IMAGES IN YOUR PROJECT REPO

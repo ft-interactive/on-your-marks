@@ -1,11 +1,12 @@
-export default class Countdown {
+import { EventEmitter } from 'events';
+import * as Timings from './Timings';
 
-  constructor(timings, onend = function () {}) {
+export default class Countdown extends EventEmitter {
+
+  constructor(timings) {
+    super();
     this.timings = timings;
-    this.onend = onend;
-    this._started = false;
-    this._running = false;
-    this._complete = false;
+    this._reset();
     this.status = '';
   }
 
@@ -18,28 +19,46 @@ export default class Countdown {
 
     this._started = true;
     this.status = '';
-    this.onupdate();
+    this.emit('start');
+    this.emit('update');
 
     for (const delay of delays) {
       this.status = await delay();
 
       if (delay === first && delay !== last) {
         this._running = true;
+        this.emit('running', true);
       } else if (!this._running) {
         break;
       } else if (delay === last) {
         this._started = false;
         this._running = false;
         this._complete = true;
-        this.onend();
+        this.emit('running', false);
+        this.emit('complete');
       }
-      this.onupdate();
+      this.emit('update');
     }
   }
 
-  cancel() {
+  async restart() {
+    if (this._started) {
+      this.cancel();
+    }
+
+    await this.start();
+  }
+
+  _reset() {
     this._running = false;
     this._started = false;
+    this._complete = false;
+    this.status = '';
+  }
+
+  cancel() {
+    this._reset();
+    this.emit('cancel');
   }
 
   get running() {
@@ -48,5 +67,13 @@ export default class Countdown {
 
   get complete() {
     return this._complete;
+  }
+
+  static getTimings(id) {
+    return Timings[id];
+  }
+
+  static createInstance(id) {
+    return new Countdown(Countdown.getTimings(id));
   }
 }

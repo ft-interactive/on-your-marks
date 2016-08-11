@@ -1,10 +1,5 @@
 {
   "options": {
-    "title": "On your marks...",
-    "description": "Test your reaction speed.",
-    "headline": "On your marks...",
-    "summary": "Being quick off the mark can make all the difference in the Olympics. Can you compete with professionals? Blah blah. Blah.",
-    "buttonText": "Play",
     "tweetText": "I got a reaction time of $TIME in the $EVENT. Can you do better? $URL",
     "assetRoot": "http://ig.ft.com/static/on-your-marks/assets-1"
   },
@@ -13,7 +8,8 @@
       "slug": "cycle",
       "name": "Omnium time trial",
       "sportname": "Track cycling",
-      "clockname": "Team sprint",
+      "clockname": "Track cycling",
+      "countdownInstruction": "Counting down: 5, 4, 3, 2, 1, Go!",
       "nextimage": "https://image.webservices.ft.com/v1/images/raw/http://www2.pictures.zimbio.com/gi/Ranomi+Kromowidjojo+Olympics+Day+7+Swimming+-w8h9mERPR5l.jpg?source=ig",
       "intro": "Cyclists have an easy ride: five low beeps followed by a high-pitched starter tone.",
       "hasnopresignal": true,
@@ -37,7 +33,8 @@
       "slug": "sprint",
       "name": "100m sprint",
       "sportname": "Athletics",
-      "clockname": "100m",
+      "countdownInstruction": "Marks, set, and wait for the gun",
+      "clockname": "100m sprint",
       "nextimage": null,
       "intro": "In track events, the starter signal is a gun, usually filled with blanks.",
       "hasnopresignal": null,
