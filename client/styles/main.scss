@@ -7,7 +7,6 @@ $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
 
-
 @font-face {
     font-family: 'clock';
     src: url('https://ig.ft.com/static/on-your-marks/assets-1/fonts/ds-digii-webfont.woff2?#iefix') format('woff2'),
@@ -45,8 +44,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-position: center center;
   background-size: cover;
 
-  button {
+  button,
+  button:focus {
     user-select: none;
+    outline: none;
   }
 
   &[data-level="cycle"] {
@@ -146,10 +147,13 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   font-weight: bold;
 }
 
+
+@keyframes blinker { to { opacity: 0; } }
+
 .clock {
   display: block;
   width: 360px;
-  margin: 40px auto;
+  margin: 35px auto 20px auto;
   text-align: right;
   font-feature-settings: "tnum";
   background-color: #bd1713;
@@ -158,20 +162,35 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   text-shadow: 0 0 8px rgba(240, 160, 0, 0.22), 0 0 2px rgba(235, 160, 0, 0.4);
   font-family: 'clock', monospace;
   padding: 0 12px;
-  font-size: 38px;
+  font-size: 45px;
   box-sizing: border-box;
   overflow: auto;
+
+  background-image: url('https://image.webservices.ft.com/v1/images/raw/fticon:brand-ft-masthead?source=o-icons&tint=%23f5cccb,%23f5cccb&format=svg');
+  background-image: url('https://image.webservices.ft.com/v1/images/raw/fticon:brand-ft-masthead?source=o-icons&tint=%23f5cccb,%23f5cccb&format=png&width=138')\9;
+  background-repeat: no-repeat;
+  background-size: 62px;
+  background-position: center 5px;
+
+  @include oGridRespondTo($until:M) {
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
 
   &__display {
     background-color: #191919;
     border: 1px solid black;
     margin: 14px 0;
     padding: 0 4px;
+
+  }
+
+  &__blink {
+    animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
   }
 }
 
 body {
-  @include oColorsFor(page, background);
   margin: 0;
   border: 0;
   font-family: $font-sans;
@@ -252,6 +271,48 @@ $share-button-size: 38px;
   }
 }
 
+
+@keyframes shrinkAway {
+  60% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform-origin: 50% 50%;
+    transform: scale(0,0);
+  }
+}
+
+@keyframes puffOut {
+  2% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+    -webkit-filter: blur(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(7,7);
+    -webkit-filter: blur(50px);
+  }
+}
+
+.puffOut {
+  animation-name: puffOut !important;
+  animation-duration: 1.2s;
+  animation-fill-mode: both;
+}
+
+.shrinkAway {
+  animation-name: shrinkAway !important;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+}
 
 html.game-on {
   &, body {
@@ -334,6 +395,7 @@ html.game-on {
         background-color:orange;
         transition: background-color 0.1s;
       }
+
     }
 
     &.set {
@@ -370,8 +432,11 @@ html.game-on {
     font-size: 60px;
     transition: all 0.1s;
     box-shadow: 0px 20px 0px #034f92;
-    transform: rotateX(33deg);
     color: white;
+
+    .no-touch & {
+      transform: rotateX(28deg);
+    }
   }
 
   &__race-button {
@@ -384,36 +449,58 @@ html.game-on {
     border: none;
     background-color: #0363b7;
     position: relative;
-    margin: 40px auto;
+    margin: 0 auto;
     font-size: 60px;
-    transition: all 0.1s;
+    transition: all 0.07s;
     box-shadow: 0px 20px 0px #034f92;
-    transform: rotateX(33deg);
     top: 0;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 0.85;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    .no-touch & {
+      transform: rotateX(28deg);
+    }
+
+    @include oGridRespondTo($until:M) {
+      width: 280px;
+      height: 280px;
+    }
+
     &:active{
-      box-shadow: 0px 8px 0px #023058;
+      box-shadow: 0px 1px 0px #023058;
       position:relative;
-      top: 12px;
+      top: 19px;
     }
     &.error {
       background-color: red;
-      box-shadow: 0px 20px 0px darken(red, 20);
+      box-shadow: 0px 19px 0px darken(red, 20);
+      font-size: 50px;
       &:active {
-        box-shadow: 0px 8px 0px darken(red, 30);
+        box-shadow: 0px 1px 0px darken(red, 30);
       }
     }
     &.go {
       background-color: green;
-      box-shadow: 0px 20px 0px darken(green, 10);
+      box-shadow: 0px 19px 0px darken(green, 10);
       &:active {
-        box-shadow: 0px 8px 0px darken(green, 15);
+        box-shadow: 0px 1px 0px darken(green, 15);
       }
     }
     &.countdown {
       background-color: orange;
-      box-shadow: 0px 20px 0px darken(orange, 20);
+      box-shadow: 0px 19px 0px darken(orange, 20);
       &:active {
-        box-shadow: 0px 8px 0px darken(orange, 30);
+        box-shadow: 0px 1px 0px darken(orange, 30);
+      }
+
+      [data-level="swim"] & {
+        font-size: 54px;
+      }
+
+      [data-level="cycle"] & {
+        font-size: 100px;
       }
     }
   }

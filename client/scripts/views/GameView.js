@@ -12,47 +12,46 @@ export default class GameView {
 
     const delegate = new Delegate(this.el);
 
-
     this.levelContainer = this.el.querySelector('.level');
 
-    ['mousedown', 'mouseup', 'mouseout', 'click',
-     'touchmove'].forEach(type => {
+    ['mousedown', 'mouseup', 'mouseout', 'click', 'touchmove'].forEach(type => {
       this.levelContainer.addEventListener(type, event => event.preventDefault());
     });
 
     game.on('changelevel', this.showLevel.bind(this));
 
-    delegate.on('click', '[name="first-level"]', () => {
-      game.firstLevel();
+    delegate.on('click', '[name="first-level"]', event => {
+      this.game.firstLevel();
     });
 
     delegate.on('click', '[name="next-level"]', () => {
-      game.nextLevel();
+      this.game.nextLevel();
     });
 
     delegate.on('click', '[name="replay-level"]', event => {
       this.game.currentLevel = this.game.getLevelBySlug(event.target.value);
     });
 
-    delegate.on('mousedown', '[name="stopwatch-stop"]', () => {
-      if (game.currentLevel.slug === 'swim') return;
-      game.currentLevel.stop(game.stopwatch.getCurrentTime());
+    delegate.on(window.touch ? 'touchstart' : 'mousedown', '[name="stopwatch-stop"]', () => {
+      if (this.game.currentLevel.slug === 'swim') return;
+      this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
     });
 
     // For swimming add a little bit of time to leave the block
     delegate.on('click', '[name="stopwatch-stop"]', () => {
-      if (game.currentLevel.slug !== 'swim') return;
+      if (this.game.currentLevel.slug !== 'swim') return;
       setTimeout(() => {
-        game.currentLevel.stop(game.stopwatch.getCurrentTime());
+        this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
       }, 60);
     });
 
     // TODO: handle spacebar activation
     // delegate.on('keydown', '[name="stopwatch-stop"]', event => {
-    //   game.currentLevel.stop(game.stopwatch.getCurrentTime());
+    //   this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
     // });
 
-    this.levelViews = game.levels.map(level => new LevelView(getLevelElement(level.slug), level));
+    this.levelViews = this.game.levels.map(level =>
+                    new LevelView(getLevelElement(level.slug), level));
   }
 
   showLevel(level, previous) {

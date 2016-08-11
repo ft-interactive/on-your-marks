@@ -7,6 +7,7 @@ export default class Game extends EventEmitter {
     this._currentLevel = null;
     this.levels = levels;
     this.stopwatch = stopwatch;
+    this.gender = 'male';
     levels.forEach(level => {
       level.on('start', () => this.stopwatch.reset());
       level.on('replay', () => this.stopwatch.reset());
