@@ -84,10 +84,10 @@ THIS SHOWS THE COMPASION DATA
 {% block article_body %}
 
 <div class="title-container">
-  <h1>on your marks</h1>
+  <h1>{{ headline }}</h1>
 
   <div class="o-typography-lead standfirst">
-    Can you react faster than an Olympic athlete?
+    {{ summary }}
   </div>
 
   <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
@@ -104,52 +104,28 @@ THIS SHOWS THE COMPASION DATA
   <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
 </div>
 
-<div class="panel-container">
-  <div class="icon-container">
-    <i class="fa fa-volume-up fa-2x"></i>
+
+  <p class="game-instruction"><i class="fa fa-volume-up fa-2x"></i> Turn on your sound</p>
+  <p class="game-instruction"><i class="fa fa-bullhorn fa-2x"></i> Listen for the starting signal</p>
+  <p class="game-instruction"><i class="fa fa-circle fa-2x"></i> Push the button to start the race<br/>Be careful not to false start!</p>
+
+  <div class="next-level__container">
+    <button name="first-level" class="next-level" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 1</div>
+      <h2 class="next-level__level-name">Track cycling</h2>
+      <div class="next-level__play">START THE GAME</div>
+    </button>
+
+    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 2</div>
+      <h2 class="next-level__level-name">Swimming</h2>
+    </button>
+
+    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
+      <div class="next-level__level-num">Level 3</div>
+      <h2 class="next-level__level-name">Athletics</h2>
+    </button>
   </div>
-  <p>
-    Make sure your device sound is on.
-  </p>
-
-  <div class="icon-container">
-    <i class="fa fa-bullhorn fa-2x"></i>
-  </div>
-
-  <p>
-    Listen for the starting signal – be careful not to false start!
-  </p>
-
-  <div class="icon-container">
-    <i class="fa fa-circle fa-2x"></i>
-  </div>
-
-  <p>
-    Tap or click the button to start the race.
-  </p>
-
-  <button name="first-level" class="img-hoverable intro-panel">
-
-    <span class="o-typography-flyline">Level 1</span>
-    <h2>Track cycling</h2>
-
-    <div class="next-level">
-        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig">
-    </div>
-
-  </button>
-</div>
-
-<footer class="o-typography-footer">
-  <p>
-    <small>
-      <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
-      The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
-      <a href="http://fontawesome.io" target="_blank" class="o-typography-link">Font Awesome</a> by Dave Gandy.
-      <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
-    </small>
-  </p>
-</footer>
 
 {% for level in levels %}
   <div class="level" data-level="{{ level.slug }}">
@@ -181,4 +157,15 @@ THIS SHOWS THE COMPASION DATA
     </div>
   </div>
 {% endfor %}
+
+<footer class="o-typography-footer">
+  <p>
+    <small>
+      <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+      The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
+      <a href="http://fontawesome.io" target="_blank" class="o-typography-link">Font Awesome</a> by Dave Gandy.
+      <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
+    </small>
+  </p>
+</footer>
 {% endblock %}

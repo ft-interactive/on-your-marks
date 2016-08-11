@@ -1,10 +1,5 @@
 {
   "options": {
-    "title": "On your marks...",
-    "description": "Test your reaction speed.",
-    "headline": "On your marks...",
-    "summary": "Being quick off the mark can make all the difference in the Olympics. Can you compete with professionals? Blah blah. Blah.",
-    "buttonText": "Play",
     "tweetText": "I got a reaction time of $TIME in the $EVENT. Can you do better? $URL",
     "assetRoot": "http://ig.ft.com/static/on-your-marks/assets-1"
   },
