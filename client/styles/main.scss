@@ -38,7 +38,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   width: 94%;
   box-sizing: border-box;
   max-width: 600px;
-  min-height: 80px;
+  min-height: 70px;
   font-size: 20px;
   color: white;
   .fa-2x {
@@ -48,8 +48,12 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     margin-bottom: 30px;
   }
 
+  @include oGridRespondTo(S) {
+    padding-left: 70px;
+  }
+
   @include oGridRespondTo(M) {
-    padding-left: 130px;
+    padding-left: 150px;
   }
 }
 
@@ -691,7 +695,7 @@ ul.level-icons {
 }
 
 .title-container {
-  max-width: 800px;
+  max-width: 888px;
   align-self: center;
   padding: 0 0.75em;
   text-align: center;
@@ -701,7 +705,7 @@ ul.level-icons {
     margin-bottom: 10px;
     line-height: 1;
     font-family: 'Monoton', cursive;
-    font-size: 3.5em;
+    font-size: 3em;
     font-weight: 400;
     color: #fff;
   }
@@ -819,7 +823,7 @@ footer.o-footer {
 @include oGridRespondTo (M) {
   .title-container h1 {
     font-size: 4.9em;
-    margin-top: 0.83em;
+    margin-top: 0.4em;
     margin-bottom: 0.83px;
   }
   .o-typography-footer {
