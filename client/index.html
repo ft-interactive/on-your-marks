@@ -90,26 +90,14 @@
 
 {% block article_body %}
 
-<div class="title-container">
-  <h1>{{ headline }}</h1>
+  <div class="title-container">
+    <h1>{{ headline }}</h1>
 
-  <div class="o-typography-lead standfirst">
-    {{ summary }}
+    <div class="o-typography-lead standfirst">
+      {{ summary }}
+    </div>
+
   </div>
-
-  <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
-
-  <div data-o-component="o-share"
-      class="o-share o-share--muted"
-      data-o-share-links="twitter facebook"
-      data-o-share-url="{{ url }}"
-      data-o-share-title="{{ socialHeadline | default(headline, true) | plain }}"
-      data-o-share-summary="{{ socialSummary | default(summary, true) | plain }}"
-      data-o-share-relatedTwitterAccounts="@ft">
-  </div>
-
-  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
-</div>
 
   <div class="game-instruction__container">
   <p class="game-instruction"><i class="icon"><svg x="0px" y="0px" viewBox="0 0 40 40">

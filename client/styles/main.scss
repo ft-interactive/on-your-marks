@@ -661,7 +661,7 @@ ul.level-icons {
 }
 
 .o-header {
-  position: relative;
+  position: relative !important;
   background-color: transparent !important;
 }
 
@@ -682,17 +682,16 @@ ul.level-icons {
 }
 
 .title-container {
-  max-width: 888px;
+  max-width: 800px;
   align-self: center;
   padding: 0 0.75em;
   text-align: center;
-  margin-bottom: 20px;
   h1 {
     margin-top: 0;
     margin-bottom: 10px;
     line-height: 1;
     font-family: 'Monoton', cursive;
-    font-size: 3em;
+    font-size: 1.8em;
     font-weight: 400;
     color: #fff;
   }
@@ -710,6 +709,7 @@ ul.level-icons {
   min-width: 33%;
   max-width: 625px;
   align-self: center;
+  margin: 40px auto 24px;
   color: oColorsGetPaletteColor('white');
   .icon-container {
     text-align: center;
@@ -720,7 +720,12 @@ ul.level-icons {
     font-size: 1.7em;
     color: oColorsGetPaletteColor('white');
   }
-
+  p {
+    margin-top: 0.10px;
+    font-size: 20px;
+    text-shadow: 0 0 2px oColorsGetPaletteColor('grey-tint5');
+    text-align: center;
+  }
 }
 
 .intro-panel {
@@ -730,7 +735,7 @@ ul.level-icons {
   margin: 20px auto;
   border-style: solid;
   border-width: 1px;
-  border-color: rgba(39, 117, 123, 1);
+  border-color: rgba(39, 117, 123, 0.8);
   border-radius: 4px;
   padding: 20px;
   background: rgba(29, 29, 29, 0.8);
@@ -748,13 +753,9 @@ ul.level-icons {
     max-height: 349px;
     overflow: hidden;
   }
-
   .img-hoverable {
     position: relative;
     display: inline-block;
-    background-color: transparent;
-    border: none;
-    outline: 0;
     .hoverable-text {
       position: absolute;
       z-index: 1;
@@ -787,6 +788,7 @@ ul.level-icons {
 }
 
 .o-typography-footer {
+  box-sizing: border-box;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -803,14 +805,14 @@ footer.o-footer {
 
 @include oGridRespondTo (S) {
   .title-container h1 {
-    font-size: 2.8em;
+    font-size: 3.5em;
   }
 }
 
 @include oGridRespondTo (M) {
   .title-container h1 {
-    font-size: 4.9em;
-    margin-top: 0.4em;
+    font-size: 4.8em;
+    margin-top: 0.83em;
     margin-bottom: 0.83px;
   }
   .o-typography-footer {
