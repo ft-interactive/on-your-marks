@@ -72,8 +72,12 @@ THIS SHOWS THE COMPASION DATA
 {% macro clock(slug, d) %}
 
 <div class="clock clock--{{ slug }}">
-<div class="clock__display clock__event">{{ d }}</div>
-<div class="clock__display clock__time" data-clock="{{ slug }}">0.00</div>
+  <div class="clock__display">
+    <div class="clock__event">{{ d }}</div>
+  </div>
+  <div class="clock__display">
+    <div class="clock__time" data-clock="{{ slug }}">0.00</div>
+  </div>
 </div>
 {% endmacro %}
 
@@ -124,35 +128,16 @@ THIS SHOWS THE COMPASION DATA
     Tap or click the button to start the race.
   </p>
 
-  <div class="intro-panel">
-    <!-- <ul class="level-icons">
-    {% for level in levels %}
-      <li><i class="{{ level.slug }}"></i></li>
-    {% endfor %}
-    </ul> -->
+  <button name="first-level" class="img-hoverable intro-panel">
 
     <span class="o-typography-flyline">Level 1</span>
     <h2>Track cycling</h2>
 
     <div class="next-level">
-      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: left">
-        <h2 class="hoverable-text">
-          Compete as a man
-        </h2>
-
-        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-man.jpg?source=ig">
-      </button>
-
-      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: right">
-        <h2 class="hoverable-text">
-          Compete as a woman
-        </h2>
-
         <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig">
-      </button>
     </div>
 
-  </div>
+  </button>
 </div>
 
 <footer class="o-typography-footer">

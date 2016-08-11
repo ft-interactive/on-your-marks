@@ -87,6 +87,9 @@ export default class LevelView {
   }
 
   normalStart() {
+    const btn = this.el.querySelector('.countdown-status');
+    btn.classList.add('puffOut');
+
     const _el = this.getStateElement('normal-start');
     const msg = messageScale(this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
@@ -94,6 +97,7 @@ export default class LevelView {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       _el.style.display = 'block';
+      btn.classList.remove('puffOut');
     }, 800);
   }
 

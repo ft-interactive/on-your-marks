@@ -37,6 +37,12 @@ function transition(from, to) {
     to.onloaderror = (id, reason) => {
       reject(reason);
     };
+
+    if (to.playing()) {
+      resolve();
+      return;
+    }
+
     to.once('play', resolve);
     to.volume(1);
     to.play();
