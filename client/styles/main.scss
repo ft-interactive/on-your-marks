@@ -44,8 +44,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-position: center center;
   background-size: cover;
 
-  button {
+  button,
+  button:focus {
     user-select: none;
+    outline: none;
   }
 
   &[data-level="cycle"] {
@@ -270,6 +272,19 @@ $share-button-size: 38px;
 }
 
 
+@keyframes shrinkAway {
+  60% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform-origin: 50% 50%;
+    transform: scale(0,0);
+  }
+}
 
 @keyframes puffOut {
   2% {
@@ -282,17 +297,22 @@ $share-button-size: 38px;
   100% {
     opacity: 0;
     transform-origin: 50% 50%;
-    transform: scale(6,6);
-    -webkit-filter: blur(1px);
+    transform: scale(7,7);
+    -webkit-filter: blur(50px);
   }
 }
 
 .puffOut {
   animation-name: puffOut !important;
-  animation-duration: 0.4s;
+  animation-duration: 1.2s;
   animation-fill-mode: both;
 }
 
+.shrinkAway {
+  animation-name: shrinkAway !important;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+}
 
 html.game-on {
   &, body {
@@ -375,6 +395,7 @@ html.game-on {
         background-color:orange;
         transition: background-color 0.1s;
       }
+
     }
 
     &.set {
@@ -433,6 +454,9 @@ html.game-on {
     transition: all 0.07s;
     box-shadow: 0px 20px 0px #034f92;
     top: 0;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 0.85;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
     .no-touch & {
@@ -452,6 +476,7 @@ html.game-on {
     &.error {
       background-color: red;
       box-shadow: 0px 19px 0px darken(red, 20);
+      font-size: 50px;
       &:active {
         box-shadow: 0px 1px 0px darken(red, 30);
       }
@@ -468,6 +493,14 @@ html.game-on {
       box-shadow: 0px 19px 0px darken(orange, 20);
       &:active {
         box-shadow: 0px 1px 0px darken(orange, 30);
+      }
+
+      [data-level="swim"] & {
+        font-size: 54px;
+      }
+
+      [data-level="cycle"] & {
+        font-size: 100px;
       }
     }
   }
