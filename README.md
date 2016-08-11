@@ -1,6 +1,6 @@
 # [on-your-marks](https://ig.ft.com/sites/on-your-marks)
 
-[![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
+[![Build Status][circle-image]][circle-url]
 
 ## Local
 
@@ -35,6 +35,3 @@ Please note the MIT licence includes only the software, and does not cover any F
 <!-- badge URLs -->
 [circle-url]: https://circleci.com/gh/ft-interactive/on-your-marks
 [circle-image]: https://circleci.com/gh/ft-interactive/on-your-marks/tree/master.svg?style=shield
-
-[devdeps-url]: https://david-dm.org/ft-interactive/on-your-marks#info=devDependencies
-[devdeps-image]: https://img.shields.io/david/dev/ft-interactive/on-your-marks.svg?style=flat-square

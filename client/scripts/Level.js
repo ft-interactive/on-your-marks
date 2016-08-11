@@ -5,6 +5,7 @@ import Bluebird from 'bluebird';
 const config = window.__gameConfig;
 const qs = selector => document.querySelector(selector);
 
+
 /**
  * A level instance can be in one of three states:
  *
@@ -26,6 +27,8 @@ const soundTypes = [{
   name: 'signal',
 }, {
   name: 'roar', // should play after the signal (or maybe after user goes?)
+}, {
+  name: 'groan', // should play after the signal (or maybe after user goes?)
 }];
 
 const imageTypes = ['bg'];
@@ -115,6 +118,10 @@ export default class Level extends EventEmitter {
   async _playSound(name, volume = 1, awaitCompletion = true) {
     if (this[`hasno${name}`]) return;
 
+    if (this._state === 'played' && name !== 'groan') {
+      return;
+    }
+
     await new Bluebird(resolve => {
 
       if ( this.slug == 'sprint' && name == 'presignal' ){
@@ -163,8 +170,11 @@ export default class Level extends EventEmitter {
 
     await this.ready();
     this._active = true;
-    if (this.slug === 'cycle') {
+    if (this.isFirst) {
+      console.log('Level 1')
       this._setState('unplayed');
+      // this._fadeSound('ambient', 0, 1, 2000);
+      await this._playSound('ambient', 1, false);
     } else {
       await this.startPlaying();
     }
@@ -182,10 +192,28 @@ export default class Level extends EventEmitter {
     this._setState('playing');
 
     // wait a second then start fading down the ambient noise
-    // await Bluebird.delay(1000);
 
-    // await this._playSound('ambient', 1, false);
-    await this._fadeSound('ambient', 1, 0, 1000, true);
+    await this._playSound('ambient', 1, false);
+    await Bluebird.delay(300);
+    if (this.slug === 'sprint') {
+      await this._fadeSound('ambient', 1, 0.1, 1800);
+
+      setTimeout(async ()=> {
+        await this._fadeSound('ambient', 0.1, 0.05, 600);
+        await this._fadeSound('ambient', 0.05, 0.0055, 1000);
+        await this._fadeSound('ambient', 0.0055, 0, 3000);
+      }, 60);
+    } else {
+      await this._fadeSound('ambient', 1, 0.1, 1500);
+      setTimeout(async ()=> {
+        await this._fadeSound('ambient', 0.1, 0, 600);
+      }, 60);
+    }
+
+
+    // play the presignal
+    await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
+
 
     // perform a nice staggered fade-down of the ambient noise
     // await this._fadeSound('ambient', 1, 0.4, 1500);
@@ -193,8 +221,6 @@ export default class Level extends EventEmitter {
     // await this._fadeSound('ambient', 0.4, 0.15, 1000);
     // await this._fadeSound('ambient', 0.15, 0, 1500);
 
-    // play the presignal
-    await this._playSound('presignal'); // TODO skip if no presignal, as is the case in the bike one
 
     // wait for the delay
     await Bluebird.delay(this.delay + (Math.random() * this.delayrandomness));
@@ -259,14 +285,34 @@ export default class Level extends EventEmitter {
   registerReactionNow() {
     this._userReactedAt = Date.now();
     this._setState('played');
+
+    if (this.isFalseStart()) {
+      this._stopSounds();
+      console.log('That was a false start!');
+      this.reactToFalseStart();
+    }
+  }
+
+  async reactToFalseStart() {
+    await Bluebird.delay(200);
+    await this._playSound('groan', 1, false);
+  }
+
+  isTooSlow() {
+    return !this._userReactedAt && !!this._signalTime;
+  }
+
+  isFalseStart() {
+    if (this._userReactedAt && !this._signalTime) return true;
+    return (this._userReactedAt - this._signalTime) < 100;
   }
 
   getReactionTime() {
-    if (!this._userReactedAt) {
-      return 'You never left the blocks!';
-    }
 
-    if (!this._signalTime) {
+    console.log('Assk reactio time')
+    if (this.isTooSlow()) {
+      return 'You never left the blocks!';
+    } else if (this.isFalseStart()) {
       return 'False start - you\'re disqualified';
     }
 

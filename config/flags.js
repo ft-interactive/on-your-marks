@@ -5,9 +5,9 @@ export default () => ({
   errorReporting: prod,
   analytics: prod,
   googleAnalytics: prod,
-  ads: true,
+  ads: false,
   onwardjourney: false,
-  shareButtons: true,
+  shareButtons: false,
   header: true,
   footer: true,
 
@@ -19,7 +19,7 @@ export default () => ({
     localhost, you need an ft.com hostname
     Add the follow entry to the end of the hosts file
 
-    127.0.0.1 ig-local.ft.com
+    127.0.0.1 ig-local. ft.com
 
     2)
     In order for comments to work the page needs a UUID.

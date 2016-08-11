@@ -1,22 +1,199 @@
 {% extends "layout.html" %}
 
+{% macro loading() %}
+<div class="game__race-loader">LOADING</div>
+{% endmacro %}
+
+{% macro lastScreen(levels) %}
+<div class="last-screen">
+  <div class="last-screen__replay-btns">
+    {% for level in levels %}
+    {{ replayButton(level.slug, level.name) }}
+    {% endfor %}
+  </div>
+  {% include "includes/share.html" %}
+</div>
+{% endmacro %}
+
+{% macro comparison() %}
+<div class="level__comparison">
+THIS SHOWS THE COMPASION DATA
+</div>
+{% endmacro %}
+
+{% macro replayButton(slug, label) %}
+<button name="replay-level" value="{{ slug }}">{{ label }}</button>
+{% endmacro %}
+
+{% macro nextButton(name, num, src) %}
+<button class="next-level-button" name="next-level">
+  <img src="{{ src }}" alt="">
+  <p>Next up, level {{ num }}: {{ name }}</p>
+  <span class="next-level-button__target">I'm ready</span>
+</button>
+{% endmacro%}
+
+{% macro statePanel(slug, state) %}
+<div class="level__state level__state--{{slug}}" data-state="{{ state }}">
+{{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro countdown(slug, text) %}
+  {% set content=caller() %}
+  {% call statePanel(slug, "countdown") %}
+  <button class="countdown-status game__race-button" name="stopwatch-stop">WAIT</button>
+  <div class="countdown-message">
+    {{ content }}
+  </div>
+  {% endcall %}
+{% endmacro %}
+
+{% macro falseStart(slug) %}
+  {% call statePanel(slug, "false-start") %}
+  <p>False start</p>
+  {{ replayButton(slug, "Try again") }}
+  {% endcall %}
+{% endmacro %}
+
+{% macro normalStart(slug) %}
+  {% call statePanel(slug, "normal-start") %}
+  <p class="result-summary"></p>
+  {% endcall %}
+{% endmacro %}
+
+{% macro noStart(slug) %}
+  {% call statePanel(slug, "no-start") %}
+  <p>What happened, you didn't leave blocks?</p>
+  {{ replayButton(slug, "Restart") }}
+  {% endcall %}
+{% endmacro %}
+
+{% macro clock(slug, d) %}
+
+<div class="clock clock--{{ slug }}">
+<div class="clock__display clock__event">{{ d }}</div>
+<div class="clock__display clock__time" data-clock="{{ slug }}">0.00</div>
+</div>
+{% endmacro %}
+
 {% block article_body %}
-{% markdown %}
 
-<ul class="level-icons">
-{% for level in levels %}
-  <li><i class="{{ level.slug }}"></i></li>
-{% endfor %}
-</ul>
+<div class="title-container">
+  <h1>on your marks</h1>
 
-<b>Use headphones or turn up your sound!</b>
+  <div class="o-typography-lead standfirst">
+    Can you react faster than an Olympic athlete?
+  </div>
 
-<div class="play-button-wrapper">
-  <span class="loading-indicator">Loading...</span>
-  <button class="play-game-button">Play game</button>
+  <!-- <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-share@^2">
+
+  <div data-o-component="o-share"
+      class="o-share o-share--muted"
+      data-o-share-links="twitter facebook"
+      data-o-share-url="{{ url }}"
+      data-o-share-title="{{ socialHeadline | default(headline, true) | plain }}"
+      data-o-share-summary="{{ socialSummary | default(summary, true) | plain }}"
+      data-o-share-relatedTwitterAccounts="@ft">
+  </div>
+
+  <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
 </div>
 
-<p>TK icons credit: Icons by Diego Naive from the Noun Project.</p>
+<div class="panel-container">
+  <div class="icon-container">
+    <i class="fa fa-volume-up fa-2x"></i>
+  </div>
+  <p>
+    Make sure your device sound is on.
+  </p>
 
-{% endmarkdown %}
+  <div class="icon-container">
+    <i class="fa fa-bullhorn fa-2x"></i>
+  </div>
+
+  <p>
+    Listen for the starting signal – be careful not to false start!
+  </p>
+
+  <div class="icon-container">
+    <i class="fa fa-circle fa-2x"></i>
+  </div>
+
+  <p>
+    Tap or click the button to start the race.
+  </p>
+
+  <div class="intro-panel">
+    <!-- <ul class="level-icons">
+    {% for level in levels %}
+      <li><i class="{{ level.slug }}"></i></li>
+    {% endfor %}
+    </ul> -->
+
+    <span class="o-typography-flyline">Level 1</span>
+    <h2>Track cycling</h2>
+
+    <div class="next-level">
+      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: left">
+        <h2 class="hoverable-text">
+          Compete as a man
+        </h2>
+
+        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-man.jpg?source=ig">
+      </button>
+
+      <button name="first-level" class="img-hoverable" style="max-width: 50%; float: right">
+        <h2 class="hoverable-text">
+          Compete as a woman
+        </h2>
+
+        <img src="https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig">
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="o-typography-footer">
+  <p>
+    <small>
+      <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
+      The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
+      <a href="http://fontawesome.io" target="_blank" class="o-typography-link">Font Awesome</a> by Dave Gandy.
+      <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
+    </small>
+  </p>
+</footer>
+
+{% for level in levels %}
+  <div class="level" data-level="{{ level.slug }}">
+    {{ clock(level.slug, level.clockname) }}
+    {{ loading() }}
+    <div class="level__states">
+      {% call countdown(level.slug, level.countdownInstruction) %}
+      {% if level.slug == 'cycle' %}
+      <p>Counting down...</p>
+      <p>5, 4, 3, 2, 1, Go!</p>
+      {% elif level.slug == 'swim' %}
+      <p>This one is quicker</p>
+      <p>"Take you marks", "Go"</p>
+      {% elif level.slug == 'sprint' %}
+      <p>Listen for the gun</p>
+      {% endif %}
+      {% endcall %}
+      <div class="level__complete">
+        {{ normalStart(level.slug) }}
+        {{ falseStart(level.slug) }}
+        {{ noStart(level.slug) }}
+        {{ comparison(level.slug) }}
+        {% if not loop.last %}
+        {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
+        {% else %}
+        {{ lastScreen(levels) }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
 {% endblock %}

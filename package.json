@@ -23,6 +23,7 @@
     "bower": "^1.7.9",
     "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
+    "d3-scale": "^1.0.1",
     "debowerify": "^1.5.0",
     "dom-delegate": "^2.0.3",
     "gulp": "^3.9.1",
@@ -76,12 +77,11 @@
     "clean": "rm -rf dist",
     "deploy": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js",
     "deploy:confirm": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js --confirm",
-    "download-data": "env $([[ -f .env ]] && cat .env) gulp download-data",
     "lint": "eslint .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",
     "prestart": "npm run clean",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "test": "npm run download-data && npm run build"
+    "test": "npm run build"
   }
 }

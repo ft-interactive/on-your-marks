@@ -5,6 +5,7 @@
     {% include "includes/html-head.html" %}
   </head>
   <body>
+    <div id="preload-clock-font" style="position:fixed;top:-100px;left:-100px;opacity:0;font-family:clock;">1234567890</div>
 
     {% if flags.analytics %}
       {% include "includes/analytics.html" %}
@@ -16,7 +17,7 @@
 
     <main role="main">
       <article class="article" itemscope itemtype="http://schema.org/Article">
-        <div class="article-head o-grid-container">
+        <!-- <div class="article-head o-grid-container">
           <div class="o-grid-row">
             <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
 
@@ -31,15 +32,10 @@
 
             </header>
           </div>
-        </div>
-        <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
+        </div> -->
 
+        <div class="intro-container">
           {% block article_body %}{% endblock %}
-
-          <footer class="o-typography-footer">
-            <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
-  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
-          </footer>
         </div>
       </article>
     </main>
@@ -47,9 +43,6 @@
     {# this element will be made fullscreen #}
     <section class="game" aria-hidden="true"></section>
 
-    {% if flags.comments %}
-      {% include "includes/comments.html" %}
-    {% endif %}
 
     {% if flags.footer %}
       {% include "includes/footer.html" %}
