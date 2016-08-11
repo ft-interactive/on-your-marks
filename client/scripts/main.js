@@ -12,7 +12,7 @@ import StopwatchView from './views/StopwatchView';
   window.touch = touch;
 
   async function init() {
-    const stopwatch = new Stopwatch();
+    const stopwatch = Stopwatch.getInstance();
     const levels = await Level.loadLevels();
     return new GameView(
       document.body,

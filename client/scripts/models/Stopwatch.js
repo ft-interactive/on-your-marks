@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 
 const P = performance || Date;
 
-export default class Level extends EventEmitter {
+export default class Stopwatch extends EventEmitter {
 
   constructor() {
     super();
@@ -38,4 +38,9 @@ export default class Level extends EventEmitter {
 
     return 0;
   }
+
+  static getInstance() {
+    return new Stopwatch();
+  }
+
 }

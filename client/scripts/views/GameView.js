@@ -50,14 +50,31 @@ export default class GameView {
     //   this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
     // });
 
+
     this.levelViews = this.game.levels.map(level =>
                     new LevelView(getLevelElement(level.slug), level));
+
+    this.game.levels.forEach(level => {
+      level.on('result', () => {
+        this.showLastResult(level);
+      });
+    })
+  }
+
+  showLastResult(level) {
+    if (!this.stopwatchView) return;
+    const msg = level.getResultMessage();
+    if (!msg) return;
+    console.log('stopwatch view', level.getResultMessage());
+    this.stopwatchView.flashMessage(
+      level.getResultMessage()
+    );
   }
 
   showLevel(level, previous) {
 
     if (this.stopwatchView) {
-      this.stopwatchView.el = document.querySelector(`[data-clock=${level.slug}]`);
+      this.stopwatchView.el = document.querySelector(`[data-level=${level.slug}] .clock`);
     }
 
     if (level) {

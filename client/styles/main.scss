@@ -1,10 +1,17 @@
 @import 'o-colors/main';
 @import 'o-grid/main';
-@import 'https://fonts.googleapis.com/css?family=Monoton';
 
 $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
+
+@font-face {
+  font-family: 'Monoton';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/monoton/v6/au96iQ3WM1J9H5fMga5i0QLUuEpTyoUstqEm5AMlJo4.woff2?#iefix') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
 
 @font-face {
     font-family: 'clock';
@@ -175,14 +182,14 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__complete {
-    background-color: rgba(0, 0, 0, 0.3);
     color: white;
     min-width: 280px;
     min-height: 200px;
     max-width: 600px;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 8px;
+    box-sizing: border-box;
   }
 
   &__state {
@@ -263,6 +270,22 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   font-weight: bold;
 }
 
+.countdown-message {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.8;
+  padding: 0 15px;
+  margin: 20px auto;
+  width: 84%;
+  max-width: 400px;
+  box-sizing: border-box;
+  overflow: auto;
+  p {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 23px;
+  }
+}
 
 @keyframes blinker { to { opacity: 0; } }
 
@@ -287,6 +310,14 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-repeat: no-repeat;
   background-size: 62px;
   background-position: center 5px;
+
+  @include oGridRespondTo($until:S) {
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 35px;
+    font-size: 12vw;
+  }
 
   @include oGridRespondTo($until:M) {
     margin-top: 15px;
@@ -690,7 +721,7 @@ ul.level-icons {
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 1;
-    font-family: 'Monoton', cursive;
+    font-family: 'Monoton', sans-serif;
     font-size: 2.3em;
     font-weight: 400;
     color: #fff;
