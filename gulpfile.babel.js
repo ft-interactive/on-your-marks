@@ -27,7 +27,7 @@ const AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
   'ff >= 30',
   'chrome >= 34',
-  'iOS >= 7',
+  'iOS >= 8',
   'Safari >= 7',
 ];
 
