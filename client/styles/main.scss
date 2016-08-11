@@ -232,8 +232,12 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__comparison {
-    text-align: center;
-    min-height: 120px;
+    &-graphic {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
   }
 
 }

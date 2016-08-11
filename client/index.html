@@ -15,9 +15,11 @@
 </div>
 {% endmacro %}
 
-{% macro comparison() %}
+{% macro comparison(slug) %}
 <div class="level__comparison">
-THIS SHOWS THE COMPASION DATA
+  <div class="level__comparison-graphic">
+    <img src="https://ig.ft.com/static/on-your-marks/assets-1/images/{{slug}}.svg" >
+  </div>
 </div>
 {% endmacro %}
 
