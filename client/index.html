@@ -27,13 +27,16 @@
 <button name="replay-level" value="{{ slug }}">{{ label }}</button>
 {% endmacro %}
 
-{% macro nextButton(name, num, src) %}
-<button class="next-level-button" name="next-level">
-  <img src="{{ src }}" alt="">
-  <p>Next up, level {{ num }}: {{ name }}</p>
-  <span class="next-level-button__target">I'm ready</span>
+{% macro nextButton(name, num, src, text, command=false, small=false) %}
+<button {% if command %}name="{{ command }}"{% else %}disabled="true"{% endif %} class="next-level{% if small %} next-level--small{% endif %}"
+        style="background-image:url('{{ src }}')">
+  <div class="next-level__level-num">Level {{ num }}</div>
+  <h2 class="next-level__level-name">{{ name }}</h2>
+  {% if text %}
+  <div class="next-level__play">{{ text }}</div>
+  {% endif %}
 </button>
-{% endmacro%}
+{% endmacro %}
 
 {% macro statePanel(slug, state) %}
 <div class="level__state level__state--{{slug}}" data-state="{{ state }}">
@@ -108,7 +111,7 @@
   <script async>queue('https://origami-build.ft.com/v2/bundles/js?modules=o-share@^2', null, true)</script> -->
 </div>
 
-
+  <div class="game-instruction__container">
   <p class="game-instruction"><i class="icon"><svg x="0px" y="0px" viewBox="0 0 40 40">
   <g><path fill="#FFFFFF" d="M36.916,25.813c-0.083,0.027-0.167,0.049-0.252,0.069c0.023,0.002,0.044,0.002,0.064,0.002
       c0.055,0,0.215-0.004,0.321-0.125C37.005,25.777,36.962,25.798,36.916,25.813z"/>
@@ -203,23 +206,16 @@
     </g>
     </svg>
   </i> Push the button to start the race<br/>Be careful not to false start!</p>
+  </div>
 
   <div class="next-level__container">
-    <button name="first-level" class="next-level" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
-      <div class="next-level__level-num">Level 1</div>
-      <h2 class="next-level__level-name">Track cycling</h2>
-      <div class="next-level__play">START THE GAME</div>
-    </button>
-
-    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
-      <div class="next-level__level-num">Level 2</div>
-      <h2 class="next-level__level-name">Swimming</h2>
-    </button>
-
-    <button disabled="true" class="next-level next-level--small" style="background-image:url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-woman.jpg?source=ig)">
-      <div class="next-level__level-num">Level 3</div>
-      <h2 class="next-level__level-name">Athletics</h2>
-    </button>
+    {% for level in levels %}
+      {% if loop.first %}
+        {{ nextButton(levels[loop.index0].sportname, loop.index, level.nextimage, "START THE GAME", "first-level") }}
+      {% else %}
+        {{ nextButton(levels[loop.index0].sportname, loop.index, level.nextimage, false, false, true) }}
+      {% endif %}
+    {% endfor %}
   </div>
 
 {% for level in levels %}
@@ -244,7 +240,7 @@
         {{ noStart(level.slug) }}
         {{ comparison(level.slug) }}
         {% if not loop.last %}
-        {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, level.nextimage, levels[loop.index0 + 1].slug) }}
+        {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, levels[loop.index0 + 1].nextimage, "I'm ready", "next-level") }}
         {% else %}
         {{ lastScreen(levels) }}
         {% endif %}
@@ -258,7 +254,7 @@
     <small>
       <a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright" class="o-typography-link">Copyright</a>
       The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web. Images copyright Getty, Dreamstime.&nbsp;
-      <span>“<a href="https://thenounproject.com/term/megaphone/38153/">Megaphone</a>” icon by Olive Q Wong, “<a href="https://thenounproject.com/term/ear/370396/">Ear</a>” icon by Marek Polakovic from <a href="http://thenounproject.com/"><span class="s2">the Noun Project</span></a>.</span>
+      <span>“<a class="o-typography-link" href="https://thenounproject.com/term/megaphone/38153/">Megaphone</a>” icon by Olive Q Wong, “<a class="o-typography-link" href="https://thenounproject.com/term/ear/370396/">Ear</a>” icon by Marek Polakovic from <a class="o-typography-link" href="http://thenounproject.com/"><span class="s2">the Noun Project</span></a>.</span>
       <!-- "Olympic Sports Collection" icons by Diego Naive from <a href="http://thenounproject.com/" target="_blank" class="o-typography-link">the Noun Project</a>. -->
     </small>
   </p>
