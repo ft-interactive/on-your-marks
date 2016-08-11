@@ -43,34 +43,50 @@ export default class StopwatchView {
     this.render();
   }
 
-  setMessage() {
+  setMessage(value) {
+    if (this._msgEl) {
+      this._msgEl.innerHTML = value;
+      this._msgEl.classList.remove('clock__blink');
+    }
+  }
 
+  blink({ duration = 4444, pause = 0, msgEl, timeEl }) {
+    const m = msgEl || this._msgEl;
+    const t = timeEl || this._timeEl;
+
+    if (m.classList.contains('clock__blink')) return;
+
+    const off = () => {
+      m.classList.remove('clock__blink');
+      t.classList.remove('clock__blink');
+    };
+    const on = () => {
+      m.classList.add('clock__blink');
+      t.classList.add('clock__blink');
+      setTimeout(off, duration);
+    };
+
+    if (pause) {
+      setTimeout(on, pause);
+    } else {
+      on();
+    }
   }
 
   flashMessage(message) {
-    const el = this._msgEl;
+    const msgEl = this._msgEl;
     const timeEl = this._timeEl;
     let counter = 0;
     const len = message.length;
-    console.log(el);
-    const unblink = () => {
-      el.classList.remove('clock__blink');
-      timeEl.classList.remove('clock__blink');
-    };
-    const blink = () => {
-      el.classList.add('clock__blink');
-      timeEl.classList.add('clock__blink');
-      setTimeout(unblink, 4444);
-    };
+
     const write = () => {
       if (counter > len) {
-        console.log('clear');
-        setTimeout(blink, 444);
+        this.blink({ pause: 444, timeEl, msgEl });
         return;
       }
-      el.innerHTML = !counter ? '' : message.substr(0, counter);
+      msgEl.innerHTML = !counter ? '&nbsp;' : message.substr(0, counter);
+      setTimeout(write, !counter ? 222 : 180);
       counter++;
-      setTimeout(write, 180);
     };
 
     setTimeout(write, 222);

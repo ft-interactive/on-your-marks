@@ -65,10 +65,24 @@ export default class GameView {
     if (!this.stopwatchView) return;
     const msg = level.getResultMessage();
     if (!msg) return;
-    console.log('stopwatch view', level.getResultMessage());
-    this.stopwatchView.flashMessage(
-      level.getResultMessage()
-    );
+    switch (level.result) {
+      case 'NO_START':
+        this.stopwatchView.setMessage('------------');
+        break;
+      case 'FALSE_START':
+        this.stopwatchView.flashMessage('DISQUALIFIED');
+        break;
+      case 'NORMAL_START':
+        this.stopwatchView.flashMessage(
+          level.getResultMessage()
+        );
+        break;
+      case 'INCOMPLETE':
+        this.stopwatchView.setMessage(level.clockname);
+        break;
+      default:
+        console.log('????');
+    }
   }
 
   showLevel(level, previous) {
