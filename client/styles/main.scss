@@ -30,6 +30,125 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 @include icon('volume-up', $fa-var-volume-up);
 @include icon('circle', $fa-var-circle);
 
+.game-instruction {
+  text-align: left;
+  clear: both;
+  margin: 0px auto 0px auto;
+  // padding-left: 40px;
+  width: 94%;
+  box-sizing: border-box;
+  max-width: 600px;
+  min-height: 80px;
+  font-size: 20px;
+  color: white;
+  .fa-2x {
+    float: left;
+    margin-top: -8px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+  }
+
+  @include oGridRespondTo(M) {
+    padding-left: 130px;
+  }
+}
+
+.next-level {
+  display: block;
+  padding: 0;
+  outline: 0;
+  user-select: none;
+  border: 1px solid #ffffff;
+  // border: none;
+  margin: 0 auto 24px 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 10px 12px;
+  background-color: transparent;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-clip: border-box;
+  //overflow: hidden;
+  padding-top: 50%;
+  position: relative;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  filter: brightness(0.95);
+
+  &:disabled {
+    border-color: #eee;
+    border-color: rgba(255,255,255, 0.7);
+    color: #ddd;
+    color: rgba(255,255,255,0.8);
+    filter: brightness(0.3);
+  }
+
+  &--small {
+    padding-top: 30%;
+    width: 48%;
+    float: left;
+    &:last-child {
+      float: right;
+    }
+    .next-level__level-num {
+      font-size: 12px;
+    }
+    .next-level__level-name {
+      font-size: 20px;
+    }
+  }
+
+  &:enabled:hover {
+    filter: brightness(1.1);
+  }
+
+  & > * {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+  }
+
+  &__level-num {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+
+  &__level-name {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    top: 24px;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    .next-level:enabled:hover & {
+      text-decoration: underline;
+    }
+  }
+
+  &__play {
+    bottom: 10px;
+    font-size: 24px;
+    top: auto;
+    font-weight: 600;
+  }
+
+  &__container {
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 94%;
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+}
+
 .level {
   width: 100%;
   height: 100vh;
@@ -576,6 +695,7 @@ ul.level-icons {
   align-self: center;
   padding: 0 0.75em;
   text-align: center;
+  margin-bottom: 20px;
   h1 {
     margin-top: 0;
     margin-bottom: 10px;
@@ -609,12 +729,7 @@ ul.level-icons {
     font-size: 1.7em;
     color: oColorsGetPaletteColor('white');
   }
-  p {
-    margin-top: 0.10px;
-    font-size: 20px;
-    text-shadow: 0 0 2px oColorsGetPaletteColor('grey-tint5');
-    text-align: center;
-  }
+
 }
 
 .intro-panel {
@@ -697,7 +812,7 @@ footer.o-footer {
 
 @include oGridRespondTo (S) {
   .title-container h1 {
-    font-size: 2.4em;
+    font-size: 2.8em;
   }
 }
 
