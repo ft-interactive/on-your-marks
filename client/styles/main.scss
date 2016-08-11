@@ -41,11 +41,22 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   min-height: 70px;
   font-size: 20px;
   color: white;
-  .fa-2x {
+  .fa-2x{
     float: left;
     margin-top: -8px;
     margin-right: 15px;
     margin-bottom: 30px;
+  }
+
+  .icon {
+    float: left;
+    margin-top: 0px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    svg {
+      width: 54px;
+      height: 54px;
+    }
   }
 
   @include oGridRespondTo(S) {
@@ -404,7 +415,7 @@ $share-button-size: 38px;
 
   100% {
     opacity: 0.3;
-    transform-origin: 50% 50% 40px;
+    transform-origin: 50% 50% 0;
     transform: rotateX(28deg) scale(0,0);
   }
 }
@@ -412,14 +423,14 @@ $share-button-size: 38px;
 @keyframes puffOut {
   2% {
     opacity: 1;
-    transform-origin: 50% 50%;
+    transform-origin: 50% 50% 0;
     transform: scale(1,1);
     -webkit-filter: blur(0px) translateZ(0);
   }
 
   100% {
     opacity: 0;
-    transform-origin: 50% 50%;
+    transform-origin: 50% 50% 0;
     transform: scale(7,7);
     -webkit-filter: blur(60px) translateZ(0);
   }
@@ -427,13 +438,13 @@ $share-button-size: 38px;
 
 .puffOut {
   animation-name: puffOut !important;
-  animation-duration: 1.2s;
+  animation-duration: 0.4s;
   animation-fill-mode: both;
 }
 
 .shrinkAway {
   animation-name: shrinkAway !important;
-  animation-duration: 0.4s;
+  animation-duration: 0.6s;
   animation-fill-mode: both;
 }
 
@@ -557,9 +568,6 @@ html.game-on {
     box-shadow: 0px 20px 0px #034f92;
     color: white;
 
-    .no-touch & {
-      transform: rotateX(28deg) translateZ(0);
-    }
   }
 
   &__race-button {
@@ -582,10 +590,7 @@ html.game-on {
     vertical-align: middle;
     line-height: 0.85;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-
-    .no-touch & {
-      transform: rotateX(28deg) translateZ(0);
-    }
+    transform: rotateX(28deg) translateZ(0);
 
     @include oGridRespondTo($until:M) {
       width: 280px;
