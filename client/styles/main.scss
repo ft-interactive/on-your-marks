@@ -28,7 +28,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   // padding-left: 40px;
   width: 94%;
   box-sizing: border-box;
-  max-width: 600px;
+  max-width: 400px;
   min-height: 50px;
   font-size: 20px;
   color: white;
@@ -45,11 +45,11 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   @include oGridRespondTo(S) {
-    padding-left: 70px;
+    padding-left: 20px;
   }
 
-  @include oGridRespondTo(M) {
-    padding-left: 150px;
+  &__container {
+    margin-bottom: 15px;
   }
 }
 
