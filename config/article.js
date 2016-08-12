@@ -1,13 +1,13 @@
 export default () => ({
   // link file UUID
-  id: '',
+  id: 'b3ed1fd0-608a-11e6-ae3f-77baadeb1c93',
 
   // canonical URL of the published page
-  url: 'https://ig.ft.com/sites/on-your-marks',
+  url: 'https://ig.ft.com/on-your-marks',
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
-  //publishedDate: new Date(),
+  publishedDate: new Date('2016-08-12T13:30:00Z'),
 
   headline: 'On your marks',
 
