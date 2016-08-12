@@ -59,8 +59,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   outline: 0;
   user-select: none;
   border: 1px solid #ffffff;
-  // border: none;
-  margin: 0 auto 24px 0;
+  margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
   text-align: left;
@@ -134,6 +133,9 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     font-size: 24px;
     top: auto;
     font-weight: 600;
+    .next-level:enabled:hover & {
+      text-decoration: underline;
+    }
   }
 
   &__container {
@@ -145,6 +147,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
       content: "";
       display: table;
       clear: both;
+    }
+
+    .next-level {
+      margin-bottom: 24px;
     }
   }
 }
@@ -188,7 +194,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
-    padding: 8px;
+    padding: 0 8px;
     box-sizing: border-box;
   }
 
@@ -201,17 +207,14 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     }
 
     &[data-state="false-start"] {
-      background-color: red;
       color: white;
     }
 
     &[data-state="normal-start"] {
-      background-color: blue;
       color: white;
     }
 
     &[data-state="no-start"] {
-      background-color: black;
       color: white;
     }
   }
@@ -272,18 +275,22 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
 .countdown-message {
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   opacity: 0.8;
-  padding: 0 15px;
+  padding: 8px 15px;
   margin: 20px auto;
-  width: 84%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 430px;
   box-sizing: border-box;
   overflow: auto;
+  line-height: 0.82;
   p {
     margin-bottom: 10px;
     margin-top: 10px;
-    font-size: 23px;
+    font-size: 30px;
+    &.small {
+      font-size: 16px;
+    }
   }
 }
 
@@ -292,7 +299,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 .clock {
   display: block;
   width: 360px;
-  margin: 35px auto 20px auto;
+  margin: 35px auto 12px auto;
   text-align: right;
   font-feature-settings: "tnum";
   background-color: #bd1713;
@@ -321,7 +328,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
   @include oGridRespondTo($until:M) {
     margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   &__display {
@@ -333,6 +340,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__blink {
+    color: #ffb300f2;
     animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
   }
 }
@@ -569,18 +577,23 @@ html.game-on {
   &__race-loader {
     text-align: center;
     display: block;
-    width: 333px;
-    height: 333px;
+    width: 264px;
+    height: 264px;
     border-radius: 100%;
     border: none;
-    background-color: #0363b7;
+    background-color: #ffffff;
+    opacity: 0.9;
     position: relative;
-    margin: 40px auto;
+    margin: 49px auto;
     font-size: 60px;
     transition: all 0.1s;
     box-shadow: 0px 20px 0px #034f92;
-    color: white;
-
+    transition: all 0.1s;
+    color: black;
+    vertical-align: middle;
+    font-weight: 600;
+    animation: blinker 2.5s linear infinite alternate;
+    mix-blend-mode: lighten;
   }
 
   &__race-button {
@@ -642,7 +655,7 @@ html.game-on {
       }
 
       [data-level="cycle"] & {
-        font-size: 100px;
+        font-size: 120px;
       }
     }
   }

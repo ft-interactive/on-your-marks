@@ -5,6 +5,7 @@ import Stopwatch from './models/Stopwatch';
 import Game from './models/Game';
 import GameView from './views/GameView';
 import StopwatchView from './views/StopwatchView';
+import UserData from './models/UserData';
 
 (async () => {
   const touch = 'ontouchstart' in document.documentElement;

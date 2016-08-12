@@ -2,6 +2,8 @@ function formatTime(time) {
   return (time / 1000).toFixed(2);
 }
 
+let timers = [];
+
 export default class StopwatchView {
   constructor(el, stopwatch) {
     this.stopwatch = stopwatch;
@@ -47,6 +49,9 @@ export default class StopwatchView {
     if (this._msgEl) {
       this._msgEl.innerHTML = value;
       this._msgEl.classList.remove('clock__blink');
+      this._timeEl.classList.remove('clock__blink');
+      timers.map(clearTimeout);
+      timers = [];
     }
   }
 
@@ -63,11 +68,11 @@ export default class StopwatchView {
     const on = () => {
       m.classList.add('clock__blink');
       t.classList.add('clock__blink');
-      setTimeout(off, duration);
+      timers.push(setTimeout(off, duration));
     };
 
     if (pause) {
-      setTimeout(on, pause);
+      timers.push(setTimeout(on, pause));
     } else {
       on();
     }
@@ -85,10 +90,10 @@ export default class StopwatchView {
         return;
       }
       msgEl.innerHTML = !counter ? '&nbsp;' : message.substr(0, counter);
-      setTimeout(write, !counter ? 222 : 180);
+      timers.push(setTimeout(write, !counter ? 180 : 90));
       counter++;
     };
 
-    setTimeout(write, 222);
+    timers.push(setTimeout(write, 100));
   }
 }

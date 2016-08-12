@@ -63,11 +63,11 @@ export default class GameView {
 
   showLastResult(level) {
     if (!this.stopwatchView) return;
-    const msg = level.getResultMessage();
-    if (!msg) return;
+
     switch (level.result) {
       case 'NO_START':
-        this.stopwatchView.setMessage('------------');
+        this.stopwatchView.setMessage(level.clockname);
+        this.stopwatchView.blink({});
         break;
       case 'FALSE_START':
         this.stopwatchView.flashMessage('DISQUALIFIED');
@@ -78,6 +78,7 @@ export default class GameView {
         );
         break;
       case 'INCOMPLETE':
+      console.log('incomplete')
         this.stopwatchView.setMessage(level.clockname);
         break;
       default:

@@ -66,6 +66,7 @@ export default class LevelView {
       const _el = this.getStateElement('false-start');
       _el.style.display = 'block';
       btn.classList.remove('shrinkAway');
+      this.el.style.overflow = 'auto';
     }, 555);
     {
       const _el = this.getStateElement('countdown');
@@ -80,6 +81,7 @@ export default class LevelView {
     this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('no-start');
     _el.style.display = 'block';
+    this.el.style.overflow = 'auto';
   }
 
   normalStart() {
@@ -91,6 +93,7 @@ export default class LevelView {
       this.el.querySelector('.level__complete').style.display = 'block';
       _el.style.display = 'block';
       btn.classList.remove('puffOut');
+      this.el.style.overflow = 'auto';
     }, 800);
   }
 
@@ -101,11 +104,13 @@ export default class LevelView {
     _el.style.display = 'block';
     const msgEl = _el.querySelector('.countdown-status');
     msgEl.classList.remove('go', 'error', 'countdown');
+    this.el.style.overflow = 'hidden';
   }
 
   show() {
     this.hideAllState();
     this.el.style.display = 'block';
+    this.el.style.overflow = 'hidden';
     this.el.querySelector('.level__complete').style.display = 'none';
     const loader = this.el.querySelector('.game__race-loader');
     const showLoader = setTimeout(() => {
