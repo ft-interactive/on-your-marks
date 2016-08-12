@@ -91,6 +91,7 @@ var polyfill_features = [
   'default',
   'requestAnimationFrame',
   'Promise',
+  'console',
   'matchMedia',
   'HTMLPictureElement',
   'fetch|always|gated'
