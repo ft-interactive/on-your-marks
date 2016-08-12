@@ -31,7 +31,7 @@ export default () => ({
   // ],
 
   // Appears in the HTML <title>
-  title: 'On your marks...',
+  title: 'Rio 2016 game: Can you react faster than an Olympic athlete?',
 
   // meta data
   description: 'Can you react faster than an Olympic athlete?',
