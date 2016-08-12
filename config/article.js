@@ -1,17 +1,19 @@
 export default () => ({
   // link file UUID
-  id: '',
+  id: 'b3ed1fd0-608a-11e6-ae3f-77baadeb1c93',
 
   // canonical URL of the published page
-  url: 'https://ig.ft.com/sites/on-your-marks',
+  url: 'https://ig.ft.com/on-your-marks',
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
-  //publishedDate: new Date(),
+  publishedDate: new Date('2016-08-12T13:30:00Z'),
 
   headline: 'On your marks',
 
   summary: 'Can you react faster than an Olympic athlete?',
+
+  image: 'https://image.webservices.ft.com/v1/images/raw/http%3A%2F%2Fcom.ft.imagepublish.prod.s3.amazonaws.com%2Ff17caecc-608c-11e6-ae3f-77baadeb1c93?source=next&fit=scale-down&width=700',
 
   topic: {
     name: 'Olympic Games',
@@ -31,7 +33,7 @@ export default () => ({
   // ],
 
   // Appears in the HTML <title>
-  title: 'On your marks...',
+  title: 'Rio 2016 game: Can you react faster than an Olympic athlete?',
 
   // meta data
   description: 'Can you react faster than an Olympic athlete?',
@@ -43,7 +45,7 @@ export default () => ({
         Twitter card docs:
         https://dev.twitter.com/cards/markup
   */
-  twitterCard: 'summary',
+  twitterCard: 'summary_large_image',
 
   // optional social meta data
   // twitterCreator: '@individual's_account',

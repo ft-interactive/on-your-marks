@@ -30,7 +30,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   padding-left: 10px;
   width: 94%;
   box-sizing: border-box;
-  max-width: 400px;
+  max-width: 350px;
   min-height: 50px;
   font-size: 20px;
   color: white;
@@ -47,7 +47,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   @include oGridRespondTo(S) {
-    padding-left: 20px;
+    padding-left: 10px;
   }
 
   &__container {
@@ -77,6 +77,8 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   color: #fff;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   filter: brightness(0.95);
+
+
 
   &:disabled {
     border-color: #eee;
@@ -138,6 +140,17 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     .next-level:enabled:hover & {
       text-decoration: underline;
     }
+
+    .level__complete & {
+      right: 12px;
+      left: 12px;
+      text-align: center;
+
+      @include oGridRespondTo(M) {
+        left: auto;
+        text-align: right;
+      }
+    }
   }
 
   &__container {
@@ -154,6 +167,18 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     .next-level {
       margin-bottom: 24px;
     }
+
+    [data-level="sprint"] & {
+      overflow: auto;
+      padding: 0 10px 15px 10px;
+      box-sizing: border-box;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &__nextup {
+    font-size: 20px;
+    margin-bottom: 6px;
   }
 }
 
@@ -171,6 +196,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-position: center center;
   background-size: cover;
 
+  *,
   button,
   button:focus {
     user-select: none;
@@ -178,15 +204,15 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &[data-level="cycle"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/cycle-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &[data-level="swim"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/swim-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fswim-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &[data-level="sprint"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/sprint-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fsprint-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &__complete {
@@ -222,6 +248,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__comparison {
+    display: none !important;
     &-graphic {
       img {
         width: 100%;
@@ -375,19 +402,21 @@ $share-button-size: 38px;
       width: $share-button-size;
       height: $share-button-size;
       text-indent: $share-button-size;
-      border: 1px solid #e9decf;
+      border: 1px solid #fff;
       &:hover {
         opacity: 1;
-        background-color: #e9decf;
+        background-color: transparent;;
       }
     }
 
     &--twitter i {
-      background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMTMgLTEwMyA0MCA0MCI+PHBhdGggZmlsbD0iI2E3YTU5YiIgZD0iTS04MS44NjItODkuNzg2Yy0uODIuMzU3LTEuNy42LTIuNjI0LjcwOC45NDMtLjU1NiAxLjY2OC0xLjQzNiAyLjAxLTIuNDgzLS44ODMuNTEtMS44NjIuODgtMi45MDIgMS4wOC0uODMzLS44Ny0yLjAyLTEuNDItMy4zMzctMS40Mi0yLjUyMyAwLTQuNTcgMi4wMS00LjU3IDQuNDkgMCAuMzUuMDQuNjkuMTE4IDEuMDItMy44LS4xOS03LjE2Ny0xLjk3OC05LjQyLTQuNjktLjM5NC42Ni0uNjIgMS40My0uNjIgMi4yNiAwIDEuNTUuODA3IDIuOTMgMi4wMzMgMy43My0uNzUtLjAyNS0xLjQ1NC0uMjI4LTIuMDctLjU2di4wNTRjMCAyLjE3NiAxLjU3MyAzLjk5IDMuNjY3IDQuNC0uMzg0LjEwNC0uNzkuMTYtMS4yMDQuMTYtLjMgMC0uNTgtLjAyNy0uODYtLjA4LjU4IDEuNzgyIDIuMjcgMy4wOCA0LjI3IDMuMTE2LTEuNTcgMS4yMDUtMy41NCAxLjkyMy01LjY4IDEuOTIzLS4zNyAwLS43NC0uMDI2LTEuMDktLjA2NyAyLjAyIDEuMjcyIDQuNDIgMi4wMTUgNyAyLjAxNSA4LjQgMCAxMy02Ljg0IDEzLTEyLjc3IDAtLjE5NC0uMDA3LS4zOS0uMDE4LS41OC44OS0uNjMzIDEuNjY1LTEuNDI1IDIuMjgtMi4zMjV6Ii8+PC9zdmc+)
+      background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMTMgLTEwMyA0MCA0MCI+PHBhdGggZmlsbD0iI2E3YTU5YiIgZD0iTS04MS44NjItODkuNzg2Yy0uODIuMzU3LTEuNy42LTIuNjI0LjcwOC45NDMtLjU1NiAxLjY2OC0xLjQzNiAyLjAxLTIuNDgzLS44ODMuNTEtMS44NjIuODgtMi45MDIgMS4wOC0uODMzLS44Ny0yLjAyLTEuNDItMy4zMzctMS40Mi0yLjUyMyAwLTQuNTcgMi4wMS00LjU3IDQuNDkgMCAuMzUuMDQuNjkuMTE4IDEuMDItMy44LS4xOS03LjE2Ny0xLjk3OC05LjQyLTQuNjktLjM5NC42Ni0uNjIgMS40My0uNjIgMi4yNiAwIDEuNTUuODA3IDIuOTMgMi4wMzMgMy43My0uNzUtLjAyNS0xLjQ1NC0uMjI4LTIuMDctLjU2di4wNTRjMCAyLjE3NiAxLjU3MyAzLjk5IDMuNjY3IDQuNC0uMzg0LjEwNC0uNzkuMTYtMS4yMDQuMTYtLjMgMC0uNTgtLjAyNy0uODYtLjA4LjU4IDEuNzgyIDIuMjcgMy4wOCA0LjI3IDMuMTE2LTEuNTcgMS4yMDUtMy41NCAxLjkyMy01LjY4IDEuOTIzLS4zNyAwLS43NC0uMDI2LTEuMDktLjA2NyAyLjAyIDEuMjcyIDQuNDIgMi4wMTUgNyAyLjAxNSA4LjQgMCAxMy02Ljg0IDEzLTEyLjc3IDAtLjE5NC0uMDA3LS4zOS0uMDE4LS41OC44OS0uNjMzIDEuNjY1LTEuNDI1IDIuMjgtMi4zMjV6Ii8+PC9zdmc+);
+      filter: brightness(100);
     }
 
     &--facebook i {
-      background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMTQgLTEwNSA0MCA0MCI+PHBhdGggZmlsbD0iI2E3YTU5YiIgZD0iTS05Ny05MS40NHYyLjk1aC0yLjE3djMuNjJILTk3djEwLjcyaDQuNDN2LTEwLjcyaDNzLjI2LTEuNzMuNC0zLjYyaC0zLjM4di0yLjQ3YzAtLjM3LjUtLjg3Ljk2LS44N2gyLjQzdi0zLjc1aC0zLjI4Yy00LjY2IDAtNC41NSAzLjYzLTQuNTUgNC4xNnoiLz48L3N2Zz4=)
+      background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMTQgLTEwNSA0MCA0MCI+PHBhdGggZmlsbD0iI2E3YTU5YiIgZD0iTS05Ny05MS40NHYyLjk1aC0yLjE3djMuNjJILTk3djEwLjcyaDQuNDN2LTEwLjcyaDNzLjI2LTEuNzMuNC0zLjYyaC0zLjM4di0yLjQ3YzAtLjM3LjUtLjg3Ljk2LS44N2gyLjQzdi0zLjc1aC0zLjI4Yy00LjY2IDAtNC41NSAzLjYzLTQuNTUgNC4xNnoiLz48L3N2Zz4=);
+      filter: brightness(100);
     }
   }
 }
@@ -424,10 +453,65 @@ $share-button-size: 38px;
     button {
       box-sizing: border-box;
       width: 47.5%;
-      margin: 10px 1.25%;
+      margin: 10px 1.24%;
+
+
+      @include oGridRespondTo($until:S) {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      };
+
+      @include oGridRespondTo(S) {
+        display: inline-block;
+        float: left;
+      };
     }
   }
+
+  a {
+    font-size: 26px;
+    color: #fff;
+    &:visited {
+      color: #fff;
+    }
+  }
+  .o-share {
+    display: block;
+    width: 100%;
+    margin: 5px auto;
+  }
 }
+
+.replay-button {
+  background-color: rgba(255,255,255,0.35);
+  color: #fff;
+  padding: 16px 50px;
+  border-radius: 10px;
+  border: 2px solid white;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  text-align: center;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  transition: all 0.07s;
+  box-shadow: 0px 6px 0px #ffffff;
+  top: 0;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transform: rotateX(28deg) translateZ(0);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+
+  &:active{
+    box-shadow: 0px 1px 0px #ffffff;
+    position:relative;
+    top: 5px;
+  }
+}
+
 
 
 @keyframes shrinkAway {
@@ -588,7 +672,7 @@ html.game-on {
     opacity: 0.9;
     position: relative;
     margin: 49px auto;
-    font-size: 60px;
+    font-size: 54px;
     transition: all 0.1s;
     box-shadow: 0px 20px 0px #034f92;
     transition: all 0.1s;
@@ -597,6 +681,7 @@ html.game-on {
     font-weight: 600;
     animation: blinker 2.5s linear infinite alternate;
     mix-blend-mode: lighten;
+    line-height: 255px;
   }
 
   &__race-button {
@@ -724,7 +809,7 @@ ul.level-icons {
   padding-top: 64px;
   padding-right: 10px;
   padding-left: 10px;
-  background: url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fintro-bg.jpg?source=ig&width=1920&quality=high) no-repeat top center;
+  background: url(https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fintro-bg.jpg?source=ig&width=1700&quality=high) no-repeat top center;
   background-size: cover;
 }
 
