@@ -204,15 +204,15 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &[data-level="cycle"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/cycle-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fcycle-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &[data-level="swim"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/swim-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fswim-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &[data-level="sprint"] {
-    background-image: url(https://ig.ft.com/static/on-your-marks/assets-1/images/sprint-bg.jpg);
+    background-image: url('https://image.webservices.ft.com/v1/images/raw/https%3A%2F%2Fig.ft.com%2Fstatic%2Fon-your-marks%2Fassets-1%2Fimages%2Fsprint-bg.jpg?source=ig&width=1800&quality=high');
   }
 
   &__complete {
