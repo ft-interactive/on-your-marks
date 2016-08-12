@@ -10,7 +10,7 @@ export default function send({ swim, cycle, sprint }) {
   const fd = new FormData();
   fd.append(fields.cycle, cycle);
   fd.append(fields.swim, swim);
-  fd.append(fields.spring, sprint);
+  fd.append(fields.sprint, sprint);
   console.log('Sending', fd);
 
   try {
