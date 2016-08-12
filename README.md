@@ -1,4 +1,4 @@
-# [on-your-marks](https://ig.ft.com/sites/on-your-marks)
+# [on-your-marks](https://ig.ft.com/on-your-marks)
 
 [![Build Status][circle-image]][circle-url]
 
