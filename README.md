@@ -4,8 +4,6 @@
 
 ## Local
 
-First time: make a `.env` file and put `SPREADSHEET_KEY` in it, set to the spreadsheet key for this project. Then do `npm run download-data`.
-
 ```
 npm start
 ```

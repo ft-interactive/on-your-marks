@@ -8,6 +8,7 @@ function createHowl(slug, name) {
       `${assetRoot}/audio/${slug}-${name}.mp3`,
     ],
     volume: 1,
+    pool: 10,
     preload: true,
     loop: false,
     onloaderror: () => {
