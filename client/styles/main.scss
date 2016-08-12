@@ -138,6 +138,17 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     .next-level:enabled:hover & {
       text-decoration: underline;
     }
+
+    .level__complete & {
+      right: 12px;
+      left: 12px;
+      text-align: center;
+
+      @include oGridRespondTo(M) {
+        left: auto;
+        text-align: right;
+      }
+    }
   }
 
   &__container {
@@ -154,6 +165,11 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     .next-level {
       margin-bottom: 24px;
     }
+  }
+
+  &__nextup {
+    font-size: 20px;
+    margin-bottom: 6px;
   }
 }
 
@@ -222,6 +238,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__comparison {
+    display: none !important;
     &-graphic {
       img {
         width: 100%;
@@ -429,6 +446,36 @@ $share-button-size: 38px;
   }
 }
 
+.replay-button {
+  background-color: rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 16px 50px;
+  border-radius: 10px;
+  border: 2px solid white;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  text-align: center;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  transition: all 0.07s;
+  box-shadow: 0px 6px 0px #ffffff;
+  top: 0;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transform: rotateX(28deg) translateZ(0);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+
+  &:active{
+    box-shadow: 0px 1px 0px #ffffff;
+    position:relative;
+    top: 5px;
+  }
+}
+
+
 
 @keyframes shrinkAway {
   60% {
@@ -588,7 +635,7 @@ html.game-on {
     opacity: 0.9;
     position: relative;
     margin: 49px auto;
-    font-size: 60px;
+    font-size: 54px;
     transition: all 0.1s;
     box-shadow: 0px 20px 0px #034f92;
     transition: all 0.1s;
@@ -597,6 +644,7 @@ html.game-on {
     font-weight: 600;
     animation: blinker 2.5s linear infinite alternate;
     mix-blend-mode: lighten;
+    line-height: 255px;
   }
 
   &__race-button {

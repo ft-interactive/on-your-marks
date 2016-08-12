@@ -24,7 +24,7 @@
 {% endmacro %}
 
 {% macro replayButton(slug, label) %}
-<button name="replay-level" value="{{ slug }}">{{ label }}</button>
+<button class="replay-button" name="replay-level" value="{{ slug }}">{{ label }}</button>
 {% endmacro %}
 
 {% macro nextButton(name, num, src, text, command=false, small=false) %}
@@ -232,7 +232,10 @@
         {{ noStart(level.slug) }}
         {{ comparison(level.slug) }}
         {% if not loop.last %}
+        <div class="next-level__container">
+        <p class="next-level__nextup">Next up:</p>
         {{ nextButton(levels[loop.index0 + 1].sportname, loop.index + 1, levels[loop.index0 + 1].nextimage, "I'm ready", "next-level") }}
+        </div>
         {% else %}
         {{ lastScreen(levels) }}
         {% endif %}

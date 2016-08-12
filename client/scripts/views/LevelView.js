@@ -56,7 +56,7 @@ export default class LevelView {
   falseStart() {
     this.audio.playFalseStartClip();
     const btn = this.el.querySelector('.countdown-status');
-    btn.innerHTML = 'FALSE START!'
+    btn.innerHTML = 'FALSE START!';
     setTimeout(() => {
       btn.classList.add('shrinkAway');
     }, 90);
@@ -68,6 +68,9 @@ export default class LevelView {
       btn.classList.remove('shrinkAway');
       this.el.style.overflow = 'auto';
     }, 555);
+    setTimeout(() => {
+      this.el.querySelector('.next-level__container').style.display = 'block';
+    }, 2800);
     {
       const _el = this.getStateElement('countdown');
       const msgEl = _el.querySelector('.countdown-status');
@@ -82,6 +85,9 @@ export default class LevelView {
     const _el = this.getStateElement('no-start');
     _el.style.display = 'block';
     this.el.style.overflow = 'auto';
+    setTimeout(() => {
+      this.el.querySelector('.next-level__container').style.display = 'block';
+    }, 1500);
   }
 
   normalStart() {
@@ -95,6 +101,9 @@ export default class LevelView {
       btn.classList.remove('puffOut');
       this.el.style.overflow = 'auto';
     }, 800);
+    setTimeout(() => {
+      this.el.querySelector('.next-level__container').style.display = 'block';
+    }, 4000);
   }
 
   incomplete() {
@@ -105,6 +114,7 @@ export default class LevelView {
     const msgEl = _el.querySelector('.countdown-status');
     msgEl.classList.remove('go', 'error', 'countdown');
     this.el.style.overflow = 'hidden';
+    this.el.querySelector('.next-level__container').style.display = 'none';
   }
 
   show() {
@@ -112,6 +122,7 @@ export default class LevelView {
     this.el.style.display = 'block';
     this.el.style.overflow = 'hidden';
     this.el.querySelector('.level__complete').style.display = 'none';
+    this.el.querySelector('.next-level__container').style.display = 'none';
     const loader = this.el.querySelector('.game__race-loader');
     const showLoader = setTimeout(() => {
       loader.style.display = 'block';
