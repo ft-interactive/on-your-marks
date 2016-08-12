@@ -31,7 +31,7 @@ export default class LevelView {
         this.incomplete();
         break;
       default:
-        console.log('WHAT STATE??');
+        //console.log('WHAT STATE??');
     }
   }
 

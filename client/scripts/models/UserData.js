@@ -11,8 +11,6 @@ export default function send({ swim, cycle, sprint }) {
   fd.append(fields.cycle, cycle);
   fd.append(fields.swim, swim);
   fd.append(fields.sprint, sprint);
-  console.log('Sending', fd);
-
   try {
     return fetch(formAction, {
       method: 'POST',

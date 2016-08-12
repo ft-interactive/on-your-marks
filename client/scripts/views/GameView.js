@@ -80,16 +80,16 @@ export default class GameView {
         this.stopwatchView.setMessage(level.clockname);
         break;
       default:
-        console.log('????');
+        //console.log('????');
     }
   }
 
   showLevel(level, previous) {
-    if (this.stopwatchView) {
-      this.stopwatchView.el = document.querySelector(`[data-level=${level.slug}] .clock`);
-    }
 
     if (level) {
+      if (this.stopwatchView) {
+        this.stopwatchView.el = document.querySelector(`[data-level=${level.slug}] .clock`);
+      }
       document.body.style.overflow = 'hidden';
       this.levelViews.find(v => v.level === level).show();
     } else {
