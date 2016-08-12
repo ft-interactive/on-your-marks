@@ -19,13 +19,11 @@ export default class Game extends EventEmitter {
   }
 
   onResult() {
-    if (!this.sentUserData) {
-      const allComplete = this.levels.every(l => l.complete);
-      if (allComplete) {
+    if(this.currentLevel.complete){
         userData({
-          cycle: this.levels[0].time,
-          swim: this.levels[1].time,
-          sprint: this.levels[2].time,
+          cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+          swim: this.levels.indexOf(this.currentLevel) == 1 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+          sprint: this.levels.indexOf(this.currentLevel) == 2 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
         })
         .then(() => {
           console.log('Sent');
@@ -34,7 +32,6 @@ export default class Game extends EventEmitter {
           console.log('Error sending user data', reason);
         });
         this.sentUserData = true;
-      }
     }
   }
 

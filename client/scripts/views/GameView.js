@@ -50,7 +50,6 @@ export default class GameView {
     //   this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
     // });
 
-
     this.levelViews = this.game.levels.map(level =>
                     new LevelView(getLevelElement(level.slug), level));
 

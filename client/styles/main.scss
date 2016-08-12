@@ -5,6 +5,7 @@ $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
 
+
 @font-face {
   font-family: 'Monoton';
   font-style: normal;
@@ -12,6 +13,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   src: local('Monoton'), local('Monoton-Regular'), url('https://fonts.gstatic.com/s/monoton/v6/au96iQ3WM1J9H5fMga5i0QLUuEpTyoUstqEm5AMlJo4.woff2?#iefix') format('woff2'), url('https://fonts.gstatic.com/s/monoton/v6/E1qpC-_4m0LngvlMPmKrlgLUuEpTyoUstqEm5AMlJo4.woff?#iefix') format('woff');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
+
 
 @font-face {
     font-family: 'clock';
@@ -272,6 +274,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   color: white;
   font-weight: bold;
 }
+
 
 .countdown-message {
   color: #fff;
