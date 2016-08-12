@@ -1,6 +1,12 @@
 import { EventEmitter } from 'events';
 
-const P = performance || Date;
+let P = ('performance' in window) ? window.performance : Date;
+
+if (typeof P.now !== 'function') {
+  P.now = function() {
+    return new Date().getTime();
+  };
+}
 
 export default class Stopwatch extends EventEmitter {
 
