@@ -167,6 +167,13 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     .next-level {
       margin-bottom: 24px;
     }
+
+    [data-level="sprint"] & {
+      overflow: auto;
+      padding: 0 10px 15px 10px;
+      box-sizing: border-box;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
   }
 
   &__nextup {
@@ -189,6 +196,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-position: center center;
   background-size: cover;
 
+  *,
   button,
   button:focus {
     user-select: none;
@@ -443,11 +451,18 @@ $share-button-size: 38px;
     button {
       box-sizing: border-box;
       width: 47.5%;
-      margin: 10px 1.25%;
+      margin: 10px 1.24%;
+
+
       @include oGridRespondTo($until:S) {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
+      };
+
+      @include oGridRespondTo(S) {
+        display: inline-block;
+        float: left;
       };
     }
   }
@@ -467,7 +482,7 @@ $share-button-size: 38px;
 }
 
 .replay-button {
-  background-color: rgba(255,255,255,0.25);
+  background-color: rgba(255,255,255,0.35);
   color: #fff;
   padding: 16px 50px;
   border-radius: 10px;

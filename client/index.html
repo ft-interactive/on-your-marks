@@ -7,12 +7,13 @@
 {% macro lastScreen(levels) %}
 <div class="last-screen">
   <div class="last-screen__replay-btns">
+    <button class="replay-button" name="first-level">PLAY ALL AGAIN</button>
     {% for level in levels %}
     {{ replayButton(level.slug, level.sportname) }}
     {% endfor %}
   </div>
   {% include "includes/share.html" %}
-  <p style="text-align:center;clear:both;">
+  <p style="text-align:center;clear:both;margin-top:20px;">
     <a style="font-size:26px;" href="{{ topic.url }}">Rio Olympics on ft.com</a>
   </p>
 </div>
