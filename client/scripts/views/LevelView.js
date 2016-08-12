@@ -1,30 +1,4 @@
-import { scaleThreshold } from 'd3-scale';
 import AudioPlayer from './AudioPlayer';
-
-// TODO: dont hard code these values, use real data
-//       to generate a histogram to make the domain
-//       - or at least make the reflect the sport's data
-// TODO: tweak the messages
-const messageScale = {};
-messageScale.cycle = scaleThreshold()
-                        .domain([0, 20, 120, 260, 360, 500, 2000])
-                        .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
-                                'Poor Effort', 'Terrible', 'Did you fall asleep?']);
-
-messageScale.swim = scaleThreshold()
-                      .domain([0, 150, 275, 450, 560, 750, 2000])
-                      .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
-                              'Poor Effort', 'Terrible', 'Did you fall asleep?']);
-
-messageScale.sprint = scaleThreshold()
-                      .domain([100, 120, 140, 180, 250, 500, 2000])
-                      .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
-                              'Poor Effort', 'Terrible', 'Did you fall asleep?']);
-
-const bounds = {};
-bounds.cycle = [100,500];
-bounds.swim = [121,888];
-bounds.sprint = [93,521];
 
 export default class LevelView {
   constructor(el, level) {
@@ -92,6 +66,10 @@ export default class LevelView {
       const _el = this.getStateElement('false-start');
       _el.style.display = 'block';
       btn.classList.remove('shrinkAway');
+<<<<<<< HEAD
+=======
+      this.el.style.overflow = 'auto';
+>>>>>>> master
     }, 555);
     {
       const _el = this.getStateElement('countdown');
@@ -106,20 +84,29 @@ export default class LevelView {
     this.el.querySelector('.level__complete').style.display = 'block';
     const _el = this.getStateElement('no-start');
     _el.style.display = 'block';
+    this.el.style.overflow = 'auto';
   }
 
   normalStart() {
     const btn = this.el.querySelector('.countdown-status');
     btn.classList.add('puffOut');
+<<<<<<< HEAD
 
     const _el = this.getStateElement('normal-start');
     const msg = messageScale[this.level.slug](this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
+=======
+    const _el = this.getStateElement('normal-start');
+>>>>>>> master
     setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       _el.style.display = 'block';
       btn.classList.remove('puffOut');
+<<<<<<< HEAD
+=======
+      this.el.style.overflow = 'auto';
+>>>>>>> master
     }, 800);
   }
 
@@ -130,11 +117,13 @@ export default class LevelView {
     _el.style.display = 'block';
     const msgEl = _el.querySelector('.countdown-status');
     msgEl.classList.remove('go', 'error', 'countdown');
+    this.el.style.overflow = 'hidden';
   }
 
   show() {
     this.hideAllState();
     this.el.style.display = 'block';
+    this.el.style.overflow = 'hidden';
     this.el.querySelector('.level__complete').style.display = 'none';
     const loader = this.el.querySelector('.game__race-loader');
     const showLoader = setTimeout(() => {

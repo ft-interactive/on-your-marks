@@ -5,6 +5,7 @@ import Stopwatch from './models/Stopwatch';
 import Game from './models/Game';
 import GameView from './views/GameView';
 import StopwatchView from './views/StopwatchView';
+import UserData from './models/UserData';
 
 (async () => {
   const touch = 'ontouchstart' in document.documentElement;
@@ -12,7 +13,7 @@ import StopwatchView from './views/StopwatchView';
   window.touch = touch;
 
   async function init() {
-    const stopwatch = new Stopwatch();
+    const stopwatch = Stopwatch.getInstance();
     const levels = await Level.loadLevels();
     return new GameView(
       document.body,

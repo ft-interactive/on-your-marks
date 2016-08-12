@@ -20,7 +20,7 @@ export default class GameView {
 
     game.on('changelevel', this.showLevel.bind(this));
 
-    delegate.on('click', '[name="first-level"]', event => {
+    delegate.on('click', '[name="first-level"]', () => {
       this.game.firstLevel();
     });
 
@@ -52,12 +52,41 @@ export default class GameView {
 
     this.levelViews = this.game.levels.map(level =>
                     new LevelView(getLevelElement(level.slug), level));
+
+    this.game.levels.forEach(level => {
+      level.on('result', () => {
+        this.showLastResult(level);
+      });
+    });
+  }
+
+  showLastResult(level) {
+    if (!this.stopwatchView) return;
+
+    switch (level.result) {
+      case 'NO_START':
+        this.stopwatchView.setMessage(level.clockname);
+        this.stopwatchView.blink({});
+        break;
+      case 'FALSE_START':
+        this.stopwatchView.flashMessage('DISQUALIFIED');
+        break;
+      case 'NORMAL_START':
+        this.stopwatchView.flashMessage(
+          level.getResultMessage()
+        );
+        break;
+      case 'INCOMPLETE':
+        this.stopwatchView.setMessage(level.clockname);
+        break;
+      default:
+        console.log('????');
+    }
   }
 
   showLevel(level, previous) {
-
     if (this.stopwatchView) {
-      this.stopwatchView.el = document.querySelector(`[data-clock=${level.slug}]`);
+      this.stopwatchView.el = document.querySelector(`[data-level=${level.slug}] .clock`);
     }
 
     if (level) {

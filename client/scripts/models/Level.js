@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { scaleThreshold } from 'd3-scale';
 import Countdown from './Countdown';
 
 const Result = {
@@ -11,6 +12,30 @@ const Result = {
 const technicalFalseStarts = {
   spring: 100,
 };
+
+const messageScale = {};
+messageScale.cycle = scaleThreshold()
+                        .domain([0, 20, 60, 100, 150, 200, 300, 2000])
+                        .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
+                                'Pretty good!', 'Fair',
+                                'Poor Effort', 'Terrible', 'Too slow']);
+
+messageScale.swim = scaleThreshold()
+                      .domain([0, 120, 150, 275, 450, 560, 750, 2000])
+                      .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
+                              'Pretty good!', 'Fair',
+                              'Poor Effort', 'Terrible', 'Too Slow']);
+
+messageScale.sprint = scaleThreshold()
+                      .domain([100, 115, 125, 160, 220, 300, 500, 2000])
+                      .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
+                              'Pretty good!', 'Fair',
+                              'Poor Effort', 'Terrible', 'Too slow']);
+
+const bounds = {};
+bounds.cycle = [100,500];
+bounds.swim = [121,888];
+bounds.sprint = [93,521];
 
 export default class Level extends EventEmitter {
 
@@ -81,6 +106,10 @@ export default class Level extends EventEmitter {
     if (!result) return;
     this.setResult(result, time);
     this.emit('stop');
+  }
+
+  getResultMessage() {
+    return this.complete ? messageScale[this.slug](this.time) : '';
   }
 
   restart() {

@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import userData from './UserData';
 
 export default class Game extends EventEmitter {
 
@@ -7,14 +8,31 @@ export default class Game extends EventEmitter {
     this._currentLevel = null;
     this.levels = levels;
     this.stopwatch = stopwatch;
-    this.gender = 'male';
     levels.forEach(level => {
       level.on('start', () => this.stopwatch.reset());
       level.on('replay', () => this.stopwatch.reset());
       level.on('go', () => this.stopwatch.start());
       level.on('stop', () => this.stopwatch.stop());
       level.on('timeout', () => this.stopwatch.stop());
+      level.on('result', () => this.onResult());
     });
+  }
+
+  onResult() {
+    if(this.currentLevel.complete){
+        userData({
+          cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+          swim: this.levels.indexOf(this.currentLevel) == 1 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+          sprint: this.levels.indexOf(this.currentLevel) == 2 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+        })
+        .then(() => {
+          console.log('Sent');
+        })
+        .catch( reason => {
+          console.log('Error sending user data', reason);
+        });
+        this.sentUserData = true;
+    }
   }
 
   firstLevel() {

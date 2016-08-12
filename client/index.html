@@ -57,7 +57,6 @@
 {% macro falseStart(slug) %}
   {% call statePanel(slug, "false-start") %}
   <p>
-    You've been disqualified from the event
     {{ replayButton(slug, "Try again") }}
   </p>
   {% endcall %}
@@ -71,8 +70,10 @@
 
 {% macro noStart(slug) %}
   {% call statePanel(slug, "no-start") %}
-  <p>What happened, you didn't leave blocks?</p>
-  {{ replayButton(slug, "Restart") }}
+  <p>
+    You didn't leave blocks.
+    {{ replayButton(slug, "Restart") }}
+  </p>
   {% endcall %}
 {% endmacro %}
 
@@ -100,7 +101,9 @@
   </div>
 
   <div class="game-instruction__container">
-  <p class="game-instruction"><i class="icon"><svg x="0px" y="0px" viewBox="0 0 40 40">
+  <p class="game-instruction" style="min-height:auto;margin-bottom: 12px;font-size:16px;">HOW TO PLAY</p>
+  <p class="game-instruction">
+  <i class="icon"><svg x="0px" y="0px" viewBox="0 0 40 40">
   <g><path fill="#FFFFFF" d="M36.916,25.813c-0.083,0.027-0.167,0.049-0.252,0.069c0.023,0.002,0.044,0.002,0.064,0.002
       c0.055,0,0.215-0.004,0.321-0.125C37.005,25.777,36.962,25.798,36.916,25.813z"/>
     <path fill="#FFFFFF" d="M36.936,11.756c-2.108-5.781-5.727-9.824-8.083-9.031c-1.9,0.641-2.397,4.232-1.413,8.631l4.08-1.174
@@ -193,7 +196,7 @@
     	</g>
     </g>
     </svg>
-  </i> Push the button to start the race<br/>Be careful not to false start!</p>
+  </i> Push the button to start the race. Be careful not to false start!</p>
   </div>
 
   <div class="next-level__container">
@@ -213,13 +216,14 @@
     <div class="level__states">
       {% call countdown(level.slug, level.countdownInstruction) %}
       {% if level.slug == 'cycle' %}
-      <p>Counting down...</p>
-      <p>5, 4, 3, 2, 1, Go!</p>
+      <p class="small">Track cycling events start with a countdown...</p>
+      <p>“5, 4, 3, 2, 1, Go!”</p>
       {% elif level.slug == 'swim' %}
-      <p>This one is quicker</p>
-      <p>"Take you marks", "Go"</p>
+      <p class="small">Swimming is a quicker start. There&rsquo;s no countdown, and the start signal could go at any time...</p>
+      <p>Listen for “Take you marks”, “Go”</p>
       {% elif level.slug == 'sprint' %}
-      <p>Listen for the gun</p>
+      <p class="small">Don&rsquo;t blow it all now with a false start...</p>
+      <p>Listen for the starting pistol</p>
       {% endif %}
       {% endcall %}
       <div class="level__complete">
