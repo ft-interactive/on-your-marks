@@ -31,7 +31,6 @@ export default class Game extends EventEmitter {
         .catch( reason => {
           console.log('Error sending user data', reason);
         });
-        this.sentUserData = true;
     }
   }
 
