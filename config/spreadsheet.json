@@ -1,7 +1,7 @@
 {
   "options": {
     "tweetText": "I got a reaction time of $TIME in the $EVENT. Can you do better? $URL",
-    "assetRoot": "http://ig.ft.com/static/on-your-marks/assets-1"
+    "assetRoot": "https://ig.ft.com/static/on-your-marks/assets-1"
   },
   "levels": [
     {
