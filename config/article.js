@@ -13,6 +13,8 @@ export default () => ({
 
   summary: 'Can you react faster than an Olympic athlete?',
 
+  image: 'https://image.webservices.ft.com/v1/images/raw/http%3A%2F%2Fcom.ft.imagepublish.prod.s3.amazonaws.com%2Ff17caecc-608c-11e6-ae3f-77baadeb1c93?source=next&fit=scale-down&width=700',
+
   topic: {
     name: 'Olympic Games',
     url: 'http://www.ft.com/rio-olympics',
