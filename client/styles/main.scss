@@ -283,7 +283,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   max-width: 430px;
   box-sizing: border-box;
   overflow: auto;
-  line-height: 0.82;
+  line-height: 1;
   p {
     margin-bottom: 10px;
     margin-top: 10px;
@@ -741,7 +741,7 @@ ul.level-icons {
   }
   .standfirst {
     color: oColorsGetPaletteColor('white');
-    margin-bottom: 33px;
+    margin-bottom: 24px;
   }
 }
 

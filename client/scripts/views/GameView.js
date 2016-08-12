@@ -20,7 +20,7 @@ export default class GameView {
 
     game.on('changelevel', this.showLevel.bind(this));
 
-    delegate.on('click', '[name="first-level"]', event => {
+    delegate.on('click', '[name="first-level"]', () => {
       this.game.firstLevel();
     });
 
@@ -58,7 +58,7 @@ export default class GameView {
       level.on('result', () => {
         this.showLastResult(level);
       });
-    })
+    });
   }
 
   showLastResult(level) {
@@ -86,7 +86,6 @@ export default class GameView {
   }
 
   showLevel(level, previous) {
-
     if (this.stopwatchView) {
       this.stopwatchView.el = document.querySelector(`[data-level=${level.slug}] .clock`);
     }
