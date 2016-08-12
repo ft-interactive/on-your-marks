@@ -9,14 +9,13 @@ export default () => ({
   //       new Date('2016-05-17T17:11:22Z')
   //publishedDate: new Date(),
 
-  // headline: 'Politics and the English Language',
+  headline: 'On your marks',
 
-  // summary: 'Political language is designed to make lies sound truthful' +
-  //          'and murder respectable, and to give an appearance of solidity to pure wind',
+  summary: 'Can you react faster than an Olympic athlete?',
 
   topic: {
     name: 'Olympic Games',
-    url: '/rio-olympics',
+    url: 'http://www.ft.com/rio-olympics',
   },
 
   // relatedArticle: {
@@ -32,10 +31,10 @@ export default () => ({
   // ],
 
   // Appears in the HTML <title>
-  // title: '',
+  title: 'On your marks...',
 
   // meta data
-  // description: '',
+  description: 'Can you react faster than an Olympic athlete?',
 
   /*
   TODO: Select Twitter card type -

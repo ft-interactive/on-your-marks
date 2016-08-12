@@ -21,6 +21,11 @@ messageScale.sprint = scaleThreshold()
                       .range(['False start', 'Молодец!', 'Incredible!!', 'Pretty good!', 'Fair',
                               'Poor Effort', 'Terrible', 'Did you fall asleep?']);
 
+const bounds = {};
+bounds.cycle = [100,500];
+bounds.swim = [121,888];
+bounds.sprint = [93,521];
+
 export default class LevelView {
   constructor(el, level) {
     this.el = el;
@@ -76,12 +81,18 @@ export default class LevelView {
 
   falseStart() {
     this.audio.playFalseStartClip();
+    const btn = this.el.querySelector('.countdown-status');
+    btn.innerHTML = 'FALSE START!'
+    setTimeout(() => {
+      btn.classList.add('shrinkAway');
+    }, 90);
     setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       const _el = this.getStateElement('false-start');
       _el.style.display = 'block';
-    }, 700);
+      btn.classList.remove('shrinkAway');
+    }, 555);
     {
       const _el = this.getStateElement('countdown');
       const msgEl = _el.querySelector('.countdown-status');
@@ -98,6 +109,9 @@ export default class LevelView {
   }
 
   normalStart() {
+    const btn = this.el.querySelector('.countdown-status');
+    btn.classList.add('puffOut');
+
     const _el = this.getStateElement('normal-start');
     const msg = messageScale[this.level.slug](this.level.time);
     _el.querySelector('.result-summary').innerHTML = msg;
@@ -105,6 +119,7 @@ export default class LevelView {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       _el.style.display = 'block';
+      btn.classList.remove('puffOut');
     }, 800);
   }
 
