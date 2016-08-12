@@ -45,7 +45,7 @@ export default () => ({
         Twitter card docs:
         https://dev.twitter.com/cards/markup
   */
-  twitterCard: 'summary',
+  twitterCard: 'summary_large_image',
 
   // optional social meta data
   // twitterCreator: '@individual's_account',
