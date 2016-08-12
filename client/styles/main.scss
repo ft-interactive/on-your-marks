@@ -78,6 +78,8 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   filter: brightness(0.95);
 
+
+
   &:disabled {
     border-color: #eee;
     border-color: rgba(255,255,255, 0.7);
@@ -442,7 +444,25 @@ $share-button-size: 38px;
       box-sizing: border-box;
       width: 47.5%;
       margin: 10px 1.25%;
+      @include oGridRespondTo($until:S) {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      };
     }
+  }
+
+  a {
+    font-size: 26px;
+    color: #fff;
+    &:visited {
+      color: #fff;
+    }
+  }
+  .o-share {
+    display: block;
+    width: 100%;
+    margin: 5px auto;
   }
 }
 
