@@ -5,8 +5,7 @@ $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
 
-<<<<<<< HEAD
-=======
+
 @font-face {
   font-family: 'Monoton';
   font-style: normal;
@@ -15,7 +14,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
->>>>>>> master
+
 @font-face {
     font-family: 'clock';
     src: url('https://ig.ft.com/static/on-your-marks/assets-1/fonts/ds-digii-webfont.woff2?#iefix') format('woff2'),
@@ -28,33 +27,6 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   text-align: left;
   clear: both;
   margin: 0px auto 0px auto;
-<<<<<<< HEAD
-  // padding-left: 40px;
-  width: 94%;
-  box-sizing: border-box;
-  max-width: 600px;
-  min-height: 50px;
-  font-size: 20px;
-  color: white;
-
-  .icon {
-    float: left;
-    margin-top: 0px;
-    margin-right: 15px;
-    margin-bottom: 10px;
-    svg {
-      width: 54px;
-      height: 54px;
-    }
-  }
-
-  @include oGridRespondTo(S) {
-    padding-left: 70px;
-  }
-
-  @include oGridRespondTo(M) {
-    padding-left: 150px;
-=======
   padding-left: 10px;
   width: 94%;
   box-sizing: border-box;
@@ -80,7 +52,6 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
   &__container {
     margin-bottom: 15px;
->>>>>>> master
   }
 }
 
@@ -90,12 +61,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   outline: 0;
   user-select: none;
   border: 1px solid #ffffff;
-<<<<<<< HEAD
-  // border: none;
-  margin: 0 auto 24px 0;
-=======
   margin: 0 auto;
->>>>>>> master
   width: 100%;
   box-sizing: border-box;
   text-align: left;
@@ -169,12 +135,9 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     font-size: 24px;
     top: auto;
     font-weight: 600;
-<<<<<<< HEAD
-=======
     .next-level:enabled:hover & {
       text-decoration: underline;
     }
->>>>>>> master
   }
 
   &__container {
@@ -187,13 +150,10 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
       display: table;
       clear: both;
     }
-<<<<<<< HEAD
-=======
 
     .next-level {
       margin-bottom: 24px;
     }
->>>>>>> master
   }
 }
 
@@ -315,8 +275,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   font-weight: bold;
 }
 
-<<<<<<< HEAD
-=======
+
 .countdown-message {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
@@ -337,18 +296,13 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
     }
   }
 }
->>>>>>> master
 
 @keyframes blinker { to { opacity: 0; } }
 
 .clock {
   display: block;
   width: 360px;
-<<<<<<< HEAD
-  margin: 35px auto 20px auto;
-=======
   margin: 35px auto 12px auto;
->>>>>>> master
   text-align: right;
   font-feature-settings: "tnum";
   background-color: #bd1713;
@@ -367,11 +321,6 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   background-size: 62px;
   background-position: center 5px;
 
-<<<<<<< HEAD
-  @include oGridRespondTo($until:M) {
-    margin-top: 15px;
-    margin-bottom: 20px;
-=======
   @include oGridRespondTo($until:S) {
     width: auto;
     margin-left: 10px;
@@ -383,7 +332,6 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   @include oGridRespondTo($until:M) {
     margin-top: 15px;
     margin-bottom: 10px;
->>>>>>> master
   }
 
   &__display {
@@ -395,10 +343,7 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
   }
 
   &__blink {
-<<<<<<< HEAD
-=======
     color: #ffb300f2;
->>>>>>> master
     animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
   }
 }
@@ -646,17 +591,12 @@ html.game-on {
     font-size: 60px;
     transition: all 0.1s;
     box-shadow: 0px 20px 0px #034f92;
-<<<<<<< HEAD
-    color: white;
-
-=======
     transition: all 0.1s;
     color: black;
     vertical-align: middle;
     font-weight: 600;
     animation: blinker 2.5s linear infinite alternate;
     mix-blend-mode: lighten;
->>>>>>> master
   }
 
   &__race-button {
@@ -718,11 +658,7 @@ html.game-on {
       }
 
       [data-level="cycle"] & {
-<<<<<<< HEAD
-        font-size: 100px;
-=======
         font-size: 120px;
->>>>>>> master
       }
     }
   }
@@ -801,22 +737,14 @@ ul.level-icons {
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 1;
-<<<<<<< HEAD
-    font-family: 'Monoton', cursive;
-=======
     font-family: 'Monoton', sans-serif;
->>>>>>> master
     font-size: 2.3em;
     font-weight: 400;
     color: #fff;
   }
   .standfirst {
     color: oColorsGetPaletteColor('white');
-<<<<<<< HEAD
-    margin-bottom: 33px;
-=======
     margin-bottom: 24px;
->>>>>>> master
   }
 }
 

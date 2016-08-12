@@ -66,10 +66,7 @@ export default class LevelView {
       const _el = this.getStateElement('false-start');
       _el.style.display = 'block';
       btn.classList.remove('shrinkAway');
-<<<<<<< HEAD
-=======
       this.el.style.overflow = 'auto';
->>>>>>> master
     }, 555);
     {
       const _el = this.getStateElement('countdown');
@@ -90,23 +87,13 @@ export default class LevelView {
   normalStart() {
     const btn = this.el.querySelector('.countdown-status');
     btn.classList.add('puffOut');
-<<<<<<< HEAD
-
     const _el = this.getStateElement('normal-start');
-    const msg = messageScale[this.level.slug](this.level.time);
-    _el.querySelector('.result-summary').innerHTML = msg;
-=======
-    const _el = this.getStateElement('normal-start');
->>>>>>> master
     setTimeout(() => {
       this.hideAllState();
       this.el.querySelector('.level__complete').style.display = 'block';
       _el.style.display = 'block';
       btn.classList.remove('puffOut');
-<<<<<<< HEAD
-=======
       this.el.style.overflow = 'auto';
->>>>>>> master
     }, 800);
   }
 
