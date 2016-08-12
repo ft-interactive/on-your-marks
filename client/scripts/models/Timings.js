@@ -22,7 +22,7 @@ export const cycle = sequence(
 );
 
 export const swim = sequence(
-  ['Take you marks', secs(5)],
+  ['Take your marks', secs(5)],
   ['Dive!', secs(2), secs(1)]
 );
 
