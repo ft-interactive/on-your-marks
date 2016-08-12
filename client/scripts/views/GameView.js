@@ -78,7 +78,6 @@ export default class GameView {
         );
         break;
       case 'INCOMPLETE':
-      console.log('incomplete')
         this.stopwatchView.setMessage(level.clockname);
         break;
       default:
