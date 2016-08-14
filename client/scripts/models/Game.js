@@ -1,8 +1,11 @@
 import { EventEmitter } from 'events';
 import userData from './UserData';
+const berthaURL = 'https://bertha.ig.ft.com/view/publish/ig/19y8GJL3VZdOPNHyNUvFs4siZdFL2euaSSDzAo8PRADg/basic';
 
-const request = require('request');
-const berthaURL = 'http://bertha.ig.ft.com/view/publish/ig/19y8GJL3VZdOPNHyNUvFs4siZdFL2euaSSDzAo8PRADg/basic';
+const comparisonData = fetch(berthaURL).then(res => res.json()).catch(reason => {
+  console.log('failed to fetch comparison data');
+  console.log(reason);
+});
 
 export default class Game extends EventEmitter {
 
@@ -23,16 +26,21 @@ export default class Game extends EventEmitter {
 
   onResult() {
     if(this.currentLevel.complete){
-        request(berthaURL, function(error, response, body){
-          if(game._currentLevel.result == 'NORMAL_START') {
-            let data = JSON.parse(body).data;
-            var percentile = data.filter((o) => o[game._currentLevel.slug] < game._currentLevel.time)[0].percentile;
-            document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].style.padding = "10px 10px 15px 10px";
-            document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].innerHTML = "You were quicker than " + percentile + "% of players of the " + game._currentLevel.clockname.toLowerCase() + " round!";
+      comparisonData.then(d => {
+          if (!this.currentLevel) return;
+          const {slug, result, time} = this.currentLevel;
+          const el = document.querySelector(`[data-level=${slug}] .level__comparison`);
+          if (!el) return;
+          if(result === 'NORMAL_START') {
+            const percentile = d.data.filter(o => o[slug] < time)[0].percentile;
+            el.style.padding = '10px 10px 15px 10px';
+            el.innerHTML = `You were quicker than ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
+            el.style.display = 'block';
           }else{
-            document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].style.padding = "0";
-            document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].innerHTML = "";
+            el.innerHTML = '';
+            el.style.display = 'none';
           }
+
         });
         userData({
           cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
@@ -42,7 +50,7 @@ export default class Game extends EventEmitter {
         .then(() => {
           console.log('Sent');
         })
-        .catch( reason => {
+        .catch(reason => {
           console.log('Error sending user data', reason);
         });
     }
