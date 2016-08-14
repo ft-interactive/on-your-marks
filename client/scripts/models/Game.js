@@ -31,6 +31,7 @@ export default class Game extends EventEmitter {
             document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].innerHTML = "You were quicker than " + percentile + "% of players of the " + game._currentLevel.clockname.toLowerCase() + " round!";
           }else{
             document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].style.padding = "0";
+            document.querySelectorAll(`div[data-level=`+game._currentLevel.slug+`] .level__comparison`)[0].innerHTML = "";
           }
         });
         userData({
