@@ -42,17 +42,15 @@ export default class Game extends EventEmitter {
           }
 
         });
-        userData({
-          cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
-          swim: this.levels.indexOf(this.currentLevel) == 1 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
-          sprint: this.levels.indexOf(this.currentLevel) == 2 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
-        })
-        .then(() => {
-          console.log('Sent');
-        })
-        .catch(reason => {
-          console.log('Error sending user data', reason);
-        });
+      userData({
+        cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+        swim: this.levels.indexOf(this.currentLevel) == 1 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+        sprint: this.levels.indexOf(this.currentLevel) == 2 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
+      }).then(() => {
+        console.log('Sent');
+      }).catch(reason => {
+        console.log('Error sending user data', reason);
+      });
     }
   }
 
