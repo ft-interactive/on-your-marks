@@ -2,8 +2,8 @@ const prod = process.env.NODE_ENV === 'production';
 
 export default () => ({
   prod,
-  errorReporting: prod,
-  analytics: prod,
+  errorReporting: true,
+  analytics: true,
   googleAnalytics: prod,
   ads: false,
   onwardjourney: false,

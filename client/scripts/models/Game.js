@@ -1,6 +1,8 @@
 import { EventEmitter } from 'events';
 import userData from './UserData';
-const berthaURL = 'https://bertha.ig.ft.com/view/publish/ig/19y8GJL3VZdOPNHyNUvFs4siZdFL2euaSSDzAo8PRADg/basic';
+const berthaURL = 'https://bertha.ig.ft.com/view/publish/ig/1omXt6YmJin_xbbOd9zljIZAAgL3SvM4z4ZCKxBRHcME/basic';
+
+const fetch = window.fetch || function(){return{then:function(){},catch:function(){}}};
 
 const comparisonData = fetch(berthaURL).then(res => res.json()).catch(reason => {
   console.log('failed to fetch comparison data');
@@ -32,13 +34,9 @@ export default class Game extends EventEmitter {
           const el = document.querySelector(`[data-level=${slug}] .level__comparison`);
           if (!el) return;
           if(result === 'NORMAL_START') {
-            const percentile = d.data.filter(o => o[slug] > time).reverse()[0].percentile;
+            const percentile = d.data.filter(o => o[slug] < time)[0].percentile;
             el.style.padding = '10px 10px 15px 10px';
-            if(slug == 'sprint' && time < 155){
-              el.innerHTML = `You reacted more quickly than Usain Bolt did in the 100m final! You also beat ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
-            }else{
-              el.innerHTML = `You were quicker than ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
-            }
+            el.innerHTML = `You were quicker than ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
             el.style.display = 'block';
           }else{
             el.innerHTML = '';
