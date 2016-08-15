@@ -6,12 +6,6 @@ const comparisonData = fetch(berthaURL).then(res => res.json()).catch(reason => 
   console.log('failed to fetch comparison data');
   console.log(reason);
 });
-<<<<<<< HEAD
-
-const request = require('request');
-const berthaURL = 'http://bertha.ig.ft.com/view/publish/ig/19y8GJL3VZdOPNHyNUvFs4siZdFL2euaSSDzAo8PRADg/basic';
-=======
->>>>>>> master
 
 export default class Game extends EventEmitter {
 
