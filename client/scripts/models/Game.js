@@ -2,7 +2,12 @@ import { EventEmitter } from 'events';
 import userData from './UserData';
 const berthaURL = 'https://bertha.ig.ft.com/view/publish/ig/1omXt6YmJin_xbbOd9zljIZAAgL3SvM4z4ZCKxBRHcME/basic';
 
-const fetch = window.fetch || function(){return{then:function(){},catch:function(){}}};
+function nooppromise(){
+  const o = {then:function(){return o;},catch:function(){return o;}};
+  return o;
+}
+
+const fetch = window.fetch || nooppromise;
 
 const comparisonData = fetch(berthaURL).then(res => res.json()).catch(reason => {
   console.log('failed to fetch comparison data');
