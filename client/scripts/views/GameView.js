@@ -38,7 +38,7 @@ export default class GameView {
     });
 
     // For swimming add a little bit of time to leave the block
-    delegate.on('click', '[name="stopwatch-stop"]', () => {
+    delegate.on(window.touch ? 'touchend' : 'click', '[name="stopwatch-stop"]', () => {
       if (this.game.currentLevel.slug !== 'swim') return;
       setTimeout(() => {
         this.game.currentLevel.stop(game.stopwatch.getCurrentTime());
