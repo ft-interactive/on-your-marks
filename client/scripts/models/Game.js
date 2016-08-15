@@ -34,7 +34,11 @@ export default class Game extends EventEmitter {
           if(result === 'NORMAL_START') {
             const percentile = d.data.filter(o => o[slug] < time)[0].percentile;
             el.style.padding = '10px 10px 15px 10px';
-            el.innerHTML = `You were quicker than ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
+            if(slug == 'sprint' && time < 155){
+              el.innerHTML = `You reacted more quickly than Usain Bolt did in the 100m final! You also beat ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
+            }else{
+              el.innerHTML = `You were quicker than ${percentile}% of players of the ${this.currentLevel.clockname.toLowerCase()} round!`;
+            }
             el.style.display = 'block';
           }else{
             el.innerHTML = '';

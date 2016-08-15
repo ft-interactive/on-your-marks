@@ -15,22 +15,22 @@ const technicalFalseStarts = {
 
 const messageScale = {};
 messageScale.cycle = scaleThreshold()
-                        .domain([0, 20, 60, 100, 150, 200, 300, 2000])
+                        .domain([0, 5, 9, 25, 78, 130, 226, 2000])
                         .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
                                 'Pretty good!', 'Fair',
-                                'Poor Effort', 'Terrible', 'Too slow']);
+                                'Poor effort', 'Terrible', 'Too slow']);
 
 messageScale.swim = scaleThreshold()
-                      .domain([0, 120, 150, 275, 450, 560, 750, 2000])
+                      .domain([0, 5, 9, 350, 395, 436, 521, 2000])
                       .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
                               'Pretty good!', 'Fair',
-                              'Poor Effort', 'Terrible', 'Too Slow']);
+                              'Poor effort', 'Terrible', 'Too Slow']);
 
 messageScale.sprint = scaleThreshold()
-                      .domain([100, 115, 125, 160, 220, 300, 500, 2000])
+                      .domain([100, 101, 120, 199, 225, 242, 300, 2000])
                       .range(['Disqualified', 'Молодец!', 'New WR', 'Incredible!!',
                               'Pretty good!', 'Fair',
-                              'Poor Effort', 'Terrible', 'Too slow']);
+                              'Poor effort', 'Terrible', 'Too slow']);
 
 const bounds = {};
 bounds.cycle = [100,500];
