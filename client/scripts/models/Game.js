@@ -6,9 +6,12 @@ const comparisonData = fetch(berthaURL).then(res => res.json()).catch(reason => 
   console.log('failed to fetch comparison data');
   console.log(reason);
 });
+<<<<<<< HEAD
 
 const request = require('request');
 const berthaURL = 'http://bertha.ig.ft.com/view/publish/ig/19y8GJL3VZdOPNHyNUvFs4siZdFL2euaSSDzAo8PRADg/basic';
+=======
+>>>>>>> master
 
 export default class Game extends EventEmitter {
 
@@ -43,6 +46,7 @@ export default class Game extends EventEmitter {
             el.innerHTML = '';
             el.style.display = 'none';
           }
+
         });
       userData({
         cycle: this.levels.indexOf(this.currentLevel) == 0 ? this.levels[this.levels.indexOf(this.currentLevel)].time:'NA',
